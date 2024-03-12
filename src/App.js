@@ -1,30 +1,26 @@
 import Header from './components/Header';
 import Home from './components/Home';
-import Dishes from './components/Dishes';
-import About from './components/About';
-import Reviews from './components/Reviews';
+import Footer from './components/Footer';
 
-import './App.css';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
 
-      <Header/>
+      <Header />
+
       <main>
-        <div id='home'>
-          <Home />
-        </div>
-        <div id='dishes'>
-          <Dishes />
-        </div>
-        <div id='about'>
-          <About />
-        </div>
-        <div id='reviews'>
-          <Reviews />
-        </div>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/about' element={<h1>About US</h1>} />
+            <Route path='/reviews' element={<h1>Reviews</h1>} />
+            <Route path='*' element={<Navigate to='/' />} />
+          </Routes>
       </main>
+
+      <Footer/>
+
     </div>
   );
 }
