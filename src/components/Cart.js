@@ -1,25 +1,29 @@
 import React from 'react';
-import { BiCart,  BiX,  BiXCircle } from 'react-icons/bi';
+import { BiCart, BiX } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
-    const data = [{
-        img: 'https://modinatheme.com/html/foodking-html/assets/img/shop-food/s1.png',
-        price: 20,
-        subtotal: 200
-    },
-    {
-        img: 'https://modinatheme.com/html/foodking-html/assets/img/shop-food/s1.png',
-        price: 45,
-        subtotal: 500
-    }
+    const data = [
+        {
+            img: 'https://modinatheme.com/html/foodking-html/assets/img/shop-food/s1.png',
+            price: 20,
+            subtotal: 200
+        },
+        {
+            img: 'https://modinatheme.com/html/foodking-html/assets/img/shop-food/s1.png',
+            price: 45,
+            subtotal: 500
+        }
     ]
     return (
         <>
             <div className="overflow-x-auto mx-auto">
 
-                <h1 className=' uppercase font-bold text-6xl mx-auto my-14 w-3/4'>SHOPPING CART <BiCart className='inline'/></h1>
+                {/* Heading */}
+                <h1 className=' uppercase font-bold text-6xl mx-auto my-14 w-3/4'>SHOPPING <h1 className='inline text-red-600'>CART</h1>&nbsp;<BiCart className='inline' /></h1>
 
-                <div className=" overflow-x-auto mx-auto my-14 w-3/4 p-6 shadow-lg">
+                {/* Cart items */}
+                <div className=" overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">
                     <table className="mx-auto my-9 w-full">
                         <thead>
                             <tr className="text-lg border-b">
@@ -38,7 +42,7 @@ const Cart = () => {
                                     <td className="px-4 py-2">2</td>
                                     <td className="px-4 py-2">{item.subtotal}</td>
                                     <td className="px-4 py-2">
-                                        <BiX className=' font-bold text-xl cursor-pointer'/>
+                                        <BiX className=' font-bold text-xl cursor-pointer' />
                                     </td>
                                 </tr>
                             ))}
@@ -46,13 +50,13 @@ const Cart = () => {
                     </table>
 
                     <div className='flex'>
-                        <button className='uppercase font-bold w-fit py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600' >View More &nbsp; &rarr; </button>
+                        <button className='uppercase font-bold w-fit py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600' ><Link to="/menu">View More &nbsp; &rarr; </Link></button>
                     </div>
 
                 </div>
-                
+
                 {/* Cart Total */}
-                <div className="mx-auto my-14 w-3/4 p-6 shadow-lg uppercase">
+                <div className="mx-auto my-14 w-11/12 md:w-3/4 p-6 shadow-lg uppercase">
                     <h2 className="text-xl font-semibold mb-12">Cart Total</h2>
                     <div className="flex justify-between mb-9">
                         <span>Subtotal :</span>
@@ -62,11 +66,17 @@ const Cart = () => {
                         <span>Shipping :</span>
                         <span>$10</span>
                     </div>
-                    <div className="flex justify-between border-t border-gray-300 pt-2 mb-6 mt-3 text-gray-700">
-                        <span className="font-semibold">Total:</span>
-                        <span className="font-semibold">$260</span>
+                    <div className="flex justify-between mb-9">
+                        <span>Delivery :</span>
+                        <span>$50</span>
                     </div>
-                    <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' >Order Now</button>
+                    <div className="flex justify-between border-t border-gray-300 pt-3 mb-6 mt-3 text-gray-700">
+                        <span className="font-semibold">Total:</span>
+                        <span className="font-semibold">$310</span>
+                    </div>
+                    <div className='flex justify-end mt-10'>
+                        <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' >Order Now</button>
+                    </div>
                 </div>
 
             </div>

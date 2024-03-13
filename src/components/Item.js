@@ -3,6 +3,7 @@ import burgerImg from '../Assets/burger.png'
 
 import ReviewItem from './ReviewItem'
 import Stars from './Stars'
+import { Link } from 'react-router-dom'
 
 const Item = () => {
   return (
@@ -23,7 +24,7 @@ const Item = () => {
           <p className="mb-4 text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt a dolorum?</p>
           <span className="font-bold text-2xl text-red-600">Rs. 239</span>
 
-          <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-full flex justify-center gap-2' > <BiCart size={25} /><a href="/cart">Add to cart</a></button>
+          <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-full flex justify-center gap-2' > <BiCart size={25} /><Link to="/cart">Add to cart</Link></button>
 
           <h6 className='text-sm mt-9'>
             GROUND DELIVERY SURCHARGE :
