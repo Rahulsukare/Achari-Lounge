@@ -41,7 +41,7 @@ const Item = () => {
       {/* Bottom Reviews container starts */}
       <div className=" bg-white mt-9 p-9">
         {/* Tabs */}
-        <ul id='tabs' className='flex flex-wrap gap-5 mb-16'>
+        <ul id='tabs' className='flex gap-5 mb-16 overflow-x-auto'>
           <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-md'>reviews (5)</li>
           <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-md'>Description</li>
         </ul>

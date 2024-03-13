@@ -4,7 +4,7 @@ import burgerImg from '../Assets/burger.png'
 
 const DishesCard = (props) => {
     return (
-        <Link to='/menu/item' className="lg:w-1/4 md:w-1/2 p-4 w-full hover:bg-amber-400 rounded-lg">
+        <Link to='/item' className="lg:w-1/4 md:w-1/2 p-4 w-full hover:bg-amber-400 rounded-lg">
             <a href='/' className="block relative h-48 rounded overflow-hidden">
                 <img alt="ecommerce" className="object-cover object-center w-full h-full block" src={burgerImg}></img>
             </a>

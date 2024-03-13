@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import Item from './components/Item';
+import Cart from './components/Cart';
 import Footer from './components/Footer';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
             <Route path='/about' element={<h1>About US</h1>} />
             <Route path='/reviews' element={<h1>Reviews</h1>} />
             <Route path='/menu' element={<Menu/>} />
-            <Route path='/menu/item' element={<Item/>} />
+            <Route path='/item' element={<Item/>} />
+            <Route path='/cart' element={<Cart/>} />
             <Route path='*' element={<Navigate to='/' />} />
           </Routes>
       </main>
