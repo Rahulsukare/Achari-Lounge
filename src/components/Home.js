@@ -21,6 +21,9 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            <h1 className="text-4xl font-semibold text-center lg:pt-16 pt-24 pb-10">
+                Our Dishes
+            </h1>
             <Dishes />
             <About />
             <Reviews />
