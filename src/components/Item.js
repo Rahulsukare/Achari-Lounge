@@ -46,7 +46,7 @@ const Item = () => {
       {/* Bottom Reviews container starts */}
       <div className="mt-9 p-9">
         {/* Tabs */}
-        <ul className='flex gap-5 mb-16 overflow-scroll'>
+        <ul id='tabs' className='flex flex-wrap gap-5 mb-16'>
           <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-full'>reviews (5)</li>
           <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-full'>Description</li>
         </ul>
@@ -62,6 +62,13 @@ const Item = () => {
         
       </div>
       {/* Bottom Reviews container ends */}
+
+      {/* Review Form starts */}
+      <div>
+        <h4>ADD A REVIEW</h4>
+        <p>RATE THIS PRODUCT?</p>
+      </div>
+      {/* Review Form End */}
 
     </>
   )

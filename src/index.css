@@ -7,3 +7,17 @@ body {
     font-family: 'poppins', sans-serif;
     background-color: #feeff2;
 }
+
+/* For vertical scrollbar */
+body::-webkit-scrollbar {
+    width: 8px; /* width of the vertical scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    border-radius: 20px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(182, 182, 182);
+    border-radius: 20px;
+}
