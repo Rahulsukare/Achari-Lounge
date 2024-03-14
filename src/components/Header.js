@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {restLogo} from "../Assets/RestLogo.png";
 // import { BiRestaurant } from "react-icons/bi";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
@@ -28,7 +27,7 @@ const Header = () => {
             <div>
                 <div className=" flex flex-row justify-between p-1 md:px-356 px-5 bg-backBody shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
                     <div className=" flex flex-row items-center cursor-pointer">
-                        <img className="w-24 rounded-full" src={restLogo} alt="" />
+                        <img className="w-24 rounded-full" src="../Assets/RestLogo.png" alt="" />
                         <h1 className=" ml-4 text-xl font-semibold">Food Restro</h1>
                     </div>
 
