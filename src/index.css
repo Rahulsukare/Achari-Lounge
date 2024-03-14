@@ -5,19 +5,20 @@
 
 body {
     font-family: 'poppins', sans-serif;
-    background-color: white;
+    background-color: #ffffff;
 }
 
 /* For vertical scrollbar */
 body::-webkit-scrollbar {
-    width: 8px; /* width of the vertical scrollbar */
+    width: 4px; /* width of the vertical scrollbar */
 }
 
 body::-webkit-scrollbar-track {
     border-radius: 20px;
+    background-color: #acf0cc;
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: rgb(182, 182, 182);
+    background-color: #00813d;
     border-radius: 20px;
 }
