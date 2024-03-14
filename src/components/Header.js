@@ -18,6 +18,9 @@ const Header = () => {
         setMenu(false);
     };
 
+    const handleLoginClick = () => {
+
+    }
 
     return (
         <div className=" w-full bg-backBody text-white">
@@ -78,8 +81,9 @@ const Header = () => {
                         <Link to='/reviews' className="hover:text-brightColor transition-all cursor-pointer">
                             Reviews
                         </Link>
-
-                        <Button title="Login" />
+                        <Link to ='/login' className =''>
+                            <Button title="Login" />
+                        </Link>
                     </nav>
 
                     <div className="md:hidden flex items-center">
@@ -111,7 +115,7 @@ const Header = () => {
                         Reviews
                     </Link>
 
-                    <Button title="login" />
+                    <Button title="login" onClick = {handleLoginClick()}/>
                 </div>
             </div>
         </div>
