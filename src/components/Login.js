@@ -64,7 +64,7 @@ const Login = () => {
         </div>
         <div className="md:w-1/3 max-w-sm">
             <div className="text-[#F4511F] my-5 text-center font-bold text-3xl md:text-left">
-                Login
+                {(isSignInForm) ? "Sign In" : "Sign Up"}
             </div>
             <form action=""  onSubmit={(e) => e.preventDefault()} className=''>
                 {(!errorMessage) ? "" : <p className='font-semibold text-red-600 py-3'>{errorMessage}</p>}
