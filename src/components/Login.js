@@ -67,8 +67,8 @@ const Login = () => {
                 Login
             </div>
             <form action=""  onSubmit={(e) => e.preventDefault()} className=''>
+                {(!errorMessage) ? "" : <p className='font-semibold text-red-600 py-3'>{errorMessage}</p>}
                 {(isSignInForm) ? <></> : <input ref = {name} className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" type="text" placeholder='Name'/>}
-                {(!errorMessage) ? "" : <p className='font-semibold text-red-600'>{errorMessage}</p>}
                 <input ref = {email}
                 className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
                 type="text"
@@ -96,7 +96,7 @@ const Login = () => {
             </a>
             </div>
             <div>
-                <p className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left hover: cursor-pointer" onClick={toggleSignIn}>{(isSignInForm) ? "New to Netflix? Sign Up Now!" : "Already Registered? Sign In Now!"}</p>
+                <p className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left hover: cursor-pointer" onClick={toggleSignIn}>{(isSignInForm) ? "New to Achari-Lounge? Sign Up Now!" : "Already Registered? Sign In Now!"}</p>
             </div>
         </div>
         </section>

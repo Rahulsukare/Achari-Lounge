@@ -26,6 +26,7 @@ function App() {
             <Route path='/menu' element={<Menu/>} />
             <Route path='/item' element={<Item/>} />
             <Route path='/cart' element={<Cart/>} />
+            <Route path='/login' element={<Login/>}/>
             <Route path='*' element={<Navigate to='/' />} />
           </Routes>
       </main>
