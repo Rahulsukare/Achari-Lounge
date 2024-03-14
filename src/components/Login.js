@@ -1,4 +1,5 @@
 import React, {useRef, useState} from "react";
+import {restLogo} from "../Assets/RestLogo.png"
 import {checkValidData} from "../utils/Validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../utils/firebase";
@@ -58,7 +59,7 @@ const Login = () => {
         <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
         <div className="md:w-1/3 max-w-sm">
             <img className="rounded-full lg:w-96 md:w-48 sm: w-48"
-            src="https://thumbs.dreamstime.com/z/plate-fork-spoon-restaurant-logo-white-background-eps-plate-fork-spoon-restaurant-logo-193685698.jpg?w=768"
+            src={restLogo}
             alt="loginImg"
             />
         </div>
