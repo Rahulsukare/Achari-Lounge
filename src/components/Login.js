@@ -3,10 +3,18 @@ import { checkValidData } from "../utils/Validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { Link } from "react-router-dom";
+import BrandLogo from '../Assets/RestLogo.png'
+import { BiHide, BiShow } from "react-icons/bi";
+
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(false);
+    const [toggle, setToggle] = useState(false);
     const name = useRef(null);
     const email = useRef(null);
     const password = useRef(null);
@@ -42,13 +50,22 @@ const Login = () => {
         }
         else {
             //Sign In Logic
+            const user = {};
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
+                    console.log(user)
+                    const User = {
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                    }
+                    console.log(User);
                     console.log("Log In Successfull")
-                    navigate('/home')
+                    dispatch(addUser(User))
+                    // navigate('/home')
                     // ...
                 })
                 .catch((error) => {
@@ -59,11 +76,16 @@ const Login = () => {
                 });
         }
     }
+
+    const toggleShowHidePass = () => {
+        setToggle(!toggle)
+    }
+
     return (
         <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
             <div className="md:w-1/3 max-w-sm">
                 <img className="rounded-full lg:w-96 md:w-48 sm: w-48"
-                    src="../Assets/RestLogo.png"
+                    src={BrandLogo}
                     alt="loginImg"
                 />
             </div>
@@ -79,11 +101,15 @@ const Login = () => {
                         type="text"
                         placeholder="Email Address"
                     />
-                    <input ref={password}
-                        className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                        type="password"
-                        placeholder="Password"
-                    />
+                    <div className='flex justify-between items-center text-sm w-full border border-solid border-gray-300 rounded mt-4' >
+                        <input ref={password}
+                            className="text-sm w-full px-4 py-2 "
+                            type={toggle ? ("text") : ("password")}
+                            placeholder="Password"
+                        />
+                        {!toggle ? (<BiHide size={23} className='mx-2 text-gray-400 cursor-pointer' onClick={toggleShowHidePass} />) : (<BiShow size={23} className='mx-2 text-gray-400 cursor-pointer' onClick={toggleShowHidePass} />)}
+
+                    </div>
                     <button className='my-3 px-6 py-1 border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white transition-all rounded-full' onClick={handleButtonClick}>
                         {(isSignInForm) ? "Sign In" : "Sign Up"}
                     </button>
@@ -93,12 +119,12 @@ const Login = () => {
                         <input className="mr-1" type="checkbox" />
                         <span>Remember Me</span>
                     </label>
-                    <a
+                    <Link
                         className="text-[#F4511F] hover:text-[#ba2f05] hover:underline hover:underline-offset-4"
-                        href="#"
+                        href="/login"
                     >
                         Forgot Password?
-                    </a>
+                    </Link>
                 </div>
                 <div>
                     <p className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left hover: cursor-pointer" onClick={toggleSignIn}>{(isSignInForm) ? "New to Achari-Lounge? Sign Up Now!" : "Already Registered? Sign In Now!"}</p>
