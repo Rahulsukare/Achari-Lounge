@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
+import axios from 'axios';
 import { checkValidData } from "../utils/Validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../utils/firebase";
+
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -12,6 +12,7 @@ import { BiHide, BiShow } from "react-icons/bi";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(false);
     const [toggle, setToggle] = useState(false);
@@ -22,7 +23,7 @@ const Login = () => {
         setIsSignInForm(!isSignInForm);
         setErrorMessage(null);
     }
-    const handleButtonClick = () => {
+    const handleButtonClick = async () => {
         //validate the form data
         const msg = checkValidData(email.current.value, password.current.value);
         setErrorMessage(msg);
@@ -35,45 +36,115 @@ const Login = () => {
         //sign In/ Sign Up
         if (isSignInForm === false) {
             // Sign Up Logic
-            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    console.log(user);
-                    console.log('User Registration Successfull')
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setErrorMessage(errorMessage);
-                });
+            try {
+                const signUpData = {
+                    name: name.current.value,
+                    email: email.current.value,
+                    password: password.current.value,
+                    phoneNumber: "7890898989",
+                    address: "Old Mhada Colony, Wardha-442001"
+                };
+
+                let config = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8001/auth/signup',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `${localStorage.getItem('auth')}`,
+                    },
+                    data: signUpData
+                };
+
+                axios.request(config)
+                    .then(response => {
+                        // Handle successful signup response
+                        console.log('User signed up successfully:', response.data);
+                        // Optionally, you can perform any actions upon successful signup
+                    })
+                    .catch(error => {
+                        // Handle signup error
+                        if (error.response) {
+                            console.error('Server responded with an error:', error.response.data);
+                        } else if (error.request) {
+                            console.error('No response received from the server:', error.request);
+                        } else {
+                            console.error('Error setting up the request:', error.message);
+                        }
+                        // Optionally, you can set an error message to display to the user
+                        setErrorMessage('Failed to sign up. Please try again.');
+                    });
+            } catch (error) {
+                console.error(error);
+                alert("Invalid Credentials!");
+            } finally {
+                // setLoading(false);
+                setIsSignInForm(!isSignInForm)
+            }
+
+            {
+                // createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+                //     .then((userCredential) => {
+                //         // Signed up 
+                //         const user = userCredential.user;
+                //         console.log(user);
+                //         console.log('User Registration Successfull')
+                //     })
+                //     .catch((error) => {
+                //         const errorCode = error.code;
+                //         const errorMessage = error.message;
+                //         setErrorMessage(errorMessage);
+                //     });
+            }
         }
         else {
             //Sign In Logic
-            const user = {};
-            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    console.log(user)
-                    const User = {
-                        uid: user.uid,
-                        displayName: user.displayName,
-                        email: user.email,
-                        photoURL: user.photoURL,
-                    }
-                    console.log(User);
-                    console.log("Log In Successfull")
-                    dispatch(addUser(User))
-                    // navigate('/home')
-                    // ...
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setErrorMessage(errorMessage);
+            try {
+                // setLoading(true);
+                const loginData = {
+                    email: email.current.value,
+                    password: password.current.value
+                };
+                const response = await axios.post('http://localhost:8001/auth/login', loginData);
 
-                });
+                alert("Login Successful");
+                localStorage.setItem('auth-token', response.data);
+                // navigate('/?page=ViewAllPosts');
+            } catch (error) {
+                console.error(error);
+                alert("Invalid Credentials!");
+            } finally {
+                // setLoading(false);
+                navigate('/home')
+            }
+
+            {
+
+                // const user = {};
+                // signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                //     .then((userCredential) => {
+                //         // Signed in 
+                //         const user = userCredential.user;
+                //         console.log(user)
+                //         const User = {
+                //             uid: user.uid,
+                //             displayName: user.displayName,
+                //             email: user.email,
+                //             photoURL: user.photoURL,
+                //         }
+                //         console.log(User);
+                //         console.log("Log In Successfull")
+                //         dispatch(addUser(User))
+                //         // navigate('/home')
+                //         // ...
+                //     })
+                //     .catch((error) => {
+                //         const errorCode = error.code;
+                //         const errorMessage = error.message;
+                //         setErrorMessage(errorMessage);
+
+                //     });
+            }
         }
     }
 
