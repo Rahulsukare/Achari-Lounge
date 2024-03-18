@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { BiRestaurant } from "react-icons/bi";
+import { VscAccount } from "react-icons/vsc";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
@@ -81,6 +82,9 @@ const Header = () => {
                         <Link to='/reviews' className="hover:text-brightColor transition-all cursor-pointer">
                             Reviews
                         </Link>
+                        <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer">
+                            <VscAccount size={25}/>
+                        </Link>
                         <Link to ='/login' className =''>
                             <Button title="Login" />
                         </Link>
@@ -114,7 +118,9 @@ const Header = () => {
                     <Link to='/reviews' className=" hover:text-brightColor transition-all cursor-pointer" onClick={closeMenu}>
                         Reviews
                     </Link>
-
+                    <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer">
+                            <VscAccount size={25}/>
+                    </Link>
                     <Button title="login" onClick = {handleLoginClick()}/>
                 </div>
             </div>

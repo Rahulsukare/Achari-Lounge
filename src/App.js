@@ -6,7 +6,7 @@ import Item from './components/Item';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Login from './components/Login';
-
+import Profile from './components/Profile';
 function App() {
 
   return (
@@ -22,6 +22,7 @@ function App() {
           <Route path='/menu' element={<Menu />} />
           <Route path='/item' element={<Item />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/profile' element = {<Profile/>}/>
           <Route path='/login' element={<Login />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>

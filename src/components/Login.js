@@ -16,6 +16,8 @@ const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(false);
     const [toggle, setToggle] = useState(false);
+    const phoneNumber = useRef(null);
+    const address = useRef(null);
     const name = useRef(null);
     const email = useRef(null);
     const password = useRef(null);
@@ -172,6 +174,9 @@ const Login = () => {
                         type="text"
                         placeholder="Email Address"
                     />
+                    {(isSignInForm) ? <></> : <input ref={phoneNumber} className=" mt-4 text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" placeholder = "Ph. Number" type="tel" id="phone" name="phone" pattern="[0-9]{4}-[0-9]{4}-[0-9]{2}"/>}
+                    {(isSignInForm) ? <></> : <input ref={address} className=" mt-4 text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" placeholder = "Address" type="text" id="address" name="address"/>}
+
                     <div className='flex justify-between items-center text-sm w-full border border-solid border-gray-300 rounded mt-4' >
                         <input ref={password}
                             className="text-sm w-full px-4 py-2 "
