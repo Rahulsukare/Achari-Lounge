@@ -16,10 +16,10 @@ const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(false);
     const [toggle, setToggle] = useState(false);
-    const phoneNumber = useRef(null);
-    const address = useRef(null);
     const name = useRef(null);
     const email = useRef(null);
+    const phoneNumber = useRef(null);
+    const address = useRef(null);
     const password = useRef(null);
     const toggleSignIn = () => {
         setIsSignInForm(!isSignInForm);
@@ -43,8 +43,8 @@ const Login = () => {
                     name: name.current.value,
                     email: email.current.value,
                     password: password.current.value,
-                    phoneNumber: "7890898989",
-                    address: "Old Mhada Colony, Wardha-442001"
+                    phoneNumber: phoneNumber.current.value,
+                    address: address.current.value
                 };
 
                 let config = {
@@ -62,6 +62,7 @@ const Login = () => {
                     .then(response => {
                         // Handle successful signup response
                         console.log('User signed up successfully:', response.data);
+                        alert("User signed up successfully");
                         // Optionally, you can perform any actions upon successful signup
                     })
                     .catch(error => {
@@ -107,17 +108,42 @@ const Login = () => {
                     email: email.current.value,
                     password: password.current.value
                 };
-                const response = await axios.post('http://localhost:8001/auth/login', loginData);
+                let config = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8001/auth/login',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `${localStorage.getItem('auth')}`,
+                    },
+                    data: loginData
+                };
+                axios.request(config)
+                    .then(response => {
+                        // Handle successful login response
+                        alert("Login Successful");
+                        localStorage.setItem('auth-token', response.data);
+                        navigate('/home')
+                        // Optionally, you can perform any actions upon successful signup
+                    })
+                    .catch(error => {
+                        // Handle signup error
+                        if (error.response) {
+                            console.error('Server responded with an error:', error.response.data);
+                        } else if (error.request) {
+                            console.error('No response received from the server:', error.request);
+                        } else {
+                            console.error('Error setting up the request:', error.message);
+                        }
+                        // Optionally, you can set an error message to display to the user
+                        setErrorMessage('Failed to sign up. Please try again.');
+                    });
 
-                alert("Login Successful");
-                localStorage.setItem('auth-token', response.data);
-                // navigate('/?page=ViewAllPosts');
             } catch (error) {
                 console.error(error);
                 alert("Invalid Credentials!");
             } finally {
                 // setLoading(false);
-                navigate('/home')
             }
 
             {
@@ -174,8 +200,8 @@ const Login = () => {
                         type="text"
                         placeholder="Email Address"
                     />
-                    {(isSignInForm) ? <></> : <input ref={phoneNumber} className=" mt-4 text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" placeholder = "Ph. Number" type="tel" id="phone" name="phone" pattern="[0-9]{4}-[0-9]{4}-[0-9]{2}"/>}
-                    {(isSignInForm) ? <></> : <input ref={address} className=" mt-4 text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" placeholder = "Address" type="text" id="address" name="address"/>}
+                    {(isSignInForm) ? <></> : <input ref={phoneNumber} className=" mt-4 text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" placeholder="Ph. Number" type="tel" id="phone" name="phone" pattern="[0-9]{4}-[0-9]{4}-[0-9]{2}" />}
+                    {(isSignInForm) ? <></> : <input ref={address} className=" mt-4 text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" placeholder="Address" type="text" id="address" name="address" />}
 
                     <div className='flex justify-between items-center text-sm w-full border border-solid border-gray-300 rounded mt-4' >
                         <input ref={password}
