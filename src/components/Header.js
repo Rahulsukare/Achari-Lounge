@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import { BiShoppingBag, BiUser, BiPowerOff } from "react-icons/bi";
 // import { BiChevronDown } from "react-icons/bi";
@@ -9,7 +10,7 @@ import { AiOutlineClose, AiOutlineMenuUnfold } from "react-icons/ai";
 const Header = (props) => {
 
     const [menu, setMenu] = useState(false);
-    const [itemCount, setItemCount] = useState(0);
+    const [cartItemCount, setCartItemCount] = useState(0);
 
     const handleChange = () => {
         setMenu(!menu);
@@ -22,6 +23,32 @@ const Header = (props) => {
     const handleLogoutClick = () => {
 
     }
+
+    
+
+    useEffect(() => {
+        const fetchCartItemsCount = async () => {
+            try {
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: `http://localhost:8001/auth/getCart`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'auth-token': `${localStorage.getItem('auth-token')}`
+                    },
+                };
+
+                const response = await axios.request(config);
+                setCartItemCount(response.data.totalCartItems)
+               
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+            }
+        };
+
+        fetchCartItemsCount();
+    }, []);
 
     return (
         <div className=" w-full ">
@@ -57,14 +84,14 @@ const Header = (props) => {
 
                         <Link to='/cart' className='relative'>
                             <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
-                                {itemCount || 0}
+                                {cartItemCount || 0}
                             </span>
                             <BiShoppingBag className="" size={30} />
                         </Link>
 
                         <Link to='/login' className=''>
                             <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                                <h1>Logout</h1> <BiPowerOff size={21} />
+                                <h1>Logout</h1> <BiPowerOff size={21} onClick={handleLogoutClick}/>
                             </button>
                         </Link>
                     </nav>
@@ -72,7 +99,7 @@ const Header = (props) => {
                     <div className="md:hidden flex gap-3 items-center">
                         <Link to='/cart' className='relative'>
                             <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
-                                {itemCount || 0}
+                                {cartItemCount || 0}
                             </span>
                             <BiShoppingBag className="" size={30} />
                         </Link>
@@ -110,7 +137,7 @@ const Header = (props) => {
                     </Link>
                     <Link to='/login' className='mx-auto'>
                         <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                            <h1>Logout</h1> <BiPowerOff size={21} />
+                            <h1>Logout</h1> <BiPowerOff size={21} onClick={handleLogoutClick}/>
                         </button>
                     </Link>
                 </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import burgerImg from '../Assets/burger.png'
+// import burgerImg from '../Assets/burger.png'
 
 const DishesCard = (props) => {
     return (
