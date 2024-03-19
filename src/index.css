@@ -16,12 +16,14 @@
       animation-duration: 0.5s; /* Adjust the duration as needed */
       animation-timing-function: ease-in-out; /* Optional: specify timing function */
     }
+    
   }
 @tailwind utilities;
 
 body {
     font-family: 'poppins', sans-serif;
     background-color: #ffffff;
+    text-transform: uppercase;
 }
 
 /* For vertical scrollbar */

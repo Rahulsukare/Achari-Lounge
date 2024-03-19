@@ -3,16 +3,16 @@ import axios from 'axios';
 import { checkValidData } from "../utils/Validate";
 
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+// import { useDispatch } from "react-redux";
+// import { addUser } from "../utils/userSlice";
 import { Link } from "react-router-dom";
 import BrandLogo from '../Assets/RestLogo.png'
 import { BiHide, BiShow } from "react-icons/bi";
 
 const Login = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
+    // const dispatch = useDispatch();
+    // const [loading, setLoading] = useState(false);
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(false);
     const [toggle, setToggle] = useState(false);
