@@ -57,8 +57,8 @@ const Cart = () => {
                                     data.map((item) => (
                                         <tr key={item._id} className="text-center sm:text-left">
                                             <td className="px-4 py-2 w-20 h-20 md:w-28 md:h-28 flex items-center justify-center"><img src={item.image} alt="productImg" className="w-20 sm:w-30" /></td>
-                                            <td className="px-4 py-2">{item.price}</td>
-                                            <td className="px-4 py-2">2</td>
+                                            <td className="px-4 py-2 text-red-600 font-bold">Rs. {item.price}</td>
+                                            <td className="px-4 py-2">1</td>
                                             <td className="px-4 py-2">{item.subtotal}</td>
                                             <td className="px-4 py-2">
                                                 <BiX className=' font-bold text-xl cursor-pointer' />
