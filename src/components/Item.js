@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { BiCart } from 'react-icons/bi';
-import burgerImg from '../Assets/burger.png';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+// import burgerImg from '../Assets/burger.png';
 import ReviewItem from './ReviewItem';
 import Stars from './Stars';
-import { Link } from 'react-router-dom';
+
+import { BiCart } from 'react-icons/bi';
 
 const Item = () => {
   const { name } = useParams();
   const [menuItem, setMenuItem] = useState(null);
 
   useEffect(() => {
+
     const fetchMenuItem = async () => {
-      console.log("Name")
-      console.log(name)
       try {
         const data = await fetch(`http://localhost:8001/menu/getMenuItem/${name}`);
         if (!data.ok) {
@@ -24,55 +24,85 @@ const Item = () => {
         console.log(item)
       } catch (error) {
         console.error(error);
-        // Handle error
       }
     };
     fetchMenuItem();
   }, [name]); // Fetch menu item whenever the name parameter changes
 
+
+  const addToCart = (id) => {
+
+    try {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `http://localhost:8001/auth/addCart/${id}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': `${localStorage.getItem('auth-token')}`
+        },
+      };
+
+      axios.request(config)
+        .then(response => {
+          console.log("Item Added to cart")
+        })
+        .catch(error => {
+          // Handle signup error
+          if (error.response) {
+            console.error('Server responded with an error:', error.response.data);
+          } else if (error.request) {
+            console.error('No response received from the server:', error.request);
+          } else {
+            console.error('Error setting up the request:', error.message);
+          }
+        });
+    } catch (error) {
+
+    }
+
+  }
+
+
   return (
     <>
       {/* Item starts here*/}
-      
-        {menuItem &&
-          menuItem.map(item => (
-            <>
 
+      {menuItem &&
+        menuItem.map(item => (
+          <div key={item._id} className=" bg-white flex flex-wrap pt-14 pb-10 px-12 md:px-20 lg:px-40 md:flex-nowrap animate-fade-in">
+            {/* Image div starts */}
+            <div className="w-full h-fit md:w-5/12 md:h-80 overflow-hidden bg-slate-50">
+              <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={item.image}></img>
+            </div>
+            {/* Image div Ends here */}
 
-              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-12 md:px-20 lg:px-40 md:flex-nowrap animate-fade-in">
-                {/* Image div starts */}
-                <div className="w-full h-fit md:w-5/12 md:h-80 overflow-hidden bg-slate-50">
-                  <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={item.image}></img>
-                </div>
-                {/* Image div Ends here */}
+            {/* Main div starts */}
+            <div className="mt-20 md:ml-20 md:mt-0">
+              <Stars />
+              <h3 className="uppercase font-bold pb-3 text-3xl">{item.name}</h3>
+              <p className="mb-4 text-md font-semibold text-slate-600">{item.description}</p>
+              <span className="font-bold text-2xl text-red-600">Rs. {item.price}</span>
 
-                {/* Main div starts */}
-                <div className="mt-20 md:ml-20 md:mt-0">
-                  <Stars />
-                  <h3 className="uppercase font-bold pb-3 text-3xl">{item.name}</h3>
-                  <p className="mb-4 text-md font-semibold text-slate-600">{item.description}</p>
-                  <span className="font-bold text-2xl text-red-600">Rs. {item.price}</span>
+              <button className='uppercase w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-md flex justify-center gap-2' onClick={() => { addToCart(item._id) }} >
+                <BiCart size={25} />
+                <span>Add to cart</span>
+              </button>
 
-                  <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-md flex justify-center gap-2' >
-                    <BiCart size={25} />
-                    <Link to="/cart">Add to cart</Link>
-                  </button>
+              <h6 className='text-sm mt-9'>
+                GROUND DELIVERY SURCHARGE :
+                <span className=' font-semibold'> Rs. 50</span>
+              </h6>
+              <h6 className=' uppercase text-sm font-semibold'>
+                Categories : {item.category}
+              </h6>
+            </div>
+            {/* Main div ends */}
+          </div >
 
-                  <h6 className='text-sm mt-9'>
-                    GROUND DELIVERY SURCHARGE :
-                    <span className=' font-semibold'> Rs. 50</span>
-                  </h6>
-                  <h6 className=' uppercase text-sm font-semibold'>
-                    Categories : {item.category}
-                  </h6>
-                </div>
-                {/* Main div ends */}
-              </div >
+        ))
+      }
 
-            </>
-          ))
-        }
-      
       {/* Item ends here */}
 
       {/* Bottom Reviews container starts */}
