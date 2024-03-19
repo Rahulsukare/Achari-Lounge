@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 // import { BiRestaurant } from "react-icons/bi";
 import { VscAccount } from "react-icons/vsc";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
-import { BiChevronDown } from "react-icons/bi";
+// import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import Button from './Button';
 
-const Header = () => {
+const Header = (props) => {
 
     const [menu, setMenu] = useState(false);
 
@@ -37,43 +37,9 @@ const Header = () => {
                             Home
                         </Link>
 
-                        {/* <div className="relative group">
-                            <div className=" flex items-center gap-1">
-                                <Link to='/' className="hover:text-brightColor transition-all cursor-pointer">
-                                    Dishes
-                                </Link>
-
-                                <BiChevronDown className="cursor-pointer" size={25} />
-                            </div>
-
-                            <ul className="absolute hidden space-y-2 group-hover:block bg-white border border-gray-300 rounded-lg p-5">
-                                <li>
-                                    <Link to='/' className="text-gray-800 hover:text-brightColor transition-all cursor-pointer">
-                                        Spicy
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to='/' className="text-gray-800 hover:text-brightColor transition-all cursor-pointer">
-                                        Tasty
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to='/' className="text-gray-800 hover:text-brightColor transition-all cursor-pointer">
-                                        Delicious
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to='/' className="text-gray-800 hover:text-brightColor transition-all cursor-pointer">
-                                        Crispy
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div> */}
-
                         <Link to='/menu' className="hover:text-brightColor transition-all cursor-pointer" >
                             Menu
                         </Link>
-
 
                         <Link to='/about' className="hover:text-brightColor transition-all cursor-pointer">
                             About
@@ -82,9 +48,12 @@ const Header = () => {
                         <Link to='/contact' className="hover:text-brightColor transition-all cursor-pointer">
                             Contact
                         </Link>
-                        <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer">
+
+                        <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer flex gap-2">
                             <VscAccount size={25} />
+                            {props.userName}
                         </Link>
+
                         <Link to='/login' className=''>
                             <Button title="Login" />
                         </Link>
@@ -114,8 +83,9 @@ const Header = () => {
                     <Link to='/reviews' className=" hover:text-brightColor transition-all cursor-pointer" onClick={closeMenu}>
                         Contact
                     </Link>
-                    <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer">
+                    <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer flex justify-center gap-2">
                         <VscAccount size={25} />
+                        {props.userName}
                     </Link>
                     <Link to='/login'>
                         <Button title="login" onClick={handleLoginClick()} />

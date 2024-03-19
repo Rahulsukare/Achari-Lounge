@@ -84,21 +84,6 @@ const Login = () => {
                 // setLoading(false);
                 setIsSignInForm(!isSignInForm)
             }
-
-            {
-                // createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-                //     .then((userCredential) => {
-                //         // Signed up 
-                //         const user = userCredential.user;
-                //         console.log(user);
-                //         console.log('User Registration Successfull')
-                //     })
-                //     .catch((error) => {
-                //         const errorCode = error.code;
-                //         const errorMessage = error.message;
-                //         setErrorMessage(errorMessage);
-                //     });
-            }
         }
         else {
             //Sign In Logic
@@ -144,34 +129,6 @@ const Login = () => {
                 alert("Invalid Credentials!");
             } finally {
                 // setLoading(false);
-            }
-
-            {
-
-                // const user = {};
-                // signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-                //     .then((userCredential) => {
-                //         // Signed in 
-                //         const user = userCredential.user;
-                //         console.log(user)
-                //         const User = {
-                //             uid: user.uid,
-                //             displayName: user.displayName,
-                //             email: user.email,
-                //             photoURL: user.photoURL,
-                //         }
-                //         console.log(User);
-                //         console.log("Log In Successfull")
-                //         dispatch(addUser(User))
-                //         // navigate('/home')
-                //         // ...
-                //     })
-                //     .catch((error) => {
-                //         const errorCode = error.code;
-                //         const errorMessage = error.message;
-                //         setErrorMessage(errorMessage);
-
-                //     });
             }
         }
     }

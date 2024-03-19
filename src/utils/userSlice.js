@@ -11,13 +11,6 @@ const userSlice = createSlice({
         addUser: (state, action) => {
             const { name, email , address, phoneNumber  } = action.payload;
             state.user = { name, email , address, phoneNumber  };
-            // const User = {
-            //     id: action.payload.uid,
-            //     name : action.payload.displayName,
-            //     email : action.payload.email,
-            //     profileImage : action.payload.photoURL
-            // }
-            // state.user = User;
         },
         removeUser: (state, action) => {
             state.user = null;
