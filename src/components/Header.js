@@ -69,7 +69,7 @@ const Header = (props) => {
                         </Link>
                     </nav>
 
-                    <div className="md:hidden flex gap-2 items-center">
+                    <div className="md:hidden flex gap-3 items-center">
                         <Link to='/cart' className='relative'>
                             <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
                                 {itemCount || 0}
@@ -82,9 +82,9 @@ const Header = (props) => {
                             </button>
                         </Link> */}
                         {menu ? (
-                            <AiOutlineClose size={25} onClick={handleChange} />
+                            <AiOutlineClose size={30} onClick={handleChange} />
                         ) : (
-                            <AiOutlineMenuUnfold size={25} onClick={handleChange} />
+                            <AiOutlineMenuUnfold size={30} onClick={handleChange} />
                         )}
                     </div>
                 </div>
