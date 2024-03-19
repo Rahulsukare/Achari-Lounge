@@ -1,20 +1,37 @@
-import React from 'react';
-import { BiCart, BiX } from 'react-icons/bi';
+import { React, useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { BiCart, BiX } from 'react-icons/bi';
+import emptyCart from '../Assets/empty-cart (1).png'
 
 const Cart = () => {
-    const data = [
-        {
-            img: 'https://modinatheme.com/html/foodking-html/assets/img/shop-food/s1.png',
-            price: 20,
-            subtotal: 200
-        },
-        {
-            img: 'https://modinatheme.com/html/foodking-html/assets/img/shop-food/s1.png',
-            price: 45,
-            subtotal: 500
-        }
-    ]
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            try {
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: `http://localhost:8001/auth/getCart`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'auth-token': `${localStorage.getItem('auth-token')}`
+                    },
+                };
+
+                const response = await axios.request(config);
+                console.log(response.data.cart);
+                setData(response.data.cart);
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+            }
+        };
+
+        fetchCartItems();
+    }, []);
+
+
     return (
         <>
             <div className="overflow-x-auto mx-auto animate-fade-in">
@@ -35,17 +52,28 @@ const Cart = () => {
                             </tr>
                         </thead>
                         <tbody className='border-b'>
-                            {data.map((item, index) => (
-                                <tr key={index} className="text-center sm:text-left">
-                                    <td className="px-4 py-2 flex items-center justify-center"><img src={item.img} alt="productImg" className="w-20 sm:w-30" /></td>
-                                    <td className="px-4 py-2">{item.price}</td>
-                                    <td className="px-4 py-2">2</td>
-                                    <td className="px-4 py-2">{item.subtotal}</td>
-                                    <td className="px-4 py-2">
-                                        <BiX className=' font-bold text-xl cursor-pointer' />
-                                    </td>
-                                </tr>
-                            ))}
+                            {data ?
+                                (
+                                    data.map((item) => (
+                                        <tr key={item._id} className="text-center sm:text-left">
+                                            <td className="px-4 py-2 w-20 h-20 md:w-28 md:h-28 flex items-center justify-center"><img src={item.image} alt="productImg" className="w-20 sm:w-30" /></td>
+                                            <td className="px-4 py-2">{item.price}</td>
+                                            <td className="px-4 py-2">2</td>
+                                            <td className="px-4 py-2">{item.subtotal}</td>
+                                            <td className="px-4 py-2">
+                                                <BiX className=' font-bold text-xl cursor-pointer' />
+                                            </td>
+                                        </tr>
+                                    ))
+                                )
+                                :
+                                (
+                                    <div className="mx-auto my-10 animate-fade-in">
+                                        <h1 className="text-center text-xl font-bold text-gray-700 mt-20">Your Cart is Empty</h1>
+                                        <img src={emptyCart} className='w-20 mx-auto' alt="Empty cart logo" />
+                                    </div>
+                                )
+                            }
                         </tbody>
                     </table>
 
