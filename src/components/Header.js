@@ -37,7 +37,7 @@ const Header = () => {
                             Home
                         </Link>
 
-                        <div className="relative group">
+                        {/* <div className="relative group">
                             <div className=" flex items-center gap-1">
                                 <Link to='/' className="hover:text-brightColor transition-all cursor-pointer">
                                     Dishes
@@ -68,7 +68,7 @@ const Header = () => {
                                     </Link>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         <Link to='/menu' className="hover:text-brightColor transition-all cursor-pointer" >
                             Menu
@@ -79,13 +79,13 @@ const Header = () => {
                             About
                         </Link>
 
-                        <Link to='/reviews' className="hover:text-brightColor transition-all cursor-pointer">
-                            Reviews
+                        <Link to='/contact' className="hover:text-brightColor transition-all cursor-pointer">
+                            Contact
                         </Link>
                         <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer">
-                            <VscAccount size={25}/>
+                            <VscAccount size={25} />
                         </Link>
-                        <Link to ='/login' className =''>
+                        <Link to='/login' className=''>
                             <Button title="Login" />
                         </Link>
                     </nav>
@@ -105,10 +105,6 @@ const Header = () => {
                     <Link to='/' className="hover:text-brightColor transition-all cursor-pointer" onClick={closeMenu} >
                         Home
                     </Link>
-                    <Link to='/' className="hover:text-brightColor transition-all cursor-pointer" onClick={closeMenu}>
-                        Dishes
-                    </Link>
-
                     <Link to='/menu' className="hover:text-brightColor transition-all cursor-pointer" onClick={closeMenu}>
                         Menu
                     </Link>
@@ -116,12 +112,14 @@ const Header = () => {
                         About
                     </Link>
                     <Link to='/reviews' className=" hover:text-brightColor transition-all cursor-pointer" onClick={closeMenu}>
-                        Reviews
+                        Contact
                     </Link>
                     <Link to='/profile' className="hover:text-brightColor transition-all cursor-pointer">
-                            <VscAccount size={25}/>
+                        <VscAccount size={25} />
                     </Link>
-                    <Button title="login" onClick = {handleLoginClick()}/>
+                    <Link to='/login'>
+                        <Button title="login" onClick={handleLoginClick()} />
+                    </Link>
                 </div>
             </div>
         </div>
