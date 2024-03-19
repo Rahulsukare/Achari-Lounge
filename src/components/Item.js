@@ -39,7 +39,7 @@ const Item = () => {
             <>
 
 
-              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-40 md:flex-nowrap animate-fade-in">
+              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-12 md:flex-nowrap animate-fade-in">
                 {/* Image div starts */}
                 <div className="w-full h-fit md:w-5/12 md:h-80 overflow-hidden bg-slate-50">
                   <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={item.image}></img>
@@ -53,7 +53,7 @@ const Item = () => {
                   <p className="mb-4 text-md font-semibold text-slate-600">{item.description}</p>
                   <span className="font-bold text-2xl text-red-600">Rs. {item.price}</span>
 
-                  <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-full flex justify-center gap-2' >
+                  <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-md flex justify-center gap-2' >
                     <BiCart size={25} />
                     <Link to="/cart">Add to cart</Link>
                   </button>
