@@ -39,7 +39,7 @@ const Item = () => {
             <>
 
 
-              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-12 md:flex-nowrap animate-fade-in">
+              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-12 md:px-20 lg:px-40 md:flex-nowrap animate-fade-in">
                 {/* Image div starts */}
                 <div className="w-full h-fit md:w-5/12 md:h-80 overflow-hidden bg-slate-50">
                   <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={item.image}></img>
