@@ -39,9 +39,9 @@ const Item = () => {
             <>
 
 
-              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-9 md:flex-nowrap animate-fade-in">
+              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-40 md:flex-nowrap animate-fade-in">
                 {/* Image div starts */}
-                <div className=" md:w-5/12 md:min-h-96 w-full overflow-hidden">
+                <div className="w-full h-fit md:w-5/12 md:h-80 overflow-hidden bg-slate-50">
                   <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={item.image}></img>
                 </div>
                 {/* Image div Ends here */}
@@ -49,8 +49,8 @@ const Item = () => {
                 {/* Main div starts */}
                 <div className="mt-20 md:ml-20 md:mt-0">
                   <Stars />
-                  <h3 className="uppercase font-bold pb-3 text-2xl">{item.name}</h3>
-                  <p className="mb-4 text-lg">{item.description}</p>
+                  <h3 className="uppercase font-bold pb-3 text-3xl">{item.name}</h3>
+                  <p className="mb-4 text-md font-semibold text-slate-600">{item.description}</p>
                   <span className="font-bold text-2xl text-red-600">Rs. {item.price}</span>
 
                   <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-full flex justify-center gap-2' >
@@ -79,8 +79,8 @@ const Item = () => {
       <div className=" bg-white mt-9 p-9">
         {/* Tabs */}
         <ul id='tabs' className='flex gap-5 mb-16 overflow-x-auto'>
-          <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-md'>reviews (5)</li>
-          <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-md'>Description</li>
+          <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-md cursor-pointer'>reviews (5)</li>
+          <li className='uppercase bg-slate-200 py-3 px-7 font-bold min-w-fit rounded-md cursor-pointer'>Description</li>
         </ul>
 
         {/* Review item start*/}

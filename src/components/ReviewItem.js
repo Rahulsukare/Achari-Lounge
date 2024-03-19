@@ -15,7 +15,7 @@ const ReviewItem = () => {
                         <h5 className='font-bold text-lg'>MIKLOS SALSA</h5>
                         <Stars/>
                     </div>
-                    <p className=' text-md font-light mt-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quia, at dolor autem et nostrum voluptas doloribus? Magni ab voluptatem quos alias sunt debitis porro.</p>
+                    <p className=' text-md font-medium text-slate-600 mt-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quia, at dolor autem et nostrum voluptas doloribus? Magni ab voluptatem quos alias sunt debitis porro.</p>
                 </div>
 
             </div>
