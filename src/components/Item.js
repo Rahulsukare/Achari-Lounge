@@ -1,42 +1,78 @@
-import { BiCart } from 'react-icons/bi'
-import burgerImg from '../Assets/burger.png'
-
-import ReviewItem from './ReviewItem'
-import Stars from './Stars'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { BiCart } from 'react-icons/bi';
+import burgerImg from '../Assets/burger.png';
+import ReviewItem from './ReviewItem';
+import Stars from './Stars';
+import { Link } from 'react-router-dom';
 
 const Item = () => {
+  const { name } = useParams();
+  const [menuItem, setMenuItem] = useState(null);
+
+  useEffect(() => {
+    const fetchMenuItem = async () => {
+      console.log("Name")
+      console.log(name)
+      try {
+        const data = await fetch(`http://localhost:8001/menu/getMenuItem/${name}`);
+        if (!data.ok) {
+          throw new Error('Failed to fetch menu item');
+        }
+        const item = await data.json();
+        setMenuItem(item); // Update state with fetched menu item
+        console.log(item)
+      } catch (error) {
+        console.error(error);
+        // Handle error
+      }
+    };
+    fetchMenuItem();
+  }, [name]); // Fetch menu item whenever the name parameter changes
+
   return (
     <>
       {/* Item starts here*/}
-      <div className=" bg-white flex flex-wrap pt-14 pb-10 px-9 md:flex-nowrap">
+      
+        {menuItem &&
+          menuItem.map(item => (
+            <>
 
-        {/* Image div starts */}
-        <div className=" md:w-5/12 md:min-h-96 w-full overflow-hidden">
-          <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={burgerImg}></img>
-        </div>
-        {/* Image div Ends here */}
 
-        {/* Main div starts */}
-        <div className="mt-20 md:ml-20 md:mt-0">
-          <Stars />
-          <h3 className="uppercase font-bold pb-3 text-2xl">Whopper burger king</h3>
-          <p className="mb-4 text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt a dolorum?</p>
-          <span className="font-bold text-2xl text-red-600">Rs. 239</span>
+              <div className=" bg-white flex flex-wrap pt-14 pb-10 px-9 md:flex-nowrap animate-fade-in">
+                {/* Image div starts */}
+                <div className=" md:w-5/12 md:min-h-96 w-full overflow-hidden">
+                  <img alt="ecommerce" className="mx-auto max-w-full max-h-full" src={item.image}></img>
+                </div>
+                {/* Image div Ends here */}
 
-          <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-full flex justify-center gap-2' > <BiCart size={25} /><Link to="/cart">Add to cart</Link></button>
+                {/* Main div starts */}
+                <div className="mt-20 md:ml-20 md:mt-0">
+                  <Stars />
+                  <h3 className="uppercase font-bold pb-3 text-2xl">{item.name}</h3>
+                  <p className="mb-4 text-lg">{item.description}</p>
+                  <span className="font-bold text-2xl text-red-600">Rs. {item.price}</span>
 
-          <h6 className='text-sm mt-9'>
-            GROUND DELIVERY SURCHARGE :
-            <span className=' font-semibold'> Rs. 50</span>
-          </h6>
-          <h6 className=' uppercase text-sm font-semibold'>
-            Categories : Burger
-          </h6>
-        </div>
-        {/* Main div ends */}
+                  <button className='uppercase md:w-3/4 w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-full flex justify-center gap-2' >
+                    <BiCart size={25} />
+                    <Link to="/cart">Add to cart</Link>
+                  </button>
 
-      </div>
+                  <h6 className='text-sm mt-9'>
+                    GROUND DELIVERY SURCHARGE :
+                    <span className=' font-semibold'> Rs. 50</span>
+                  </h6>
+                  <h6 className=' uppercase text-sm font-semibold'>
+                    Categories : {item.category}
+                  </h6>
+                </div>
+                {/* Main div ends */}
+              </div >
+
+            </>
+          ))
+        }
+      
       {/* Item ends here */}
 
       {/* Bottom Reviews container starts */}
@@ -55,7 +91,6 @@ const Item = () => {
         <ReviewItem />
         <ReviewItem />
         {/* Review item ends here*/}
-
       </div>
       {/* Bottom Reviews container ends */}
 
@@ -70,18 +105,17 @@ const Item = () => {
         {/* form */}
         <div className='mt-9'>
           <div className='flex gap-5'>
-            <input type="text" name="fname" id="fname" placeholder='FULL NAME' className='my-2 w-full md:w-1/2 p-3 text-gray-700 bg-gray-100'/>
-            <input type="email" name="email" id="email" placeholder='EMAIL ADDRESS' className='my-2 w-full md:w-1/2 p-3 text-gray-700 bg-gray-100'/>
+            <input type="text" name="fname" id="fname" placeholder='FULL NAME' className='my-2 w-full md:w-1/2 p-3 text-gray-700 bg-gray-100' />
+            <input type="email" name="email" id="email" placeholder='EMAIL ADDRESS' className='my-2 w-full md:w-1/2 p-3 text-gray-700 bg-gray-100' />
           </div>
           <textarea name="message" id="message" placeholder='MESSAGE' className='w-full p-3 h-48 my-2 text-gray-700 bg-gray-100'></textarea>
           <button className='uppercase w-fit mt-1 py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600 rounded-lg flex justify-center gap-2' >submit</button>
         </div>
         {/* form end */}
-
       </div>
       {/* Review Form End */}
     </>
-  )
-}
+  );
+};
 
-export default Item
+export default Item;

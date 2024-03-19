@@ -7,6 +7,7 @@ import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Profile from './components/Profile';
+import About from './components/About';
 function App() {
 
   return (
@@ -17,10 +18,10 @@ function App() {
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/about' element={<h1>About US</h1>} />
+          <Route path='/about' element={<About/>} />
           <Route path='/contact' element={<h1>Contact</h1>} />
           <Route path='/menu' element={<Menu />} />
-          <Route path='/item' element={<Item />} />
+          <Route path='/item/:name' element={<Item />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/profile' element = {<Profile/>}/>
           <Route path='/login' element={<Login />} />

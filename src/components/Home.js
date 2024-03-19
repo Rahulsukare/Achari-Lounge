@@ -8,7 +8,7 @@ import Reviews from './Reviews'
 const Home = () => {
     return (
         <>
-            <div className="min-h-screen flex flex-row justify-between item-center lg:px-32 px-5 " style={{
+            <div className="min-h-screen flex flex-row justify-between item-center lg:px-32 px-5 animate-fade-in" style={{
                 backgroundImage: `url(${backgroundImage})`, // Use the imported image dynamically
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -21,7 +21,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <h1 className="text-4xl font-semibold text-center lg:pt-16 pt-24 pb-10">
+            <h1 className="text-4xl font-semibold text-center lg:pt-16 pt-24 pb-10 animate-fade-in">
                 Our Dishes
             </h1>
             <Dishes />

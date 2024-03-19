@@ -17,7 +17,7 @@ const Cart = () => {
     ]
     return (
         <>
-            <div className="overflow-x-auto mx-auto">
+            <div className="overflow-x-auto mx-auto animate-fade-in">
 
                 {/* Heading */}
                 <h1 className=' uppercase font-bold text-6xl mx-auto my-14 w-3/4'>SHOPPING <h1 className='inline text-red-600'>CART</h1>&nbsp;<BiCart className='inline' /></h1>
