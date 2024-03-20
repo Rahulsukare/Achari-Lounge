@@ -34,13 +34,14 @@ const Item = () => {
 
     try {
       let config = {
-        method: 'get',
+        method: 'post',
         maxBodyLength: Infinity,
-        url: `http://localhost:8001/auth/addCart/${id}`,
+        url: `http://localhost:8001/auth/addCart`,
         headers: {
           'Content-Type': 'application/json',
           'auth-token': `${localStorage.getItem('auth-token')}`
         },
+        data:{itemId:id,quantity:1}
       };
 
       axios.request(config)
