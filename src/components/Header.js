@@ -1,12 +1,12 @@
-import React, { useState,useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { BiShoppingBag, BiUser, BiPowerOff } from "react-icons/bi";
 // import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineClose, AiOutlineMenuUnfold } from "react-icons/ai";
 
 const Header = (props) => {
+    const location = useLocation();
     const navigate = useNavigate();
     const [menu, setMenu] = useState(false);
     // const [cartItemCount, setCartItemCount] = useState(0);
@@ -27,6 +27,10 @@ const Header = (props) => {
         
     }
 
+    const isHomeActive = location.pathname === '/';
+    const isMenuActive = location.pathname === '/menu';
+    const isAboutActive = location.pathname === '/about';
+    const isContactActive = location.pathname === '/contact';
     // useEffect(() => {
     //     const fetchCartItemsCount = async () => {
     //         try {
@@ -62,19 +66,19 @@ const Header = (props) => {
                     </div>
 
                     <nav className="hidden md:flex flex-row items-center text-sm text-slate-900 font-semibold gap-8">
-                        <Link to='/' className="hover:text-red-600 transition-all cursor-pointer">
+                        <Link to='/' className={`hover:text-red-600 ${isHomeActive && 'text-red-600'} cursor-pointer`}>
                             Home
                         </Link>
 
-                        <Link to='/menu' className="hover:text-red-600 transition-all cursor-pointer" >
+                        <Link to='/menu' className={`hover:text-red-600 ${isMenuActive && 'text-red-600'} cursor-pointer`} >
                             Menu
                         </Link>
 
-                        <Link to='/about' className="hover:text-red-600 transition-all cursor-pointer">
+                        <Link to='/about' className={`hover:text-red-600 ${isAboutActive && 'text-red-600'} cursor-pointer`}>
                             About
                         </Link>
 
-                        <Link to='/contact' className="hover:text-red-600 transition-all cursor-pointer">
+                        <Link to='/contact' className={`hover:text-red-600 ${isContactActive && 'text-red-600'} cursor-pointer`}>
                             Contact
                         </Link>
 
