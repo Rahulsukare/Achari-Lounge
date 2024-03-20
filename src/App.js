@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
 import Menu from './components/Menu';
@@ -12,57 +12,71 @@ import About from './components/About';
 
 import axios from 'axios';
 
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "./utils/userSlice";
-
 function App() {
-  const dispatch = useDispatch();
-  const name = useSelector(state => state.user?.name);
+
+  const location = useLocation();
+  const [name, setName] = useState('');
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
+
     const fetchUser = async () => {
       try {
-        let config = {
-          method: 'get',
-          maxBodyLength: Infinity,
-          url: 'http://localhost:8001/auth/getUser',
-          headers: {
-            'Content-Type': 'application/json',
-            'auth-token': `${localStorage.getItem('auth-token')}`,
-          }
-        };
-        axios.request(config)
-          .then(response => {
-            dispatch(addUser(response.data));
-          })
-          .catch(error => {
-            console.log(error)
-          });
+        if (localStorage.getItem("auth-token")) {
+          let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:8001/auth/getUser',
+            headers: {
+              'Content-Type': 'application/json',
+              'auth-token': `${localStorage.getItem('auth-token')}`,
+            }
+          };
+          axios.request(config)
+            .then(response => {
+              const fullName = response.data.name;
+              const firstName = fullName.split(" ")[0];
+              setName(firstName)
+              setCartItemCount(response.data.cart.length)
+              console.log(response.data.name)
+              console.log(response.data.cart.length)
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        }
       } catch (error) {
         console.error(error);
       }
     }
 
     fetchUser();
-  }, [dispatch]);
+  });
+
+  // Check if current route is login page
+  const isLoginPage = location.pathname === '/login';
 
   return (
     <div className="App">
-      <Header userName={name || "UserName"} />
-      <main>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/contact' element={<h1>Contact</h1>} />
-          <Route path='/menu' element={<Menu />} />
-          <Route path='/item/:name' element={<Item />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='*' element={<Navigate to='/' />} />
-        </Routes>
-      </main>
-      <Footer />
+      {!(localStorage.getItem('auth-token')) ? (<><Login /></>) : (<>
+
+        {/* Conditionally render Header based on whether user is on login page */}
+        {!isLoginPage && <Header userName={name || "UserName"} cartItemCount={cartItemCount || 0} />}
+        <main>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/contact' element={<h1>Contact</h1>} />
+            <Route path='/menu' element={<Menu />} />
+            <Route path='/item/:name' element={<Item />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='*' element={<Navigate to='/' />} />
+          </Routes>
+        </main>
+        {!isLoginPage && <Footer />}
+      </>)}
     </div>
   );
 }

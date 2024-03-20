@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // import burgerImg from '../Assets/burger.png';
 import ReviewItem from './ReviewItem';
@@ -8,6 +8,7 @@ import Stars from './Stars';
 import { BiCart } from 'react-icons/bi';
 
 const Item = () => {
+  const navigate = useNavigate();
   const { name } = useParams();
   const [menuItem, setMenuItem] = useState(null);
 
@@ -47,6 +48,7 @@ const Item = () => {
       axios.request(config)
         .then(response => {
           console.log("Item Added to cart")
+          navigate(`/item/${name}`)
         })
         .catch(error => {
           // Handle signup error

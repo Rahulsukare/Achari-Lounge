@@ -1,10 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { BiCart, BiX } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
 const Cart = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [update, setUpdate] = useState(true);
 
@@ -66,6 +67,8 @@ const Cart = () => {
             const response = await axios(config);
             console.log(response.data);
             console.log("Item Removed Successfully");
+            navigate('/cart');
+            setUpdate(!update)
 
         } catch (error) {
             console.error('Error removing cart items:', error);
@@ -79,7 +82,7 @@ const Cart = () => {
             <div className="overflow-x-auto mx-auto animate-fade-in">
 
                 {/* Heading */}
-                <h1 className=' uppercase font-bold text-6xl mx-auto my-14 w-3/4'>SHOPPING <h1 className='inline text-red-600'>CART</h1>&nbsp;<BiCart className='inline' /></h1>
+                <p className='uppercase font-bold text-6xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
 
                 {/* Cart items */}
                 <div className=" overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">
@@ -110,10 +113,10 @@ const Cart = () => {
                                 )
                                 :
                                 (
-                                    <tr className="mx-auto my-10 animate-fade-in">
+                                    <tr className="animate-fade-in">
                                         <td>
-                                            <h1 className="text-center text-xl font-bold text-gray-700 mt-20">Your Cart is Empty</h1>
-                                            <img src={emptyCart} className='w-20 mx-auto' alt="Empty cart logo" />
+                                            <p className="text-center text-xl font-bold text-gray-700 mt-10">Your Cart is Empty</p>
+                                            <img src={emptyCart} className='w-20 mx-auto mb-10' alt="Empty cart logo" />
                                         </td>
                                     </tr>
                                 )

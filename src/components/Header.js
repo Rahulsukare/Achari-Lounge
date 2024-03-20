@@ -1,16 +1,15 @@
 import React, { useState,useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { BiShoppingBag, BiUser, BiPowerOff } from "react-icons/bi";
 // import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineClose, AiOutlineMenuUnfold } from "react-icons/ai";
-// import Button from './Button';
 
 const Header = (props) => {
-
+    const navigate = useNavigate();
     const [menu, setMenu] = useState(false);
-    const [cartItemCount, setCartItemCount] = useState(0);
+    // const [cartItemCount, setCartItemCount] = useState(0);
 
     const handleChange = () => {
         setMenu(!menu);
@@ -21,34 +20,36 @@ const Header = (props) => {
     };
 
     const handleLogoutClick = () => {
-
+        console.log("LOGOUT START")
+        localStorage.removeItem("auth-token");
+        navigate('/login')
+        console.log("LOGOUT END")
+        
     }
 
-    
+    // useEffect(() => {
+    //     const fetchCartItemsCount = async () => {
+    //         try {
+    //             let config = {
+    //                 method: 'get',
+    //                 maxBodyLength: Infinity,
+    //                 url: `http://localhost:8001/auth/getCart`,
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'auth-token': `${localStorage.getItem('auth-token')}`
+    //                 },
+    //             };
 
-    useEffect(() => {
-        const fetchCartItemsCount = async () => {
-            try {
-                let config = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: `http://localhost:8001/auth/getCart`,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'auth-token': `${localStorage.getItem('auth-token')}`
-                    },
-                };
-
-                const response = await axios.request(config);
-                setCartItemCount(response.data.totalCartItems)
+    //             const response = await axios.request(config);
+    //             setCartItemCount(response.data.totalCartItems)
                
-            } catch (error) {
-                console.error('Error fetching cart items:', error);
-            }
-        };
+    //         } catch (error) {
+    //             console.error('Error fetching cart items:', error);
+    //         }
+    //     };
 
-        fetchCartItemsCount();
-    }, []);
+    //     fetchCartItemsCount();
+    // },[]);
 
     return (
         <div className=" w-full ">
@@ -57,7 +58,7 @@ const Header = (props) => {
 
                     <div className=" flex flex-row items-center cursor-pointer">
                         {/* <img className="w-24 rounded-full" src="../Assets/RestLogo.png" alt="" /> */}
-                        <h1 className="text-lg lg:text-xl font-semibold text-nowrap overflow-hidden">Food Restro</h1>
+                        <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden">FoodRestro</h1>
                     </div>
 
                     <nav className="hidden md:flex flex-row items-center text-sm text-slate-900 font-semibold gap-8">
@@ -84,22 +85,22 @@ const Header = (props) => {
 
                         <Link to='/cart' className='relative'>
                             <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
-                                {cartItemCount || 0}
+                                {props.cartItemCount || 0}
                             </span>
                             <BiShoppingBag className="" size={30} />
                         </Link>
 
-                        <Link to='/login' className=''>
-                            <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                                <h1>Logout</h1> <BiPowerOff size={21} onClick={handleLogoutClick}/>
+                        {/* <Link to='/login' className=''> */}
+                            <button onClick={()=>{handleLogoutClick()}} className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
+                                <h1>Logout</h1> <BiPowerOff size={21} />
                             </button>
-                        </Link>
+                        {/* </Link> */}
                     </nav>
 
                     <div className="md:hidden flex gap-3 items-center">
                         <Link to='/cart' className='relative'>
                             <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
-                                {cartItemCount || 0}
+                                {props.cartItemCount || 0}
                             </span>
                             <BiShoppingBag className="" size={30} />
                         </Link>
@@ -135,11 +136,11 @@ const Header = (props) => {
                         <BiUser size={20} />
                         {props.userName}
                     </Link>
-                    <Link to='/login' className='mx-auto'>
-                        <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                            <h1>Logout</h1> <BiPowerOff size={21} onClick={handleLogoutClick}/>
+                    {/* <Link to='/login' className='mx-auto'> */}
+                        <button onClick={handleLogoutClick} className='uppercase w-fit mx-auto my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
+                            <h1>Logout</h1> <BiPowerOff size={21} />
                         </button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ import { BiHide, BiShow } from "react-icons/bi";
 const Login = () => {
     const navigate = useNavigate();
     // const dispatch = useDispatch();
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(false);
     const [toggle, setToggle] = useState(false);
@@ -26,15 +26,15 @@ const Login = () => {
         setErrorMessage(null);
     }
     const handleButtonClick = async () => {
+        setLoading(true)
         //validate the form data
         const msg = checkValidData(email.current.value, password.current.value);
         setErrorMessage(msg);
-        console.log(email.current.value);
-        console.log(password.current.value);
-        console.log(msg);
 
-        if (msg)
+        if (msg) {
+            setLoading(false)
             return;
+        }
         //sign In/ Sign Up
         if (isSignInForm === false) {
             // Sign Up Logic
@@ -63,6 +63,7 @@ const Login = () => {
                         // Handle successful signup response
                         console.log('User signed up successfully:', response.data);
                         alert("User signed up successfully");
+                        setLoading(false)
                         // Optionally, you can perform any actions upon successful signup
                     })
                     .catch(error => {
@@ -76,12 +77,15 @@ const Login = () => {
                         }
                         // Optionally, you can set an error message to display to the user
                         setErrorMessage('Failed to sign up. Please try again.');
+                        setLoading(false)
                     });
             } catch (error) {
                 console.error(error);
                 alert("Invalid Credentials!");
+                setLoading(false)
             } finally {
                 // setLoading(false);
+                setLoading(false)
                 setIsSignInForm(!isSignInForm)
             }
         }
@@ -109,6 +113,7 @@ const Login = () => {
                         alert("Login Successful");
                         localStorage.setItem('auth-token', response.data);
                         navigate('/home')
+                        setLoading(false)
                         // Optionally, you can perform any actions upon successful signup
                     })
                     .catch(error => {
@@ -122,15 +127,16 @@ const Login = () => {
                         }
                         // Optionally, you can set an error message to display to the user
                         setErrorMessage('Failed to sign up. Please try again.');
+                        setLoading(false)
                     });
 
             } catch (error) {
                 console.error(error);
                 alert("Invalid Credentials!");
-            } finally {
-                // setLoading(false);
-            }
+                setLoading(false)
+            } 
         }
+        
     }
 
     const toggleShowHidePass = () => {
@@ -147,7 +153,7 @@ const Login = () => {
             </div>
             <div className="md:w-1/3 max-w-sm">
                 <div className="text-[#F4511F] my-5 text-center font-bold text-3xl md:text-left">
-                    {(isSignInForm) ? "Sign In" : "Sign Up"}
+                    {(isSignInForm) ? "Login" : "Sign Up"}
                 </div>
                 <form action="" onSubmit={(e) => e.preventDefault()} className=''>
                     {(!errorMessage) ? "" : <p className='font-semibold text-red-600 py-3'>{errorMessage}</p>}
@@ -169,8 +175,8 @@ const Login = () => {
                         {!toggle ? (<BiHide size={23} className='mx-2 text-gray-400 cursor-pointer' onClick={toggleShowHidePass} />) : (<BiShow size={23} className='mx-2 text-gray-400 cursor-pointer' onClick={toggleShowHidePass} />)}
 
                     </div>
-                    <button className='my-3 px-6 py-1 border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white transition-all rounded-full' onClick={handleButtonClick}>
-                        {(isSignInForm) ? "Sign In" : "Sign Up"}
+                    <button className='uppercase my-3 px-10 py-3 text-sm rounded-md bg-green-600 text-white hover:bg-green-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' onClick={handleButtonClick}>
+                        {(loading) ? ("Loading") : (<>{(isSignInForm) ? "Login" : "Sign Up"}</>)}
                     </button>
                 </form>
                 <div className="mt-4 flex justify-between font-semibold text-sm">

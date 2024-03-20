@@ -5,7 +5,7 @@ const loadingSlice = createSlice({
   initialState: false,
   reducers: {
     setLoading(state, action) {
-      return action.payload;
+      state = action.payload;
     },
   },
 });
