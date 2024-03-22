@@ -91,29 +91,30 @@ const Menu = () => {
         <>
             {loading ? (<><Loading /></>) : (
 
-                <div className="flex flex-wrap md:flex-nowrap pt-9 animate-fade-in">
+                <div className="flex flex-wrap md:flex-nowrap pt-9 bg-zinc-100 animate-fade-in">
 
                     {/* Left Categories Box */}
-                    <button className="md:hidden w-full mx-9 mt-10 px-6 py-1 border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white transition-all rounded-full" onClick={handleCategories}>Categories {handleCat ? (<BiChevronRight className="inline" size={25} />) : (<BiChevronDown className="inline" size={25} />)}</button>
+                    <button className="md:hidden w-full mx-9 mt-5 px-6 py-3 bg-green-600 text-white hover:bg-green-600 transition-all rounded-md" onClick={handleCategories}>Categories {handleCat ? (<BiChevronRight className="inline" size={25} />) : (<BiChevronDown className="inline" size={25} />)}</button>
 
                     {/* Sidebar */}
-                    <div className={`${handleCat && 'hidden'} mx-9 w-full md:w-1/5 lg:w-1/4 ml-9 mt-9 border-slate-300 border p-9 md:block animate-fade-in`}>
-                        <h1 className=" text-2xl mb-4">CATEGORIES</h1>
-                        <h3 className="inline cursor-pointer" onClick={()=>{setFlag(true)}}>
-                            <BiChevronRight className="cursor-pointer inline text-red-600" size={25} />All
-                            <span className=" text-sm text-slate-500">({totalCategories})</span>
+                    <div className={`${handleCat && 'hidden'} mx-9 w-full md:w-fit ml-9 mt-9 md:border-none border-slate-300 border p-9 md:block animate-fade-in`}>
+                        <h2 className="text-xl mb-4 pl-2 py-0 font-semibold border-l border-l-green-600">CATEGORIES</h2>
+                        <h3 className="text-sm my-3 inline cursor-pointer font-medium text-gray-700 text-nowrap hover:text-red-600" onClick={()=>{setFlag(true)}}>
+                            {/* <BiChevronRight className="cursor-pointer inline text-red-600" size={25} /> */}
+                            All
+                            <span className=" text-sm ">({totalCategories})</span>
                         </h3>
 
                         {categories.map(category => (
-                            <h3 className=" cursor-pointer" key={category._id} onClick={() => getMenuItemByCategory(category.name)}>
-                                <BiChevronRight className="cursor-pointer inline text-red-600" size={25} />
+                            <h3 className="text-sm my-3 cursor-pointer font-medium text-gray-700 text-nowrap hover:text-red-600" key={category._id} onClick={() => getMenuItemByCategory(category.name)}>
+                                {/* <BiChevronRight className="cursor-pointer inline text-red-600" size={25} /> */}
                                 {category.name}<span className=" text-sm text-slate-500"> ({category.totalItems})</span>
                             </h3>
                         ))}
                     </div>
 
                     {/* right box contains MENU-ITEM */}
-                    <div className="w-full mt-9 px-9 animate-fade-in">
+                    <div className="w-full my-10 md:mt-9 md:mx-12 px-9 py-9 bg-white animate-fade-in">
                         {/* Heading */}
                         <div className="flex justify-between items-center flex-wrap">
                             <h2 className="text-neutral-600 my-1">  " Showing all <strong>{flag ? (totalMenuItems) : (totalMenuItemsByCategory)}</strong> results "</h2>

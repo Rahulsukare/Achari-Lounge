@@ -11,6 +11,9 @@ const Item = () => {
   const navigate = useNavigate();
   const { name } = useParams();
   const [menuItem, setMenuItem] = useState(null);
+  const [leftItem, setLeftItem] = useState(0);
+
+  const [numberOfCartItem, setNumberOfCartItem] = useState(1);
 
   useEffect(() => {
 
@@ -22,7 +25,9 @@ const Item = () => {
         }
         const item = await data.json();
         setMenuItem(item); // Update state with fetched menu item
+        setLeftItem(item.quantity)
         console.log(item)
+        console.log(item.quantity)
       } catch (error) {
         console.error(error);
       }
@@ -42,7 +47,7 @@ const Item = () => {
           'Content-Type': 'application/json',
           'auth-token': `${localStorage.getItem('auth-token')}`
         },
-        data:{itemId:id,quantity:1}
+        data: { itemId: id, quantity: numberOfCartItem }
       };
 
       axios.request(config)
@@ -83,14 +88,32 @@ const Item = () => {
             {/* Main div starts */}
             <div className="mt-20 md:ml-20 md:mt-0">
               <Stars />
-              <h3 className="uppercase font-bold pb-3 text-3xl">{item.name}</h3>
-              <p className="mb-4 text-md font-semibold text-slate-600">{item.description}</p>
-              <span className="font-bold text-2xl text-red-600">Rs. {item.price}</span>
+              <h3 className="uppercase font-bold pb-3 text-3xl tracking-wider">{item.name}</h3>
+              <p className="mb-4 text-sm font-semibold text-slate-600">{item.description}</p>
+              <span className="font-bold text-lg text-red-600">Rs. {item.price}</span>
 
-              <button className='uppercase w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 rounded-md flex justify-center gap-2' onClick={() => { addToCart(item._id) }} >
+              <div className='flex items-center gap-6'>
+                <div className=' font-semibold text-gray-900 text-sm'>Quantity : </div>
+                <div className="flex items-center w-fit rounded-md gap-8 border-black border">
+                  <button className={`px-5 py-3 font-semibold focus:outline-none rounded-md hover:bg-slate-100 ${numberOfCartItem === 0 && 'opacity-50 cursor-not-allowed'}`} onClick={() => setNumberOfCartItem(Math.max(numberOfCartItem - 1, 0))} disabled={numberOfCartItem === 0}> - </button>
+                  <div className=' text-gray-700 font-semibold'>
+                    {numberOfCartItem}
+                  </div>
+                  <button className="px-5 py-3 font-semibold focus:outline-none rounded-md hover:bg-slate-100" onClick={() => { setNumberOfCartItem(numberOfCartItem + 1) }}> + </button>
+                </div>
+              </div>
+
+
+
+              <button
+                className={`uppercase w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 flex justify-center gap-2 ${numberOfCartItem === 0 && 'opacity-50 cursor-not-allowed'}`}
+                onClick={() => { addToCart(item._id) }}
+                disabled={numberOfCartItem === 0}
+              >
                 <BiCart size={25} />
                 <span>Add to cart</span>
               </button>
+              <div className='font-medium text-sm text-gray-700 my-2'>Only <strong>"{item.quantity}"</strong> item left Hurry!</div>
 
               <h6 className='text-sm mt-9'>
                 GROUND DELIVERY SURCHARGE :
