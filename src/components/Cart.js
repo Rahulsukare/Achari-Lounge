@@ -215,7 +215,7 @@ const Cart = () => {
             <div className="overflow-x-auto mx-auto animate-fade-in">
 
                 {/* Heading */}
-                <p className='uppercase font-bold text-6xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
+                <p className='uppercase font-bold text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
 
                 {/* Cart items */}
                 <div className=" overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">

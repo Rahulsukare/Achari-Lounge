@@ -11,7 +11,7 @@ const Item = () => {
   const navigate = useNavigate();
   const { name } = useParams();
   const [menuItem, setMenuItem] = useState(null);
-  const [leftItem, setLeftItem] = useState(0);
+  // const [leftItem, setLeftItem] = useState(0);
 
   const [numberOfCartItem, setNumberOfCartItem] = useState(1);
 
@@ -25,9 +25,9 @@ const Item = () => {
         }
         const item = await data.json();
         setMenuItem(item); // Update state with fetched menu item
-        setLeftItem(item.quantity)
-        console.log(item)
-        console.log(item.quantity)
+        // setLeftItem(item.quantity)
+        // console.log(item)
+        // console.log(item.quantity)
       } catch (error) {
         console.error(error);
       }
@@ -86,11 +86,11 @@ const Item = () => {
             {/* Image div Ends here */}
 
             {/* Main div starts */}
-            <div className="mt-20 md:ml-20 md:mt-0">
+            <div className="w-full md:w-1/2 mt-20 md:ml-20 md:mt-0">
               <Stars />
               <h3 className="uppercase font-bold pb-3 text-3xl tracking-wider">{item.name}</h3>
-              <p className="mb-4 text-sm font-semibold text-slate-600">{item.description}</p>
-              <span className="font-bold text-lg text-red-600">Rs. {item.price}</span>
+              <p className="mb-4 text-sm font-semibold text-slate-600">{item.description} </p>
+              <div className="mt-20 font-bold text-lg text-red-600">Rs. {item.price}</div>
 
               <div className='flex items-center gap-6'>
                 <div className=' font-semibold text-gray-900 text-sm'>Quantity : </div>
@@ -106,7 +106,7 @@ const Item = () => {
 
 
               <button
-                className={`uppercase w-full mt-3 py-3 text-lg bg-green-600 text-white hover:bg-red-600 flex justify-center gap-2 ${numberOfCartItem === 0 && 'opacity-50 cursor-not-allowed'}`}
+                className={`uppercase w-full md:w-96 mt-3 py-3 text-lg rounded-sm bg-green-600 text-white hover:bg-red-600 flex justify-center gap-2 ${numberOfCartItem === 0 && 'opacity-50 cursor-not-allowed'}`}
                 onClick={() => { addToCart(item._id) }}
                 disabled={numberOfCartItem === 0}
               >
@@ -115,11 +115,15 @@ const Item = () => {
               </button>
               <div className='font-medium text-sm text-gray-700 my-2'>Only <strong>"{item.quantity}"</strong> item left Hurry!</div>
 
-              <h6 className='text-sm mt-9'>
+              <h6 className='text-sm mt-9 text-zinc-900'>
                 GROUND DELIVERY SURCHARGE :
                 <span className=' font-semibold'> Rs. 50</span>
               </h6>
-              <h6 className=' uppercase text-sm font-semibold'>
+              <h6 className='text-sm text-zinc-900'>
+                <span className=' font-semibold'>FREE DELIVERY </span>
+                 ON ORDER OVER Rs. 500
+              </h6>
+              <h6 className=' uppercase text-sm font-semibold text-zinc-900'>
                 Categories : {item.category}
               </h6>
             </div>
