@@ -8,6 +8,7 @@ const Cart = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [update, setUpdate] = useState(true);
+    const [checkout, setCheckOut] = useState(false);
     const [cartTotal, setCartTotal] = useState(0);
     const [deliveryCharges, setDeliveryCharges] = useState(0);
     const [platformFees, setPlatformFees] = useState(0);
@@ -63,7 +64,7 @@ const Cart = () => {
                         'auth-token': localStorage.getItem('auth-token')
                     }
                 };
-        
+
                 const response = await axios(config);
                 setCartTotal(response.data.cartTotal);
                 setPlatformFees(response.data.platformFees)
@@ -77,7 +78,7 @@ const Cart = () => {
 
         fetchCartItems();
         fetchCartTotal();
-        
+
     }, [update]);
 
     const fetchCartTotal = async () => {
@@ -90,7 +91,7 @@ const Cart = () => {
                     'auth-token': localStorage.getItem('auth-token')
                 }
             };
-    
+
             const response = await axios(config);
             setCartTotal(response.data.cartTotal);
             setPlatformFees(response.data.platformFees)
@@ -102,7 +103,7 @@ const Cart = () => {
         }
     };
 
-    const handleIncrement = async (id) =>{
+    const handleIncrement = async (id) => {
         try {
             let config = {
                 method: 'post',
@@ -114,8 +115,8 @@ const Cart = () => {
             };
 
             const response = await axios(config);
-             // Check if response data contains cart items
-             if (response.data && response.data.cart) {
+            // Check if response data contains cart items
+            if (response.data && response.data.cart) {
                 // Extract cart items and total cart items from response data
                 const { cart } = response.data;
 
@@ -143,7 +144,7 @@ const Cart = () => {
             console.error('Error removing cart items:', error);
         }
     }
-    const handleDecrement = async (id) =>{
+    const handleDecrement = async (id) => {
         try {
             let config = {
                 method: 'post',
@@ -155,8 +156,8 @@ const Cart = () => {
             };
 
             const response = await axios(config);
-             // Check if response data contains cart items
-             if (response.data && response.data.cart) {
+            // Check if response data contains cart items
+            if (response.data && response.data.cart) {
                 // Extract cart items and total cart items from response data
                 const { cart } = response.data;
 
@@ -212,7 +213,7 @@ const Cart = () => {
 
     return (
         <>
-            <div className="overflow-x-auto mx-auto animate-fade-in">
+            <div className={`overflow-x-auto mx-auto animate-fade-in ${!checkout ? "hidden" : ""}`}>
 
                 {/* Heading */}
                 <p className='uppercase font-bold text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
@@ -238,11 +239,11 @@ const Cart = () => {
                                             <td className="px-4 py-2 text-red-600 font-bold text-nowrap">Rs. {item.price}</td>
                                             <td className="px-4 py-2 ">
                                                 <div className="flex items-center bg-slate-100 w-fit rounded-md gap-3">
-                                                    <button className={`px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300 ${item.quantity === 1 && 'opacity-50 cursor-not-allowed'}`} onClick={()=>{handleDecrement(item.menuId)}}>-</button>
+                                                    <button className={`px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300 ${item.quantity === 1 && 'opacity-50 cursor-not-allowed'}`} onClick={() => { handleDecrement(item.menuId) }}>-</button>
                                                     <div className=' text-gray-700 font-semibold'>
                                                         {item.quantity}
                                                     </div>
-                                                    <button className="px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300" onClick={()=>{handleIncrement(item.menuId)}}>+</button>
+                                                    <button className="px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300" onClick={() => { handleIncrement(item.menuId) }}>+</button>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-2 font-semibold text-gray-600">{item.subtotal}</td>
@@ -297,6 +298,120 @@ const Cart = () => {
                 </div>}
 
             </div>
+
+            {
+                !checkout
+                &&
+                <div className='overflow-x-auto p-9 animate-fade-in'>
+                    {/* Heading */}
+                    <p className='uppercase font-bold text-2xl md:text-4xl my-14 w-3/4'>Checkout</p>
+
+                    <div className='flex flex-col md:flex-row gap-10 p-5 border rounded-md bg-zinc-50'>
+                        <div className='flex flex-col gap-5 w-full md:w-1/2 p-2 rounded-md'>
+
+                            <div className='font-medium text-sm md:text-md text-zinc-700'>CONTACT INFORMATION</div>
+                            <input type="tel" name="email" id="email" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white' />
+
+                            <hr />
+
+                            <div className='font-medium text-sm md:text-md text-zinc-700'>SHIPPING INFORMATION</div>
+                            <input type="text" name="name" id="name" placeholder='FULL NAME' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white' />
+                            <input type="text" name="address" id="address" placeholder='DELIVERY ADDRESS' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white' />
+
+                            <hr />
+
+                            <div className='font-medium text-sm md:text-md text-zinc-700'>Payment Method</div>
+
+                            <label className="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="card"
+                                    className="form-radio h-4 w-4 text-green-500"
+                                />
+                                <span className="ml-2 text-sm font-base text-zinc-500">Pay with Card</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="cash"
+                                    className="form-radio h-4 w-4 text-green-500"
+                                />
+                                <span className="ml-2 text-sm font-base text-zinc-500">Cash on Delivery</span>
+                            </label>
+
+                        </div>
+
+                        <div className='flex flex-col gap-2 w-full md:w-1/2 border-zinc-400 border p-4 md:p-8 rounded-md bg-white'>
+                            <div className='font-medium text-zinc-900 mb-4'>Order Summary</div>
+                            {data.map((item) => (
+                                <div key={item._id} className='border-b pb-2 md:pb-3 my-1'>
+
+
+                                    <div className='flex flex-row relative'>
+                                        <BiX className=' font-bold text-xl cursor-pointer absolute right-0 top-0' onClick={() => { removeCartItem(item.menuId) }} />
+
+                                        <div className='w-24 h-24 sm:w-24 md:h-24'>
+                                            <img className='object-cover w-full h-full' src={item.image} alt="" />
+                                        </div>
+
+                                        <div className='w-fit mx-3 sm:mx-10 p-1 flex flex-col justify-between'>
+                                            <div>
+                                                <div className='font-semibold text-md text-zinc-800'>{item.name}</div>
+                                                <div className='font-medium text-sm text-zinc-800'>RS. {item.price}</div>
+                                            </div>
+
+                                            <div className="flex items-center text-sm bg-slate-100 w-fit rounded-md gap-2">
+                                                <button className={`px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300 ${item.quantity === 1 && 'opacity-50 cursor-not-allowed'}`} onClick={() => { handleDecrement(item.menuId) }}>-</button>
+                                                <div className=' text-gray-700 font-semibold'>
+                                                    {item.quantity}
+                                                </div>
+                                                <button className="px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300" onClick={() => { handleIncrement(item.menuId) }}>+</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            ))}
+
+                            {data.length !== 0
+                                &&
+                                <>
+
+                                    <div className="flex justify-between mb-2 mt-5 text-zinc-700 text-sm md:text-md">
+                                        <span>Cart Subtotal :</span>
+                                        <span className='font-medium'>Rs. {cartTotal}</span>
+                                    </div>
+                                    <div className="flex justify-between mb-2 text-zinc-700 text-sm md:text-md">
+                                        <span>platform fees :</span>
+                                        <span className='font-medium'>Rs. {platformFees}</span>
+                                    </div>
+                                    <div className="flex justify-between mb-2 text-zinc-700 text-sm md:text-md">
+                                        <span>Delivery :</span>
+                                        <span className='font-medium'>Rs. {deliveryCharges}</span>
+                                    </div>
+                                    <div className="flex justify-between border-t border-b border-gray-300 py-3 mb-6 mt-3 text-gray-700 text-md">
+                                        <span className="font-semibold">Total:</span>
+                                        <span className="font-semibold">Rs. {finalTotal}</span>
+                                    </div>
+                                    <div className='flex justify-end mt-4 md:mt-10'>
+                                        <button className='uppercase w-full py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' >Order Now</button>
+                                    </div>
+                                </>
+                            }
+
+                        </div>
+                    </div>
+
+                    {/* <button className='uppercase w-fit mt-1 py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600 rounded-lg flex justify-center gap-2' >submit</button> */}
+                    {/* form end */}
+
+
+
+                </div>
+            }
 
         </>
     )
