@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BiCart, BiX } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
-const Cart = () => {
+const Cart = (props) => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [update, setUpdate] = useState(true);
@@ -13,6 +13,16 @@ const Cart = () => {
     const [deliveryCharges, setDeliveryCharges] = useState(0);
     const [platformFees, setPlatformFees] = useState(0);
     const [finalTotal, setFinalTotal] = useState(0);
+
+    const [paymentMethod, setpaymentMethod] = useState('card');
+    const [name, setname] = useState(props.userName || ''); // Initialize with props or empty string
+    const [phoneNumber, setphoneNumber] = useState(props.phoneNumber || ''); // Initialize with props or empty string
+    const [address, setaddress] = useState(props.address || ''); // Initialize with props or empty string
+
+    // Validation states
+    const [nameError, setNameError] = useState('');
+    const [phoneNumberError, setPhoneNumberError] = useState('');
+    const [addressError, setAddressError] = useState('');
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -210,13 +220,94 @@ const Cart = () => {
 
     }
 
+    // Function to handle form submission
+    const handleFormSubmit = () => {
+        // Clear previous errors
+        setNameError('');
+        setPhoneNumberError('');
+        setAddressError('');
+
+        // Validate name
+        const nameParts = name.trim().split(' ');
+        if (nameParts.length !== 2) {
+            setNameError('Please enter your first name and last name');
+            return;
+        }
+
+        // Validate phone number
+        const phoneRegex = /^[7-9]\d{9}$/;
+        if (!phoneNumber.match(phoneRegex)) {
+            setPhoneNumberError('Please enter a valid phone number');
+            return;
+        }
+
+        // Validate address
+        const lowerCaseAddress = address.toLowerCase();
+        if (!lowerCaseAddress.includes('wardha') || !lowerCaseAddress.includes('442001')) {
+            setAddressError('Please enter a valid address including "Wardha" and "442001"');
+            return;
+        }
+
+        // Proceed with placing the order if all validations pass
+        placeOrder();
+    };
+
+    const placeOrder = async () => {
+
+        const orderItems = data.map(item => ({
+            menuId: item.menuId,
+            quantity: item.quantity,
+            subtotal: item.subtotal
+        }))
+        const orderData = {
+            name: name,
+            address: address,
+            phoneNumber: phoneNumber,
+            totalPayable: finalTotal,
+            paymentMethod: paymentMethod,
+            items: orderItems
+        }
+
+        if (paymentMethod === 'cash') {
+            console.log("CASH ON DELIVERY PROCESSING....")
+            try {
+                let config = {
+                    method: 'post',
+                    url: `http://localhost:8001/order/addOrder`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'auth-token': `${localStorage.getItem('auth-token')}`
+                    },
+                    data: orderData
+                };
+
+                const response = await axios(config);
+                if(response){
+                    navigate('/orders')
+                    alert('Order Placed Successfully')
+                    setCheckOut(false)
+                }
+                else{
+                    console.log("Request failed")
+                    alert('Order Failed')
+                }
+            } catch (error) {
+                console.log('Add order request failed')
+            }
+
+        }
+        else {
+            console.log("Card order processing....")
+            return;
+        }
+    }
 
     return (
         <>
-            <div className={`overflow-x-auto mx-auto animate-fade-in ${!checkout ? "hidden" : ""}`}>
+            <div className={`overflow-x-auto mx-auto animate-fade-in ${checkout ? "hidden" : ""}`}>
 
                 {/* Heading */}
-                <p className='uppercase font-bold text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
+                <p className='uppercase font-bold text-2xl md:text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
 
                 {/* Cart items */}
                 <div className=" overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">
@@ -293,14 +384,14 @@ const Cart = () => {
                         <span className="font-semibold">Rs. {finalTotal}</span>
                     </div>
                     <div className='flex justify-end mt-10'>
-                        <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' >Order Now</button>
+                        <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' onClick={() => { setCheckOut(true) }} >Checkout</button>
                     </div>
                 </div>}
 
             </div>
 
             {
-                !checkout
+                (checkout && data.length !== 0)
                 &&
                 <div className='overflow-x-auto p-9 animate-fade-in'>
                     {/* Heading */}
@@ -310,23 +401,29 @@ const Cart = () => {
                         <div className='flex flex-col gap-5 w-full md:w-1/2 p-2 rounded-md'>
 
                             <div className='font-medium text-sm md:text-md text-zinc-700'>CONTACT INFORMATION</div>
-                            <input type="tel" name="email" id="email" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white' />
+                            <input type="tel" name="number" id="number" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' pattern="[7-9]{1}[0-9]{9}" minlength="10" maxlength="10" onChange={(e) => setphoneNumber(e.target.value)} value={phoneNumber} required />
+                            {phoneNumberError && <div className="text-red-500 text-xs mt-1">{phoneNumberError}</div>}
 
-                            <hr />
+                            <hr className='border-t border-gray-300 my-5' />
 
                             <div className='font-medium text-sm md:text-md text-zinc-700'>SHIPPING INFORMATION</div>
-                            <input type="text" name="name" id="name" placeholder='FULL NAME' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white' />
-                            <input type="text" name="address" id="address" placeholder='DELIVERY ADDRESS' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white' />
+                            <input type="text" name="name" id="name" placeholder='FULL NAME' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' onChange={(e) => { setname(e.target.value) }} value={name} required />
+                            {nameError && <div className="text-red-500 text-xs mt-1">{nameError}</div>}
 
-                            <hr />
+                            <input type="text" name="address" id="address" placeholder='DELIVERY ADDRESS' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' onChange={(e) => { setaddress(e.target.value) }} value={address} required />
+                            {addressError && <div className="text-red-500 text-xs mt-1">{addressError}</div>}
+
+                            <hr className='border-t border-gray-300 my-5' />
 
                             <div className='font-medium text-sm md:text-md text-zinc-700'>Payment Method</div>
 
                             <label className="inline-flex items-center">
                                 <input
                                     type="radio"
+                                    defaultChecked
                                     name="paymentMethod"
                                     value="card"
+                                    onChange={(e) => { setpaymentMethod(e.target.value) }}
                                     className="form-radio h-4 w-4 text-green-500"
                                 />
                                 <span className="ml-2 text-sm font-base text-zinc-500">Pay with Card</span>
@@ -336,6 +433,7 @@ const Cart = () => {
                                     type="radio"
                                     name="paymentMethod"
                                     value="cash"
+                                    onChange={(e) => { setpaymentMethod(e.target.value) }}
                                     className="form-radio h-4 w-4 text-green-500"
                                 />
                                 <span className="ml-2 text-sm font-base text-zinc-500">Cash on Delivery</span>
@@ -343,25 +441,20 @@ const Cart = () => {
 
                         </div>
 
-                        <div className='flex flex-col gap-2 w-full md:w-1/2 border-zinc-400 border p-4 md:p-8 rounded-md bg-white'>
+                        <div className='flex flex-col gap-2 w-full md:w-1/2 p-4 md:p-8 rounded-md bg-white shadow-md'>
                             <div className='font-medium text-zinc-900 mb-4'>Order Summary</div>
                             {data.map((item) => (
                                 <div key={item._id} className='border-b pb-2 md:pb-3 my-1'>
-
-
                                     <div className='flex flex-row relative'>
-                                        <BiX className=' font-bold text-xl cursor-pointer absolute right-0 top-0' onClick={() => { removeCartItem(item.menuId) }} />
-
+                                        <BiX className='font-bold text-xl cursor-pointer absolute right-0 top-0' onClick={() => { removeCartItem(item.menuId) }} />
                                         <div className='w-24 h-24 sm:w-24 md:h-24'>
                                             <img className='object-cover w-full h-full' src={item.image} alt="" />
                                         </div>
-
                                         <div className='w-fit mx-3 sm:mx-10 p-1 flex flex-col justify-between'>
                                             <div>
                                                 <div className='font-semibold text-md text-zinc-800'>{item.name}</div>
                                                 <div className='font-medium text-sm text-zinc-800'>RS. {item.price}</div>
                                             </div>
-
                                             <div className="flex items-center text-sm bg-slate-100 w-fit rounded-md gap-2">
                                                 <button className={`px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300 ${item.quantity === 1 && 'opacity-50 cursor-not-allowed'}`} onClick={() => { handleDecrement(item.menuId) }}>-</button>
                                                 <div className=' text-gray-700 font-semibold'>
@@ -370,16 +463,11 @@ const Cart = () => {
                                                 <button className="px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300" onClick={() => { handleIncrement(item.menuId) }}>+</button>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
                             ))}
-
-                            {data.length !== 0
-                                &&
+                            {data.length !== 0 && (
                                 <>
-
                                     <div className="flex justify-between mb-2 mt-5 text-zinc-700 text-sm md:text-md">
                                         <span>Cart Subtotal :</span>
                                         <span className='font-medium'>Rs. {cartTotal}</span>
@@ -396,21 +484,13 @@ const Cart = () => {
                                         <span className="font-semibold">Total:</span>
                                         <span className="font-semibold">Rs. {finalTotal}</span>
                                     </div>
-                                    <div className='flex justify-end mt-4 md:mt-10'>
-                                        <button className='uppercase w-full py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' >Order Now</button>
-                                    </div>
+                                    <button className='uppercase w-full py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' onClick={() => { handleFormSubmit() }} >Order Now</button>
                                 </>
-                            }
-
+                            )}
                         </div>
                     </div>
-
-                    {/* <button className='uppercase w-fit mt-1 py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600 rounded-lg flex justify-center gap-2' >submit</button> */}
-                    {/* form end */}
-
-
-
                 </div>
+
             }
 
         </>

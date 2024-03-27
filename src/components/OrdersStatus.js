@@ -34,6 +34,7 @@ const OrdersStatus = () => {
 
         const response = await axios(config);
         setOrders(response.data)
+        console.log('orders:-')
         console.log(response.data)
       } catch (error) {
         console.error(error);
@@ -43,18 +44,18 @@ const OrdersStatus = () => {
 
   }, [ordersStatus])
 
-  const formatDate = (dateString) => {
-    // Split the date and time parts
-    const parts = dateString.split(', ');
-    const datePart = parts[0]; // Extract the date part
+  // const formatDate = (dateString) => {
+  //   // Split the date and time parts
+  //   const parts = dateString.split(', ');
+  //   const datePart = parts[0]; // Extract the date part
 
-    // Parse the date part into a Date object
-    const [day, month, year] = datePart.split('/').map(Number);
-    const formattedDate = new Date(year, month - 1, day); // month is 0-based index
+  //   // Parse the date part into a Date object
+  //   const [day, month, year] = datePart.split('/').map(Number);
+  //   const formattedDate = new Date(year, month - 1, day); // month is 0-based index
 
-    // Format the date as 'DD/MM/YYYY'
-    return formattedDate.toLocaleDateString('en-IN'); // 'en-IN' is the locale for English (India)
-  };
+  //   // Format the date as 'DD/MM/YYYY'
+  //   return formattedDate.toLocaleDateString('en-IN'); // 'en-IN' is the locale for English (India)
+  // };
 
 
   return (
@@ -71,9 +72,9 @@ const OrdersStatus = () => {
 
           <div className='flex justify-between items-center'>
             <div className='font-semibold text-xl flex items-center gap-2'>
-              <span class="relative flex h-3 w-3">
-                <span class={`animate-ping absolute inline-flex h-full w-full rounded-full ${ordersStatus === 'pending' ? 'bg-red-400' : ordersStatus === 'delivered' ? 'bg-green-400' : 'bg-yellow-400'} opacity-75`}></span>
-                <span class={`relative inline-flex rounded-full h-3 w-3 ${ordersStatus === 'pending' ? 'bg-red-500' : ordersStatus === 'delivered' ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span className="relative flex h-3 w-3">
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${ordersStatus === 'pending' ? 'bg-red-400' : ordersStatus === 'delivered' ? 'bg-green-400' : 'bg-yellow-400'} opacity-75`}></span>
+                <span className={`relative inline-flex rounded-full h-3 w-3 ${ordersStatus === 'pending' ? 'bg-red-500' : ordersStatus === 'delivered' ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
               </span>
               {ordersStatus}
             </div>
@@ -91,7 +92,7 @@ const OrdersStatus = () => {
         {((orders === null) || (orders === undefined) || (orders.length === 0)) ? (<>No orders found</>) : (
           orders.map((order) => (
             <Suspense fallback={<Loading />} key={order._id}> {/* Wrap the lazy-loaded component with Suspense */}
-              <OrderItem order={order} formatDate={formatDate} /> {/* Pass necessary props to the lazy-loaded component */}
+              <OrderItem order={order} /> {/* Pass necessary props to the lazy-loaded component */}
             </Suspense>
           ))
         )}

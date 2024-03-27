@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Dishes from "./Dishes";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
-import axios from "axios";
+// import axios from "axios";
 import Loading from "./Loading";
 
 const Menu = () => {

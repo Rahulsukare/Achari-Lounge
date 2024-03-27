@@ -17,6 +17,9 @@ function App() {
 
   const location = useLocation();
   const [name, setName] = useState('');
+  const [fullName, setfullName] = useState('')
+  const [address, setaddress] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('')
   const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
@@ -38,6 +41,9 @@ function App() {
               const fullName = response.data.name;
               const firstName = fullName.split(" ")[0];
               setName(firstName)
+              setfullName(response.data.name)
+              setaddress(response.data.address)
+              setphoneNumber(response.data.phoneNumber)
               setCartItemCount(response.data.cart.length)
               console.log(response.data.name)
               console.log(response.data.cart.length)
@@ -70,7 +76,7 @@ function App() {
             <Route path='/contact' element={<h1>Contact</h1>} />
             <Route path='/menu' element={<Menu />} />
             <Route path='/item/:name' element={<Item />} />
-            <Route path='/cart' element={<Cart />} />
+            <Route path='/cart' element={<Cart userName={fullName} address={address} phoneNumber={phoneNumber} />} />
             <Route path='/orders' element={<OrdersStatus/>} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/login' element={<Login />} />
