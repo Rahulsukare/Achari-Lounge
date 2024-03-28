@@ -220,6 +220,16 @@ const Cart = (props) => {
 
     }
 
+
+    const handleCheckout = async () => {
+        setCheckOut(true)
+        // Scroll to the top of the page
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // You can change this to 'auto' for instant scrolling
+        });
+    }
+
     // Function to handle form submission
     const handleFormSubmit = () => {
         // Clear previous errors
@@ -282,12 +292,12 @@ const Cart = (props) => {
                 };
 
                 const response = await axios(config);
-                if(response){
+                if (response) {
                     navigate('/orders')
                     alert('Order Placed Successfully')
                     setCheckOut(false)
                 }
-                else{
+                else {
                     console.log("Request failed")
                     alert('Order Failed')
                 }
@@ -384,7 +394,7 @@ const Cart = (props) => {
                         <span className="font-semibold">Rs. {finalTotal}</span>
                     </div>
                     <div className='flex justify-end mt-10'>
-                        <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' onClick={() => { setCheckOut(true) }} >Checkout</button>
+                        <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' onClick={handleCheckout} >Checkout</button>
                     </div>
                 </div>}
 
@@ -424,7 +434,7 @@ const Cart = (props) => {
                                     name="paymentMethod"
                                     value="card"
                                     onChange={(e) => { setpaymentMethod(e.target.value) }}
-                                    className="form-radio h-4 w-4 text-green-500"
+                                    className="form-radio h-4 w-4 accent-green-700"
                                 />
                                 <span className="ml-2 text-sm font-base text-zinc-500">Pay with Card</span>
                             </label>
@@ -434,7 +444,7 @@ const Cart = (props) => {
                                     name="paymentMethod"
                                     value="cash"
                                     onChange={(e) => { setpaymentMethod(e.target.value) }}
-                                    className="form-radio h-4 w-4 text-green-500"
+                                    className="form-radio h-4 w-4 accent-green-700"
                                 />
                                 <span className="ml-2 text-sm font-base text-zinc-500">Cash on Delivery</span>
                             </label>

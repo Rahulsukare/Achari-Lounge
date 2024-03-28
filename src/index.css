@@ -16,6 +16,22 @@
       animation-duration: 0.5s; /* Adjust the duration as needed */
       animation-timing-function: ease-in-out; /* Optional: specify timing function */
     }
+
+    @keyframes rightIn {
+      0% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .animate-right-in {
+      animation: rightIn 1s ease-in-out 1;
+    }
+    
     
   }
 @tailwind utilities;
