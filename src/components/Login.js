@@ -50,7 +50,7 @@ const Login = () => {
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
-                    url: 'http://localhost:8001/auth/signup',
+                    url: `${process.env.REACT_APP_HOST_URL}/auth/signup`,
                     headers: {
                         'Content-Type': 'application/json',
                         // 'Authorization': `${localStorage.getItem('auth')}`,
@@ -100,7 +100,7 @@ const Login = () => {
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
-                    url: 'http://localhost:8001/auth/login',
+                    url: `${process.env.REACT_APP_HOST_URL}/auth/login`,
                     headers: {
                         'Content-Type': 'application/json',
                         // 'Authorization': `${localStorage.getItem('auth')}`,

@@ -29,7 +29,7 @@ const Cart = (props) => {
             try {
                 const config = {
                     method: 'get',
-                    url: `http://localhost:8001/auth/getCart`,
+                    url: `${process.env.REACT_APP_HOST_URL}/auth/getCart`,
                     headers: {
                         'Content-Type': 'application/json',
                         'auth-token': localStorage.getItem('auth-token')
@@ -68,7 +68,7 @@ const Cart = (props) => {
             try {
                 const config = {
                     method: 'get',
-                    url: 'http://localhost:8001/auth/getCartTotal',
+                    url: `${process.env.REACT_APP_HOST_URL}/auth/getCartTotal`,
                     headers: {
                         'Content-Type': 'application/json',
                         'auth-token': localStorage.getItem('auth-token')
@@ -95,7 +95,7 @@ const Cart = (props) => {
         try {
             const config = {
                 method: 'get',
-                url: 'http://localhost:8001/auth/getCartTotal',
+                url: `${process.env.REACT_APP_HOST_URL}/auth/getCartTotal`,
                 headers: {
                     'Content-Type': 'application/json',
                     'auth-token': localStorage.getItem('auth-token')
@@ -117,7 +117,7 @@ const Cart = (props) => {
         try {
             let config = {
                 method: 'post',
-                url: `http://localhost:8001/auth/increaseCartItemQuantity/${id}`,
+                url: `${process.env.REACT_APP_HOST_URL}/auth/increaseCartItemQuantity/${id}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'auth-token': `${localStorage.getItem('auth-token')}`
@@ -158,7 +158,7 @@ const Cart = (props) => {
         try {
             let config = {
                 method: 'post',
-                url: `http://localhost:8001/auth/decreaseCartItemQuantity/${id}`,
+                url: `${process.env.REACT_APP_HOST_URL}/auth/decreaseCartItemQuantity/${id}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'auth-token': `${localStorage.getItem('auth-token')}`
@@ -200,7 +200,7 @@ const Cart = (props) => {
         try {
             let config = {
                 method: 'post',
-                url: `http://localhost:8001/auth/removeCart/${id}`,
+                url: `${process.env.REACT_APP_HOST_URL}/auth/removeCart/${id}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'auth-token': `${localStorage.getItem('auth-token')}`
@@ -283,7 +283,7 @@ const Cart = (props) => {
             try {
                 let config = {
                     method: 'post',
-                    url: `http://localhost:8001/order/addOrder`,
+                    url: `${process.env.REACT_APP_HOST_URL}/order/addOrder`,
                     headers: {
                         'Content-Type': 'application/json',
                         'auth-token': `${localStorage.getItem('auth-token')}`

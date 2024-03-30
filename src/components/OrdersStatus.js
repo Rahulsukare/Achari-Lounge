@@ -14,10 +14,10 @@ const OrdersStatus = () => {
       try {
         let URL = ""
         if (ordersStatus === 'pending') {
-          URL = 'http://localhost:8001/auth/getPendingOrders'
+          URL = `${process.env.REACT_APP_HOST_URL}/auth/getPendingOrders`
         }
         if (ordersStatus === 'delivered') {
-          URL = 'http://localhost:8001/auth/getDeliveredOrders'
+          URL =  `${process.env.REACT_APP_HOST_URL}/auth/getDeliveredOrders`
         }
         if (ordersStatus === 'out for delivery') {
           setOrders([])

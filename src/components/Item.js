@@ -19,7 +19,7 @@ const Item = () => {
 
     const fetchMenuItem = async () => {
       try {
-        const data = await fetch(`http://localhost:8001/menu/getMenuItem/${name}`);
+        const data = await fetch(`${process.env.REACT_APP_HOST_URL}/menu/getMenuItem/${name}`);
         if (!data.ok) {
           throw new Error('Failed to fetch menu item');
         }
@@ -42,7 +42,7 @@ const Item = () => {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `http://localhost:8001/auth/addCart`,
+        url: `${process.env.REACT_APP_HOST_URL}/auth/addCart`,
         headers: {
           'Content-Type': 'application/json',
           'auth-token': `${localStorage.getItem('auth-token')}`

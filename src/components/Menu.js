@@ -30,7 +30,7 @@ const Menu = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8001/category/getAllCategories');
+                const response = await fetch(`${process.env.REACT_APP_HOST_URL}/category/getAllCategories`);
                 const data = await response.json();
 
                 // Update state with fetched data
@@ -44,7 +44,7 @@ const Menu = () => {
 
         const fetchAllMenuItems = async () => {
             try {
-                const response = await fetch('http://localhost:8001/menu/getAllMenus');
+                const response = await fetch(`${process.env.REACT_APP_HOST_URL}/menu/getAllMenus`);
                 const data = await response.json();
 
                 // Update state with fetched data
@@ -72,7 +72,7 @@ const Menu = () => {
         try {
             setLoading(true);
             setFlag(false);
-            const response = await fetch(`http://localhost:8001/menu/getMenu/${categoryName}`);
+            const response = await fetch(`${process.env.REACT_APP_HOST_URL}/menu/getMenu/${categoryName}`);
             const data = await response.json();
 
             // Update state with fetched data

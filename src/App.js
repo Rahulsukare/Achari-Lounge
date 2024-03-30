@@ -30,7 +30,7 @@ function App() {
           let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8001/auth/getUser',
+            url: `${process.env.REACT_APP_HOST_URL}/auth/getUser`,
             headers: {
               'Content-Type': 'application/json',
               'auth-token': `${localStorage.getItem('auth-token')}`,
