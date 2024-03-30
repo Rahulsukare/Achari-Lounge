@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import Button from './Button'
 // import backgroundImage from './vintage-old-rustic-cutlery-dark.jpg'
-import deliveryBoy from '../Assets/delivery-man.png'
 // import Dishes from './Dishes'
 // import About from './About'
 // import Reviews from './Reviews'
 import HeroSection from './HeroSection'
+
+import deliveryBoy from '../Assets/delivery-man.png'
+import pizzaIconMarquee from '../Assets/pizza.png'
+import burgerIconMarquee from '../Assets/burger icon.png'
 
 const Home = () => {
     const navigate = useNavigate();
@@ -56,19 +59,26 @@ const Home = () => {
             <HeroSection />
             {/* Hero section ends here */}
 
-            {/* <div>
-                <div className='text-stroke-1 text-6xl font-extrabold'>POPULAR DISHES</div>
-                <div className='text-stroke-1 text-6xl font-extrabold'>TASTY FOOD</div>
-                <div className='text-stroke-1 text-6xl font-extrabold'>VARIETY OF DISHES</div>
-            </div> */}
             <div class="overflow-x-hidden py-28">
-                <div class="py-12 animate-marquee whitespace-nowrap ">
+                <div class="py-12 animate-marquee whitespace-nowrap flex gap-5">
                     <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
-                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOO</span>
+                    <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOOD</span>
+                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
                     <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
                     <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
-                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOO</span>
+                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOOD</span>
+                    <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
                     <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
+                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOOD</span>
+                    <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
                 </div>
             </div>
 
