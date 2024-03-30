@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import deliveryBoy from '../Assets/delivery-man.png'
 // import Dishes from './Dishes'
 // import About from './About'
-import Reviews from './Reviews'
+// import Reviews from './Reviews'
 import HeroSection from './HeroSection'
 
 const Home = () => {
@@ -62,7 +62,7 @@ const Home = () => {
             </h1> */}
             {/* <Dishes /> */}
             {/* <About /> */}
-            <Reviews />
+            {/* <Reviews /> */}
             <div className={`bg-gradient-to-r from-green-700 to-green-600 w-full md:w-3/4 mx-auto my-10 rounded-xl p-12 z-50 relative `}
             >
                 <img ref={deliveryBoyRef} src={deliveryBoy} alt="deliveryBoy" className={`hidden md:block md:w-fit absolute bottom-0 right-0 ${isVisible ? 'animate-right-in' : 'opacity-0'}`} />

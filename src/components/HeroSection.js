@@ -37,7 +37,7 @@ const HeroSection = () => {
     }, []);
 
     return (
-        <div className="relative overflow-hidden h-svh border-3">
+        <div className="relative overflow-hidden h-svh border-3 animate-fade-in">
             <div className="absolute inset-0">
                 {slides.map((slide, index) => (
                     <div

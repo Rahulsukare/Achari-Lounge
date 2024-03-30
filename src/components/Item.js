@@ -90,7 +90,7 @@ const Item = () => {
               <Stars />
               <h3 className="uppercase font-bold pb-3 text-3xl tracking-wider">{item.name}</h3>
               <p className="mb-4 text-sm font-semibold text-slate-600">{item.description} </p>
-              <div className="mt-20 font-bold text-lg text-red-600">Rs. {item.price}</div>
+              <div className="mt-20 font-bold text-lg text-red-600">₹ {item.price}</div>
 
               <div className='flex items-center gap-6'>
                 <div className=' font-semibold text-gray-900 text-sm'>Quantity : </div>

@@ -337,7 +337,7 @@ const Cart = (props) => {
                                     data.map((item) => (
                                         <tr key={item.menuId} className="text-center sm:text-left">
                                             <td className="px-4 py-2 w-20 h-20 md:w-28 md:h-28 flex items-center justify-center"><img src={item.image} alt="productImg" className="w-20 sm:w-30" /></td>
-                                            <td className="px-4 py-2 text-red-600 font-bold text-nowrap">Rs. {item.price}</td>
+                                            <td className="px-4 py-2 text-red-600 font-bold text-nowrap">₹ {item.price}</td>
                                             <td className="px-4 py-2 ">
                                                 <div className="flex items-center bg-slate-100 w-fit rounded-md gap-3">
                                                     <button className={`px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300 ${item.quantity === 1 && 'opacity-50 cursor-not-allowed'}`} onClick={() => { handleDecrement(item.menuId) }}>-</button>
@@ -379,19 +379,19 @@ const Cart = (props) => {
                     <h2 className="text-xl font-semibold mb-12">Cart Total</h2>
                     <div className="flex justify-between mb-9">
                         <span>Cart Subtotal :</span>
-                        <span>Rs. {cartTotal}</span>
+                        <span>₹ {cartTotal}</span>
                     </div>
                     <div className="flex justify-between mb-9">
                         <span>platform fees :</span>
-                        <span>Rs. {platformFees}</span>
+                        <span>₹ {platformFees}</span>
                     </div>
                     <div className="flex justify-between mb-9">
                         <span>Delivery :</span>
-                        <span>Rs. {deliveryCharges}</span>
+                        <span>₹ {deliveryCharges}</span>
                     </div>
                     <div className="flex justify-between border-t border-gray-300 pt-3 mb-6 mt-3 text-gray-700">
                         <span className="font-semibold">Total:</span>
-                        <span className="font-semibold">Rs. {finalTotal}</span>
+                        <span className="font-semibold">₹ {finalTotal}</span>
                     </div>
                     <div className='flex justify-end mt-10'>
                         <button className='uppercase w-fit py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' onClick={handleCheckout} >Checkout</button>
@@ -463,7 +463,7 @@ const Cart = (props) => {
                                         <div className='w-fit mx-3 sm:mx-10 p-1 flex flex-col justify-between'>
                                             <div>
                                                 <div className='font-semibold text-md text-zinc-800'>{item.name}</div>
-                                                <div className='font-medium text-sm text-zinc-800'>RS. {item.price}</div>
+                                                <div className='font-medium text-sm text-zinc-800'>₹ {item.price}</div>
                                             </div>
                                             <div className="flex items-center text-sm bg-slate-100 w-fit rounded-md gap-2">
                                                 <button className={`px-2 py-1 font-semibold bg-gray-200 text-gray-600 rounded hover:bg-gray-300 focus:outline-none focus:bg-gray-300 ${item.quantity === 1 && 'opacity-50 cursor-not-allowed'}`} onClick={() => { handleDecrement(item.menuId) }}>-</button>
@@ -480,19 +480,19 @@ const Cart = (props) => {
                                 <>
                                     <div className="flex justify-between mb-2 mt-5 text-zinc-700 text-sm md:text-md">
                                         <span>Cart Subtotal :</span>
-                                        <span className='font-medium'>Rs. {cartTotal}</span>
+                                        <span className='font-medium'>₹ {cartTotal}</span>
                                     </div>
                                     <div className="flex justify-between mb-2 text-zinc-700 text-sm md:text-md">
                                         <span>platform fees :</span>
-                                        <span className='font-medium'>Rs. {platformFees}</span>
+                                        <span className='font-medium'>₹ {platformFees}</span>
                                     </div>
                                     <div className="flex justify-between mb-2 text-zinc-700 text-sm md:text-md">
                                         <span>Delivery :</span>
-                                        <span className='font-medium'>Rs. {deliveryCharges}</span>
+                                        <span className='font-medium'>₹ {deliveryCharges}</span>
                                     </div>
                                     <div className="flex justify-between border-t border-b border-gray-300 py-3 mb-6 mt-3 text-gray-700 text-md">
                                         <span className="font-semibold">Total:</span>
-                                        <span className="font-semibold">Rs. {finalTotal}</span>
+                                        <span className="font-semibold">₹ {finalTotal}</span>
                                     </div>
                                     <button className='uppercase w-full py-3 px-9 font-bold text-sm bg-green-600 text-white hover:bg-red-600' onClick={() => { handleFormSubmit() }} >Order Now</button>
                                 </>

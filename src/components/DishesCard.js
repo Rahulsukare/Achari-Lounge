@@ -11,7 +11,7 @@ const DishesCard = (props) => {
             <div className="mt-4">
                 <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{props.category}</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">{props.name}</h2>
-                <p className="mt-1 text-red-600">Rs. {props.price}</p>
+                <p className="mt-1 text-red-600">₹ {props.price}</p>
             </div>
         </Link>
     )
