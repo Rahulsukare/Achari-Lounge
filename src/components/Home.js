@@ -56,6 +56,22 @@ const Home = () => {
             <HeroSection />
             {/* Hero section ends here */}
 
+            {/* <div>
+                <div className='text-stroke-1 text-6xl font-extrabold'>POPULAR DISHES</div>
+                <div className='text-stroke-1 text-6xl font-extrabold'>TASTY FOOD</div>
+                <div className='text-stroke-1 text-6xl font-extrabold'>VARIETY OF DISHES</div>
+            </div> */}
+            <div class="overflow-x-hidden py-28">
+                <div class="py-12 animate-marquee whitespace-nowrap ">
+                    <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
+                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOO</span>
+                    <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
+                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOO</span>
+                    <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                </div>
+            </div>
+
             {/* dishes */}
             {/* <h1 className="text-4xl font-semibold text-center lg:pt-16 pt-24 pb-10 animate-fade-in">
                 Our Dishes
