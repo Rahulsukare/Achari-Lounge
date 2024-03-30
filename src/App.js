@@ -12,6 +12,7 @@ import About from './components/About';
 import Footer from './components/Footer';
 
 import axios from 'axios';
+import Contact from './components/Contact';
 
 function App() {
 
@@ -73,7 +74,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
-            <Route path='/contact' element={<h1>Contact</h1>} />
+            <Route path='/contact' element={<Contact/>} />
             <Route path='/menu' element={<Menu />} />
             <Route path='/item/:name' element={<Item />} />
             <Route path='/cart' element={<Cart userName={fullName} address={address} phoneNumber={phoneNumber} />} />

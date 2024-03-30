@@ -114,7 +114,7 @@ const Menu = () => {
         <>
             {loading ? (<Loading />) : (
 
-                <div className="flex flex-wrap md:flex-nowrap pt-9 bg-zinc-100 animate-fade-in">
+                <div className="flex flex-wrap md:flex-nowrap pt-9 bg-[#f4f1ea] animate-fade-in">
                     <button className="md:hidden w-full mx-9 mt-5 px-6 py-3 bg-green-600 text-white hover:bg-green-600 transition-all rounded-md" onClick={handleCategories}>Categories {handleCat ? (<BiChevronRight className="inline" size={25} />) : (<BiChevronDown className="inline" size={25} />)}</button>
                     <div className={`${handleCat && 'hidden'} mx-9 w-full md:w-fit ml-9 mt-9 md:border-none border-slate-300 border p-9 md:block animate-fade-in`}>
                         <h2 className="text-xl mb-4 pl-2 py-0 font-semibold border-l border-l-green-600">CATEGORIES</h2>
