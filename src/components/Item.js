@@ -33,6 +33,9 @@ const Item = () => {
       }
     };
     fetchMenuItem();
+
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
   }, [name]); // Fetch menu item whenever the name parameter changes
 
 

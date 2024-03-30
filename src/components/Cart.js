@@ -350,7 +350,7 @@ const Cart = (props) => {
                                             <td className="px-4 py-2 font-semibold text-gray-600">{item.subtotal}</td>
 
                                             <td className="px-4 py-2">
-                                                <BiX className=' font-bold text-xl cursor-pointer' onClick={() => { removeCartItem(item.menuId) }} />
+                                                <BiX size={23} className=' font-bold text-xl cursor-pointer' onClick={() => { removeCartItem(item.menuId) }} />
                                             </td>
                                         </tr>
                                     ))
