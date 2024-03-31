@@ -90,7 +90,7 @@ const Item = () => {
 
             {/* Main div starts */}
             <div className="w-full md:w-1/2 mt-20 md:ml-20 md:mt-0">
-              <Stars />
+              <Stars rating={item.rating} /> {/* Use the Stars component with the rating */}
               <h3 className="uppercase font-bold pb-3 text-3xl tracking-wider">{item.name}</h3>
               <p className="mb-4 text-sm font-semibold text-slate-600">{item.description} </p>
               <div className="mt-20 font-bold text-lg text-red-600">₹ {item.price}</div>
@@ -124,7 +124,7 @@ const Item = () => {
               </h6>
               <h6 className='text-sm text-zinc-900'>
                 <span className=' font-semibold'>FREE DELIVERY </span>
-                 ON ORDER OVER Rs. 500
+                ON ORDER OVER Rs. 500
               </h6>
               <h6 className=' uppercase text-sm font-semibold text-zinc-900'>
                 Categories : {item.category}
