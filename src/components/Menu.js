@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Dishes from "./Dishes";
-import { BiChevronRight, BiChevronDown } from "react-icons/bi";
+import { BiChevronRight, BiChevronDown,BiArrowBack  } from "react-icons/bi";
 import Loading from "./Loading";
 
 const Menu = () => {
     const [loading, setLoading] = useState(true);
     const [flag, setFlag] = useState(true);
+    const [back, setBack] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [categories, setCategories] = useState([]);
     const [menuItems, setMenuItems] = useState([]); // All menu
-    const [searchMenuItems, setSearchMenuItems] = useState([]); 
+    const [searchMenuItems, setSearchMenuItems] = useState([]);
     const [menuItemsByCategory, setMenuItemsByCategory] = useState([]); // Menu by category
     const [totalCategories, setTotalCategories] = useState(0);
     const [totalMenuItems, setTotalMenuItems] = useState(0);
@@ -92,6 +93,7 @@ const Menu = () => {
         fetchAllMenuItems();
         setSearchMenuItems([])
         setTotalSearchMenuItems(-1)
+        setBack(false)
     };
 
     const handleSearch = async (e) => {
@@ -104,6 +106,7 @@ const Menu = () => {
             setTotalSearchMenuItems(data.length);
             setFlag(true); // Show all results
             setLoading(false);
+            setBack(true)
         } catch (error) {
             setLoading(false);
             console.error('Error searching menu items:', error);
@@ -134,7 +137,8 @@ const Menu = () => {
                         {/* SEARCH BUTTON */}
                         <form className="mx-auto mb-10" onSubmit={handleSearch}>
                             <div className="relative flex items-center border border-zinc-400 rounded-lg">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                {back && <button className="p-3 ml-2 text-zinc-800" onClick={getAll}><BiArrowBack size={20}/></button>}
+                                <div className={` ${back && 'hidden'} absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none`}>
                                     <svg className="w-4 h-4 text-zinc-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                     </svg>

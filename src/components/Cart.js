@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { BiCart, BiX } from 'react-icons/bi';
+import { BiCart, BiX,BiShoppingBag  } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
 const Cart = (props) => {
@@ -314,13 +314,13 @@ const Cart = (props) => {
 
     return (
         <>
-            <div className={`overflow-x-auto mx-auto animate-fade-in ${checkout ? "hidden" : ""}`}>
+            <div className={`overflow-x-auto mx-auto bg-[#f4f1ea] animate-fade-in ${checkout ? "hidden" : ""}`}>
 
                 {/* Heading */}
                 <p className='uppercase font-bold text-2xl md:text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
 
                 {/* Cart items */}
-                <div className=" overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">
+                <div className="bg-white  overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">
                     <table className="mx-auto my-9 w-full">
                         <thead className=''>
                             <tr className="text-lg border-b">
@@ -375,7 +375,7 @@ const Cart = (props) => {
                 </div>
 
                 {/* Cart Total */}
-                {data.length !== 0 && <div className="mx-auto my-14 w-11/12 md:w-3/4 p-6 shadow-lg uppercase">
+                {data.length !== 0 && <div className="bg-white mx-auto my-14 w-11/12 md:w-3/4 p-6 shadow-lg uppercase">
                     <h2 className="text-xl font-semibold mb-12">Cart Total</h2>
                     <div className="flex justify-between mb-9">
                         <span>Cart Subtotal :</span>
@@ -403,11 +403,11 @@ const Cart = (props) => {
             {
                 (checkout && data.length !== 0)
                 &&
-                <div className='overflow-x-auto p-9 animate-fade-in'>
+                <div className='overflow-x-auto p-9 bg-[#f4f1ea] animate-fade-in'>
                     {/* Heading */}
-                    <p className='uppercase font-bold text-2xl md:text-4xl my-14 w-3/4'>Checkout</p>
+                    <p className='uppercase font-bold text-2xl md:text-4xl my-14 w-full md:w-3/4 mx-auto flex gap-1'>Checkout<BiShoppingBag className='inline' /></p>
 
-                    <div className='flex flex-col md:flex-row gap-10 p-5 border rounded-md bg-zinc-50'>
+                    <div className='flex flex-col md:flex-row gap-10 p-6 py-10 md:py-16 w-full md:w-3/4 mx-auto border rounded-md bg-zinc-50'>
                         <div className='flex flex-col gap-5 w-full md:w-1/2 p-2 rounded-md'>
 
                             <div className='font-medium text-sm md:text-md text-zinc-700'>CONTACT INFORMATION</div>

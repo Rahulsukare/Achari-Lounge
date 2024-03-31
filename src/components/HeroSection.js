@@ -61,7 +61,7 @@ const HeroSection = () => {
                                 <div className="text-4xl sm:text-5xl md:text-6xl text-left font-bold  animate-popup">{slide.title}</div>
                                 <div className="text-sm sm:text-md md:text-lg text-left animate-[popup_2s_ease-in-out] ">{slide.description}</div>
                                 <div className='flex mt-5 md:mt-10 animate-[popup_2s_ease-in-out]'>
-                                    <button className={`uppercase font-bold w-fit mx-auto md:mx-0 py-3 px-9 text-sm text-white hover:bg-red-600 ${slide.img1 === img11 ? 'bg-stone-900' : 'bg-green-700'}`} ><Link to="/menu">View More &nbsp; &rarr; </Link></button>
+                                    <button className={`uppercase font-bold w-fit mx-auto md:mx-0 py-3 px-9 text-sm  hover:bg-red-600 ${slide.img1 === img11 ? ' bg-amber-500 text-black' : 'bg-green-700 text-white'}`} ><Link to="/menu">View More &nbsp; &rarr; </Link></button>
                                 </div>
                             </div>
                             <div className={`w-full mt-5 md:mt-0 md:w-1/2 relative`}>
