@@ -1,5 +1,5 @@
 import React from 'react';
-import { BiStar, BiSolidStar ,BiSolidStarHalf  } from 'react-icons/bi';
+import { BiSolidStar ,BiSolidStarHalf  } from 'react-icons/bi';
 
 const Stars = ({ rating }) => {
     // Round the rating value to the nearest 0.5

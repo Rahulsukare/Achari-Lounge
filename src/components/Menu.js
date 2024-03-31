@@ -12,7 +12,7 @@ const Menu = () => {
     const [menuItems, setMenuItems] = useState([]); // All menu
     const [searchMenuItems, setSearchMenuItems] = useState([]);
     const [menuItemsByCategory, setMenuItemsByCategory] = useState([]); // Menu by category
-    const [totalCategories, setTotalCategories] = useState(0);
+    // const [totalCategories, setTotalCategories] = useState(0);
     const [totalMenuItems, setTotalMenuItems] = useState(0);
     const [totalSearchMenuItems, setTotalSearchMenuItems] = useState(-1);
     const [totalMenuItemsByCategory, setTotalMenuItemsByCategory] = useState(0);
@@ -29,7 +29,7 @@ const Menu = () => {
                 const response = await fetch(`${process.env.REACT_APP_HOST_URL}/category/getAllCategories`);
                 const data = await response.json();
                 setCategories(data.categories);
-                setTotalCategories(data.totalCategories);
+                // setTotalCategories(data.totalCategories);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }

@@ -44,7 +44,7 @@ export default function DropDownProfile(props) {
                         <Menu.Item>
                             {({ active }) => (
                                 <Link
-                                    to='/'
+                                    to='/profile'
                                     className={classNames(
                                         active ? 'bg-gray-100 text-red-600' : 'text-gray-700',
                                         'block px-4 py-2 text-sm'

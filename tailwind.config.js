@@ -6,13 +6,17 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        marquee: 'marquee 8s linear infinite',
+        marquee: 'marquee 25s linear infinite',
         popup: 'popup 1s ease-in-out'
       },
       keyframes: {
         marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-100%)' },
+          'from': {
+            transform: 'translateX(100%)'
+          },
+          'to': {
+            transform: 'translateX(-200%)'
+          }
         },
         popup: {
           'from': {
