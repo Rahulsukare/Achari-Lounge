@@ -1,7 +1,4 @@
 import React from 'react';
-import location from '../Assets/location.svg';
-import email from '../Assets/email.svg';
-import phone from '../Assets/phone.svg';
 
 import { BiMap ,BiPhoneCall ,BiMailSend  } from 'react-icons/bi';
 

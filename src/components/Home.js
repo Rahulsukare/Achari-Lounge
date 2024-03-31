@@ -61,24 +61,24 @@ const Home = () => {
 
             <div class="overflow-x-hidden py-28">
                 <div class="py-12 animate-marquee whitespace-nowrap flex gap-5">
-                    <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
+                    <span class="mx-4 text-stroke-1 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">POPULAR DISHES</span>
                     <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOOD</span>
+                    <span class="mx-4 text-stroke-2 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">TASTY FOOD</span>
                     <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <span class="mx-4 text-stroke-3 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">VARIETY OF DISHES</span>
                     <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
+                    <span class="mx-4 text-stroke-1 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">POPULAR DISHES</span>
                     <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOOD</span>
+                    <span class="mx-4 text-stroke-2 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">TASTY FOOD</span>
                     <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <span class="mx-4 text-stroke-3 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">VARIETY OF DISHES</span>
                     <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-1 text-8xl font-extrabold italic">POPULAR DISHES</span>
-                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-2 text-8xl font-extrabold italic">TASTY FOOD</span>
+                    <span class="mx-4 text-stroke-1 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">POPULAR DISHES</span>
                     <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
-                    <span class="mx-4 text-stroke-3 text-8xl font-extrabold italic">VARIETY OF DISHES</span>
-                    <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-2 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">TASTY FOOD</span>
+                     <img src={burgerIconMarquee} alt="burgerIconMarquee" className=' -skew-x-12'/>
+                    <span class="mx-4 text-stroke-3 text-6xl sm:text-7xl md:text-8xl font-extrabold italic">VARIETY OF DISHES</span>
+                    <img src={pizzaIconMarquee} alt="pizzaIconMarquee" className=' -skew-x-12'/>
                 </div>
             </div>
 

@@ -7,11 +7,23 @@ module.exports = {
     extend: {
       animation: {
         marquee: 'marquee 8s linear infinite',
+        popup: 'popup 1s ease-in-out'
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-100%)' },
+        },
+        popup: {
+          'from': {
+            opacity: 0,
+            transform: 'translateY(20%)'
+          },
+          'to': {
+            opacity: 1,
+            transform: 'translateY(0%)'
+          }
+
         }
       },
       colors: {
