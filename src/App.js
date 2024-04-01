@@ -59,6 +59,7 @@ function App() {
     }
 
     fetchUser();
+    
   });
 
   // Check if current route is login page

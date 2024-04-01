@@ -5,7 +5,7 @@ import axios from 'axios';
 import ReviewItem from './ReviewItem';
 import Stars from './Stars';
 
-import { BiCart,BiSad  } from 'react-icons/bi';
+import { BiCart, BiSad } from 'react-icons/bi';
 
 const Item = () => {
   const navigate = useNavigate();
@@ -74,6 +74,10 @@ const Item = () => {
 
   }
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  document.title = `${capitalizeFirstLetter(name)} - FoodRestro`;
 
   return (
     <>
@@ -95,35 +99,35 @@ const Item = () => {
               <p className="mb-4 text-sm font-semibold text-slate-600">{item.description} </p>
               <div className="mt-20 font-bold text-lg text-red-600">₹ {item.price}</div>
 
-              {item.quantity===0 ?
-            <></>
-            :
-            <div className='flex items-center gap-6'>
-                <div className=' font-semibold text-gray-900 text-sm'>Quantity : </div>
-                <div className="flex items-center w-fit rounded-md gap-8 border-black border">
-                  <button className={`px-5 py-3 font-semibold focus:outline-none rounded-md hover:bg-slate-100 ${numberOfCartItem === 0 && 'opacity-50 cursor-not-allowed'}`} onClick={() => setNumberOfCartItem(Math.max(numberOfCartItem - 1, 0))} disabled={numberOfCartItem === 0}> - </button>
-                  <div className=' text-gray-700 font-semibold'>
-                    {numberOfCartItem}
+              {item.quantity === 0 ?
+                <></>
+                :
+                <div className='flex items-center gap-6'>
+                  <div className=' font-semibold text-gray-900 text-sm'>Quantity : </div>
+                  <div className="flex items-center w-fit rounded-md gap-8 border-black border">
+                    <button className={`px-5 py-3 font-semibold focus:outline-none rounded-md hover:bg-slate-100 ${numberOfCartItem === 0 && 'opacity-50 cursor-not-allowed'}`} onClick={() => setNumberOfCartItem(Math.max(numberOfCartItem - 1, 0))} disabled={numberOfCartItem === 0}> - </button>
+                    <div className=' text-gray-700 font-semibold'>
+                      {numberOfCartItem}
+                    </div>
+                    <button className={`px-5 py-3 font-semibold focus:outline-none rounded-md hover:bg-slate-100 ${numberOfCartItem >= item.quantity && 'opacity-50 cursor-not-allowed'}`} onClick={() => { setNumberOfCartItem(numberOfCartItem + 1) }} disabled={numberOfCartItem >= item.quantity}> + </button>
                   </div>
-                  <button className="px-5 py-3 font-semibold focus:outline-none rounded-md hover:bg-slate-100" onClick={() => { setNumberOfCartItem(numberOfCartItem + 1) }}> + </button>
                 </div>
-              </div>  
-            }
+              }
 
 
 
               <button
-                className={`uppercase w-full md:w-96 mt-3 py-3 text-lg rounded-sm text-white  flex justify-center gap-2 ${item.quantity===0 ? 'cursor-not-allowed bg-red-400':'bg-green-600 hover:bg-red-600'} ${numberOfCartItem === 0 && 'cursor-not-allowed bg-red-400'}`}
+                className={`uppercase w-full md:w-96 mt-3 py-3 text-lg rounded-sm text-white  flex justify-center gap-2 ${item.quantity === 0 ? 'cursor-not-allowed bg-red-400' : 'bg-green-600 hover:bg-red-600'} ${numberOfCartItem === 0 && 'cursor-not-allowed bg-red-400'}`}
                 onClick={() => { addToCart(item._id) }}
                 disabled={numberOfCartItem === 0 || item.quantity === 0}
               >
-                {item.quantity===0 ? <><span>OUT OF STOCK</span><BiSad size={25} /></> : <><BiCart size={25} />
-                <span>Add to cart</span></>}
+                {item.quantity === 0 ? <><span>OUT OF STOCK</span><BiSad size={25} /></> : <><BiCart size={25} />
+                  <span>Add to cart</span></>}
               </button>
 
-              {item.quantity === 0 ? 
-              <div className='font-medium text-sm text-red-600 my-2' >"Sorry No Item Left"</div> :
-              <div className='font-medium text-sm text-gray-700 my-2'>Only <strong>"{item.quantity}"</strong> item left Hurry!</div>}
+              {item.quantity === 0 ?
+                <div className='font-medium text-sm text-red-600 my-2' >"Sorry No Item Left"</div> :
+                <div className='font-medium text-sm text-gray-700 my-2'>Only <strong>"{item.quantity}"</strong> item left Hurry!</div>}
 
               <h6 className='text-sm mt-9 text-zinc-900'>
                 GROUND DELIVERY SURCHARGE :

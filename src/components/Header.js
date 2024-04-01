@@ -32,6 +32,9 @@ const Header = (props) => {
     const isMenuActive = location.pathname === '/menu';
     const isAboutActive = location.pathname === '/about';
     const isContactActive = location.pathname === '/contact';
+    const isCartActive = location.pathname === '/cart';
+    const isOrdersActive = location.pathname === '/orders';
+    const isProfileActive = location.pathname === '/profile';
     // useEffect(() => {
     //     const fetchCartItemsCount = async () => {
     //         try {
@@ -55,6 +58,20 @@ const Header = (props) => {
 
     //     fetchCartItemsCount();
     // },[]);
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    let title = ""
+    if (isHomeActive) {title = 'Home'}
+    if (isMenuActive){title = 'Menu'}
+    if (isAboutActive){ title = 'About'}
+    if (isContactActive){ title = 'Contact'}
+    if (isCartActive){ title = 'Cart'}
+    if (isOrdersActive){ title = 'Orders'}
+    if (isProfileActive){ title = 'Profile'}
+
+    document.title = `${capitalizeFirstLetter(title)} - FoodRestro`;
 
     return (
         <div className=" w-full animate-fade-in ">

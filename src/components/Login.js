@@ -143,6 +143,17 @@ const Login = () => {
         setToggle(!toggle)
     }
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    if(isSignInForm){
+        document.title = `${capitalizeFirstLetter('Login')} - FoodRestro`;
+    }
+    if(!isSignInForm){
+        document.title = `${capitalizeFirstLetter('SignUp')} - FoodRestro`;
+    }
+
     return (
         <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
             <div className="md:w-1/3 max-w-sm">

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { BiCart, BiX,BiShoppingBag  } from 'react-icons/bi';
+import { BiCart, BiX, BiShoppingBag } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
 const Cart = (props) => {
@@ -312,6 +312,13 @@ const Cart = (props) => {
         }
     }
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    if(checkout){
+        document.title = `${capitalizeFirstLetter('checkout')} - FoodRestro`;
+    }
+
     return (
         <>
             <div className={`overflow-x-auto mx-auto bg-[#f4f1ea] animate-fade-in ${checkout ? "hidden" : ""}`}>
@@ -369,7 +376,9 @@ const Cart = (props) => {
                     </table>
 
                     <div className='flex'>
-                        <button className='uppercase font-bold w-fit py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600' ><Link to="/menu">View More &nbsp; &rarr; </Link></button>
+                        <Link to='/menu'>
+                            <button className='uppercase font-bold w-fit py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600' >View More &nbsp; &rarr; </button>
+                        </Link>
                     </div>
 
                 </div>
