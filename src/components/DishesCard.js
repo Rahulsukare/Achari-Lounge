@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BiCart ,BiCheckCircle } from 'react-icons/bi';
+import { BiCart, BiCheckCircle, BiSad } from 'react-icons/bi';
 
 const DishesCard = (props) => {
     const navigate = useNavigate();
@@ -55,9 +55,15 @@ const DishesCard = (props) => {
                 <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{props.category}</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">{props.name}</h2>
                 <p className="mt-1 text-red-600 font-medium">₹ {props.price}</p>
-                <button className={`uppercase w-full mt-5 py-3 text-[0.6rem] font-semibold rounded-xl bg-zinc-800 text-white hover:bg-red-600 flex justify-center gap-1 transition-all ease-in-out delay-75`} onClick={() => { addToCart(props.id) }} disabled={isAdded}>
-                    <div>{isAdded ? 'Item Added' : 'Add to cart'}</div>
-                    {isAdded ? <BiCheckCircle size={14}/>:<BiCart size={14} />}
+                <button className={`uppercase w-full mt-5 py-3 text-[0.6rem] font-semibold rounded-xl  text-white  flex justify-center gap-1 transition-all ease-in-out delay-75 ${props.quantity === 0 ? 'bg-red-500 text-white cursor-not-allowed' : 'bg-zinc-800 hover:bg-red-600'}`} onClick={() => { addToCart(props.id) }} disabled={isAdded || props.quantity === 0}>
+                    {props.quantity === 0 ? <><span>OUT OF STOCK</span><BiSad size={14} /></>
+                        :
+                        <>
+                            {isAdded ? <><div>Item Added</div><BiCheckCircle size={14} /></> : <><BiCart size={14} />
+                                <span>Add to cart</span></>}
+
+                        </>
+                    }
                 </button>
             </div>
         </div>

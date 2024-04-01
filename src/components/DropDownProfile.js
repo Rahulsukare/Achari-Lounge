@@ -39,7 +39,7 @@ export default function DropDownProfile(props) {
                                     to='/orders'
                                     className={classNames(
                                         isOrders ? 'bg-gray-100 text-red-600' : 'text-gray-700',
-                                        'block px-4 py-2 text-sm'
+                                        'block px-4 py-2 text-sm hover:bg-gray-50'
                                     )}
                                 >
                                     Your Orders
@@ -52,7 +52,7 @@ export default function DropDownProfile(props) {
                                     to='/profile'
                                     className={classNames(
                                         isProfile ? 'bg-gray-100 text-red-600' : 'text-gray-700',
-                                        'block px-4 py-2 text-sm'
+                                        'block px-4 py-2 text-sm hover:bg-gray-50'
                                     )}
                                 >
                                     Profile
@@ -64,7 +64,7 @@ export default function DropDownProfile(props) {
                                 <Link
                                     to='/login'
                                     className={classNames(
-                                        ' text-red-600 hover:text-red-400',
+                                        ' text-red-600 hover:text-red-400 hover:bg-gray-50',
                                         'px-4 py-2 text-sm text-nowrap flex items-center gap-1'
                                     )}
                                 >
