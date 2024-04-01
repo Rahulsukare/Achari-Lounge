@@ -16,13 +16,13 @@ const OrdersStatus = () => {
         if (ordersStatus === 'pending') {
           URL = `${process.env.REACT_APP_HOST_URL}/auth/getPendingOrders`
         }
-        if (ordersStatus === 'confirmed') {
+         else if(ordersStatus === 'confirmed') {
           URL =  `${process.env.REACT_APP_HOST_URL}/auth/getConfirmedOrders`
         }
-        if (ordersStatus === 'out for delivery') {
+        else if(ordersStatus === 'out for delivery') {
           URL =  `${process.env.REACT_APP_HOST_URL}/auth/getOutForDeliveryOrders`
         }
-        if (ordersStatus === 'delivered') {
+        else if(ordersStatus === 'delivered') {
           URL =  `${process.env.REACT_APP_HOST_URL}/auth/getDeliveredOrders`
         }
         const config = {

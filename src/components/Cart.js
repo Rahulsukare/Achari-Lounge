@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BiCart, BiX, BiShoppingBag } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
+import { loadStripe } from '@stripe/stripe-js'
+
+
 const Cart = (props) => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
@@ -308,14 +311,69 @@ const Cart = (props) => {
         }
         else {
             console.log("Card order processing....")
-            return;
+            try {
+                const stripe = await loadStripe("pk_test_51OyVVOSAWb2FjJrNU1aA5jEsl82WVhQ9e3XgCKx0XrcC5FenRMtvETdI9jLosLuqN9VL065Q7WsW52SxZEYoc6PG004NeShwdw")
+
+                const body = {
+                    products: data,
+                    customerName: orderData.name,
+                    customerAddress: orderData.address
+                }
+                const headers = {
+                    'Content-Type': 'application/json'
+                }
+
+                const response = await fetch(`${process.env.REACT_APP_HOST_URL}/order/create-checkout-session`, {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(body)
+                });
+                const session = await response.json();
+
+                const result = stripe.redirectToCheckout({
+                    sessionId: session.id
+                })
+                if (result.error) {
+                    console.log(result.error)
+                }
+                else{
+                    try {
+                        let config = {
+                            method: 'post',
+                            url: `${process.env.REACT_APP_HOST_URL}/order/addOrder`,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'auth-token': `${localStorage.getItem('auth-token')}`
+                            },
+                            data: orderData
+                        };
+
+                        const response = await axios(config);
+                        if (response) {
+                            // navigate('/orders')
+                            // alert('Order Placed Successfully')
+                            setCheckOut(false)
+                        }
+                        else {
+                            console.log("Request failed")
+                            alert('Order Failed')
+                        }
+                    } catch (error) {
+                        console.log('Add order request failed')
+                    }
+                    console.log("Card order Completed .")
+                }
+
+            } catch (error) {
+                alert('Payment Failed')
+            }
         }
     }
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    if(checkout){
+    if (checkout) {
         document.title = `${capitalizeFirstLetter('checkout')} - FoodRestro`;
     }
 
@@ -420,7 +478,7 @@ const Cart = (props) => {
                         <div className='flex flex-col gap-5 w-full md:w-1/2 p-2 rounded-md'>
 
                             <div className='font-medium text-sm md:text-md text-zinc-700'>CONTACT INFORMATION</div>
-                            <input type="tel" name="number" id="number" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' pattern="[7-9]{1}[0-9]{9}" minlength="10" maxlength="10" onChange={(e) => setphoneNumber(e.target.value)} value={phoneNumber} required />
+                            <input type="tel" name="number" id="number" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' pattern="[7-9]{1}[0-9]{9}" minLength="10" maxLength="10" onChange={(e) => setphoneNumber(e.target.value)} value={phoneNumber} required />
                             {phoneNumberError && <div className="text-red-500 text-xs mt-1">{phoneNumberError}</div>}
 
                             <hr className='border-t border-gray-300 my-5' />
