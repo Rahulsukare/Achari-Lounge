@@ -17,7 +17,7 @@ const Stars = ({ rating }) => {
     });
 
     return (
-        <div className="flex items-center gap-1">
+        <div className="flex py-2 gap-1">
             {stars.map((star, index) => (
                 <span key={index}>{star}</span>
             ))}
