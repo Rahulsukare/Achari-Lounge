@@ -1,10 +1,9 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import { BiCart, BiX, BiShoppingBag } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
-import { loadStripe } from '@stripe/stripe-js'
 
 
 const Cart = (props) => {
@@ -18,9 +17,10 @@ const Cart = (props) => {
     const [finalTotal, setFinalTotal] = useState(0);
 
     const [paymentMethod, setpaymentMethod] = useState('card');
-    const [name, setname] = useState(props.userName || ''); // Initialize with props or empty string
-    const [phoneNumber, setphoneNumber] = useState(props.phoneNumber || ''); // Initialize with props or empty string
-    const [address, setaddress] = useState(props.address || ''); // Initialize with props or empty string
+    const [name, setname] = useState(props.userName || '');
+    const [email, setemail] = useState(props.email || '')
+    const [phoneNumber, setphoneNumber] = useState(props.phoneNumber || '');
+    const [address, setaddress] = useState(props.address || '');
 
     // Validation states
     const [nameError, setNameError] = useState('');
@@ -310,62 +310,95 @@ const Cart = (props) => {
 
         }
         else {
-            console.log("Card order processing....")
+            console.log("Card order processing....");
             try {
-                const stripe = await loadStripe("pk_test_51OyVVOSAWb2FjJrNU1aA5jEsl82WVhQ9e3XgCKx0XrcC5FenRMtvETdI9jLosLuqN9VL065Q7WsW52SxZEYoc6PG004NeShwdw")
+                const response = await axios.post(`${process.env.REACT_APP_HOST_URL}/order/checkout`, { amount: finalTotal });
 
-                const body = {
-                    products: data,
-                    customerName: orderData.name,
-                    customerAddress: orderData.address
-                }
-                const headers = {
-                    'Content-Type': 'application/json'
-                }
+                if (response.data.success === true) {
+                    const options = {
+                        key: "rzp_test_tV1cfQiqQ5MW4d",
+                        amount: response.data.paymentOrder.amount,
+                        currency: "INR",
+                        name: "Food Restro", //your business name
+                        description: "Food Restro Payments",
+                        image: "/favicon.png",
+                        order_id: response.data.paymentOrder.id,
+                        // callback_url: "http://localhost:8001/order/paymentVerification",
+                        remember_customer: true,
+                        prefill: {
+                            "name": name,
+                            "email": email,
+                            "contact": phoneNumber
+                        },
+                        notes: {
+                            "address": "Razorpay Corporate Office"
+                        },
+                        theme: {
+                            "color": "#00813D"
+                        },
+                        handler: async function (response) {
+                            console.log("callBack Invoked:", response);
 
-                const response = await fetch(`${process.env.REACT_APP_HOST_URL}/order/create-checkout-session`, {
-                    method: "POST",
-                    headers: headers,
-                    body: JSON.stringify(body)
-                });
-                const session = await response.json();
+                            // Check if the callback URL responded well
+                            try {
+                                const callbackResponse = await axios.post(`${process.env.REACT_APP_HOST_URL}/order/paymentVerification`, {
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature
+                                });
+                                if (callbackResponse.data.success === true) {
+                                    // Proceed to add order after payment success
+                                    try {
+                                        let config = {
+                                            method: 'post',
+                                            url: `${process.env.REACT_APP_HOST_URL}/order/addOrder`,
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'auth-token': `${localStorage.getItem('auth-token')}`
+                                            },
+                                            data: orderData
+                                        };
 
-                const result = stripe.redirectToCheckout({
-                    sessionId: session.id
-                })
-                if (result.error) {
-                    console.log(result.error)
-                }
-                else{
-                    try {
-                        let config = {
-                            method: 'post',
-                            url: `${process.env.REACT_APP_HOST_URL}/order/addOrder`,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'auth-token': `${localStorage.getItem('auth-token')}`
-                            },
-                            data: orderData
-                        };
-
-                        const response = await axios(config);
-                        if (response) {
-                            // navigate('/orders')
-                            // alert('Order Placed Successfully')
-                            setCheckOut(false)
+                                        const orderResponse = await axios(config);
+                                        if (orderResponse) {
+                                            setCheckOut(false);
+                                            console.log("Card order Completed .");
+                                            navigate('/success');
+                                            window.scrollTo(0, 0);
+                                        } else {
+                                            console.log("Request failed");
+                                            alert('Payment Completed But Order place did not respond');
+                                        }
+                                    } catch (error) {
+                                        console.log('Add order request failed');
+                                        navigate('/failed')
+                                        // Scroll window to top after navigation
+                                        window.scrollTo(0, 0);
+                                        alert('Payment Completed But Order Failed');
+                                    }
+                                } else {
+                                    console.log("Callback URL did not respond well");
+                                    navigate('/failed')
+                                    // Scroll window to top after navigation
+                                    window.scrollTo(0, 0);
+                                    alert("Payment verification failed");
+                                }
+                            } catch (error) {
+                                console.error("Error verifying payment:", error);
+                                navigate('/failed')
+                                // Scroll window to top after navigation
+                                window.scrollTo(0, 0);
+                                alert("Payment verification failed");
+                            }
                         }
-                        else {
-                            console.log("Request failed")
-                            alert('Order Failed')
-                        }
-                    } catch (error) {
-                        console.log('Add order request failed')
-                    }
-                    console.log("Card order Completed .")
+                    };
+                    const razor = await new window.Razorpay(options);
+                    razor.open();
+                } else {
+                    alert('Checkout Payment Failed');
                 }
-
             } catch (error) {
-                alert('Payment Failed')
+                alert('Payment Failed');
             }
         }
     }

@@ -9,7 +9,7 @@ import { BiCart, BiSad } from 'react-icons/bi';
 const Item = () => {
   const navigate = useNavigate();
   const { name } = useParams();
-  const [menuItem, setMenuItem] = useState(null);
+  const [menuItem, setMenuItem] = useState([]);
   const [reviews, setReviews] = useState([])
   const [numberOfreviews, setNumberOfreviews] = useState(0)
   const [review, setReview] = useState('')
@@ -57,7 +57,7 @@ const Item = () => {
   }, [name]); // Fetch menu item whenever the name parameter changes
 
 
-  const addToCart = (id) => {
+  const addToCart = async (id) => {
 
     try {
       let config = {
@@ -71,7 +71,7 @@ const Item = () => {
         data: { itemId: id, quantity: numberOfCartItem }
       };
 
-      axios.request(config)
+      await axios.request(config)
         .then(response => {
           console.log("Item Added to cart")
           navigate(`/item/${name}`)
@@ -196,8 +196,10 @@ const Item = () => {
 
       {/* Item ends here */}
 
-      {/* Bottom Reviews container starts */}
-      <div className="  mt-9 px-12 md:px-20 lg:px-40">
+      {menuItem &&
+      <>
+          {/* Bottom Reviews container starts */}
+          <div className="  mt-9 px-12 md:px-20 lg:px-40">
         {/* Tabs */}
         <ul id='tabs' className='flex gap-5 mb-16 overflow-x-auto'>
           <li className='uppercase bg-amber-500 py-3 px-7 font-bold min-w-fit rounded-md cursor-pointer'>reviews ({numberOfreviews})</li>
@@ -244,6 +246,8 @@ const Item = () => {
         {/* form end */}
       </div>
       {/* Review Form End */}
+      </>}
+  
     </>
   );
 };
