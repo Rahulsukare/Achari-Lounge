@@ -137,7 +137,7 @@ const Menu = () => {
                         {/* SEARCH BUTTON */}
                         <form className="mx-auto mb-10" onSubmit={handleSearch}>
                             <div className="relative flex items-center border border-zinc-400 rounded-lg">
-                                {back && <button className="p-3 ml-2 text-zinc-800" onClick={getAll}><BiArrowBack size={20}/></button>}
+                                {/* {back && <button className="p-3 ml-2 text-zinc-800" onClick={getAll}><BiArrowBack size={20}/></button>} */}
                                 <div className={` ${back && 'hidden'} absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none`}>
                                     <svg className="w-4 h-4 text-zinc-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />

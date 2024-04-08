@@ -4,8 +4,6 @@ import { Link, redirect, useNavigate } from 'react-router-dom';
 import { BiCart, BiX, BiShoppingBag } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
-
-
 const Cart = (props) => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
@@ -211,7 +209,8 @@ const Cart = (props) => {
             };
 
             const response = await axios(config);
-            console.log(response.data);
+            // console.log(response.data);
+            setData(response.data.cart)
             console.log("Item Removed Successfully");
             navigate('/cart');
             setUpdate(!update)
@@ -296,16 +295,21 @@ const Cart = (props) => {
 
                 const response = await axios(config);
                 if (response) {
-                    navigate('/orders')
-                    alert('Order Placed Successfully')
+                    navigate('/success')
+                    window.scrollTo(0, 0);
                     setCheckOut(false)
+                    // alert('Order Placed Successfully')
                 }
                 else {
                     console.log("Request failed")
-                    alert('Order Failed')
+                    navigate('/failed')
+                    window.scrollTo(0, 0);
+                    setCheckOut(false)
+                    // alert('Order Failed')
                 }
             } catch (error) {
                 console.log('Add order request failed')
+                setCheckOut(false)
             }
 
         }

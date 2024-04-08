@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       animation: {
         marquee: 'marquee 25s linear infinite',
-        popup: 'popup 1s ease-in-out'
+        popup: 'popup 1s ease-in-out',
+        order: 'order 2s ease-in-out infinite'
       },
       keyframes: {
         marquee: {
@@ -27,7 +28,20 @@ module.exports = {
             opacity: 1,
             transform: 'translateY(0%)'
           }
-
+        },
+        order: {
+          '0%': {
+            // opacity: 0,
+            transform: 'scale(1)'
+          },
+          '50%': {
+            // opacity: 1,
+            transform: 'scale(1.1)'
+          },
+          '100%': {
+            // opacity: 1,
+            transform: 'scale(1)'
+          }
         }
       },
       colors: {

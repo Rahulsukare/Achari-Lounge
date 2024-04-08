@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BiCart, BiCheckCircle, BiSad } from 'react-icons/bi';
+import Stars from './Stars';
 
 const DishesCard = (props) => {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ const DishesCard = (props) => {
     };
 
     return (
-        <div className='lg:w-1/4 md:w-1/2 p-4 w-full transition-all duration-300 ease-in-out transform hover:bg-amber-400 hover:scale-105 rounded-lg'>
+        <div className=' group lg:w-1/4 md:w-1/2 p-4 w-full transition-all duration-300 ease-in-out transform hover:bg-[#FFB936] hover:scale-105 rounded-lg'>
             <Link to={`/item/${props.name}`} className="">
                 <div className="block relative h-48 rounded overflow-hidden">
                     <img loading='lazy' alt="ecommerce" className="object-cover object-center w-full h-full block" src={props.img}></img>
@@ -55,16 +56,26 @@ const DishesCard = (props) => {
                 <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{props.category}</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">{props.name}</h2>
                 <p className="mt-1 text-red-600 font-medium">₹ {props.price}</p>
-                <button className={`uppercase w-full mt-5 py-3 text-[0.6rem] font-semibold rounded-xl  text-white  flex justify-center gap-1 transition-all ease-in-out delay-75 ${props.quantity === 0 ? 'bg-red-500 text-white cursor-not-allowed' : 'bg-zinc-800 hover:bg-red-600'}`} onClick={() => { addToCart(props.id) }} disabled={isAdded || props.quantity === 0}>
+
+                <div className='flex mt-3'>
+                    <div className='hidden group-hover:block'>
+                        <Stars rating={5} color={'white'} size={18} />
+                    </div>
+                    <div className='group-hover:hidden'>
+                        <Stars rating={props.rating} size={18} />
+                    </div>
+                </div>
+
+                <button className={`uppercase w-full mt-5 py-3 text-[0.6rem] font-semibold rounded-xl  text-white  flex justify-center gap-1 transition-all ease-in-out delay-75 ${props.quantity === 0 ? 'bg-red-500 text-white cursor-not-allowed' : 'bg-zinc-800 hover:bg-[#00813D]'}`} onClick={() => { addToCart(props.id) }} disabled={isAdded || props.quantity === 0}>
                     {props.quantity === 0 ? <><span>OUT OF STOCK</span><BiSad size={14} /></>
                         :
                         <>
                             {isAdded ? <><div>Item Added</div><BiCheckCircle size={14} /></> : <><BiCart size={14} />
                                 <span>Add to cart</span></>}
-
                         </>
                     }
                 </button>
+
             </div>
         </div>
     );

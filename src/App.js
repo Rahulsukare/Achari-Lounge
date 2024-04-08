@@ -13,6 +13,8 @@ import Footer from './components/Footer';
 
 import axios from 'axios';
 import Contact from './components/Contact';
+import OrderSuccess from './components/OrderSuccess';
+import OrderFailed from './components/OrderFailed';
 
 function App() {
 
@@ -83,14 +85,8 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/about' element={<About />} />
-            <Route path='/success' element={<div className="bg-green-100 rounded-lg p-6 shadow-md">
-              <h2 className="text-green-700 text-2xl font-bold mb-4">Order Placed Successfully!</h2>
-              <p className="text-gray-700">Thank you for your order. We have received your order and it is being processed. You will receive a confirmation email shortly.</p>
-            </div>} />
-            <Route path='/failed' element={<div className="bg-red-100 rounded-lg p-6 shadow-md">
-              <h2 className="text-red-700 text-2xl font-bold mb-4">Order Failed</h2>
-              <p className="text-gray-700">We apologize, but there was an issue processing your order. Please try again later or contact support for assistance.</p>
-            </div>} />
+            <Route path='/success' element={<OrderSuccess/>} />
+            <Route path='/failed' element={<OrderFailed/>} />
             <Route path='/contact' element={<Contact />} />
             <Route path='*' element={<Navigate to='/' />} />
           </Routes>
