@@ -8,11 +8,11 @@ const Stars = ({ rating,size,color }) => {
     // Generate an array of star icons based on the rounded value
     const stars = Array.from({ length: 5 }, (_, index) => {
         if (index + 0.5 === roundedValue) {
-            return <BiSolidStarHalf className={`text-${color || '[#ffb936]' }`} size={size || 15}  key={index} />;
+            return <BiSolidStarHalf className={`${color? 'text-white ': "text-[#ffb936]"} `} size={size || 15}  key={index} />;
         } else if (index + 1 <= roundedValue) {
-            return <BiSolidStar className={`text-${color || '[#ffb936]' }`} size={size || 15}  key={index} />;
+            return <BiSolidStar className={`${color? 'text-white ': "text-[#ffb936]"} `} size={size || 15}  key={index} />;
         } else {
-            return <BiSolidStar className={`text-${color || '[#d4d4d4]' }`} size={size || 15}  key={index} />;
+            return <BiSolidStar className={`${color? 'text-white ': "text-[#d4d4d4]"}  `} size={size || 15}  key={index} />;
         }
     });
 

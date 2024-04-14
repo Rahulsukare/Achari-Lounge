@@ -24,7 +24,7 @@ const Menu = () => {
 
     useEffect(() => {
         setLoading(true);
-        const fetchData = async () => {
+        const fetchCategories = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_HOST_URL}/category/getAllCategories`);
                 const data = await response.json();
@@ -47,10 +47,10 @@ const Menu = () => {
             }
         };
 
-        fetchData();
+        fetchCategories();
         fetchAllMenuItems();
 
-        Promise.all([fetchData(), fetchAllMenuItems()]).then(() => {
+        Promise.all([fetchCategories(), fetchAllMenuItems()]).then(() => {
             setLoading(false);
         }).catch(error => {
             setLoading(false);
