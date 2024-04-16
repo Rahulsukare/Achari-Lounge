@@ -110,18 +110,33 @@ body {
   text-transform: uppercase;
 }
 
-/* For vertical scrollbar */
-body::-webkit-scrollbar {
-  width: 4px;
-  /* width of the vertical scrollbar */
+/* Vertical Scrollbar */
+::-webkit-scrollbar {
+  width: 4px; /* Width of the vertical scrollbar */
 }
 
-body::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   border-radius: 20px;
   background-color: #acf0cc;
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: #00813d;
   border-radius: 20px;
 }
+
+/* Horizontal Scrollbar */
+::-webkit-scrollbar:horizontal {
+  height: 4px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track:horizontal {
+  border-radius: 20px;
+  background-color: #acf0cc;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: #00813d;
+  border-radius: 20px;
+}
+

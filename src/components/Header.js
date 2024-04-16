@@ -74,13 +74,13 @@ const Header = (props) => {
     document.title = `${capitalizeFirstLetter(title)} - FoodRestro`;
 
     return (
-        <div className=" w-full animate-fade-in ">
+        <div className=" w-full animate-fade-in overflow-x-auto">
             <div>
-                <div className=" flex flex-row justify-between py-5 px-10 md:py-0 md:px-10 md:px-356 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                <div className="min-w-fit flex flex-row justify-between py-5 px-10 md:py-0 md:px-10 md:px-356 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
 
                     <div className=" flex flex-row items-center cursor-pointer">
                         {/* <img className="w-24 rounded-full" src="../Assets/RestLogo.png" alt="" /> */}
-                        <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden">FoodRestro</h1>
+                        <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden mr-10 md:mr-5">FoodRestro</h1>
                     </div>
 
                     <nav className="hidden md:flex flex-row items-center text-sm text-slate-900 font-semibold gap-8">
