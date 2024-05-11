@@ -32,6 +32,9 @@ const Header = (props) => {
     const isMenuActive = location.pathname === '/menu';
     const isAboutActive = location.pathname === '/about';
     const isContactActive = location.pathname === '/contact';
+    const isCartActive = location.pathname === '/cart';
+    const isOrdersActive = location.pathname === '/orders';
+    const isProfileActive = location.pathname === '/profile';
     // useEffect(() => {
     //     const fetchCartItemsCount = async () => {
     //         try {
@@ -56,35 +59,49 @@ const Header = (props) => {
     //     fetchCartItemsCount();
     // },[]);
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    let title = ""
+    if (isHomeActive) {title = 'Home'}
+    if (isMenuActive){title = 'Menu'}
+    if (isAboutActive){ title = 'About'}
+    if (isContactActive){ title = 'Contact'}
+    if (isCartActive){ title = 'Cart'}
+    if (isOrdersActive){ title = 'Orders'}
+    if (isProfileActive){ title = 'Profile'}
+
+    document.title = `${capitalizeFirstLetter(title)} - FoodRestro`;
+
     return (
-        <div className=" w-full animate-fade-in ">
+        <div className=" w-full animate-fade-in overflow-x-auto">
             <div>
-                <div className=" flex flex-row justify-between py-5 px-10 md:py-0 md:px-10 md:px-356 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                <div className="min-w-fit flex flex-row justify-between py-5 px-10 md:py-0 md:px-10 md:px-356 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
 
                     <div className=" flex flex-row items-center cursor-pointer">
                         {/* <img className="w-24 rounded-full" src="../Assets/RestLogo.png" alt="" /> */}
-                        <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden">FoodRestro</h1>
+                        <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden mr-10 md:mr-5">FoodRestro</h1>
                     </div>
 
                     <nav className="hidden md:flex flex-row items-center text-sm text-slate-900 font-semibold gap-8">
-                        <Link to='/' className={`hover:text-red-600 ${isHomeActive && 'text-red-600'} cursor-pointer`}>
+                        <Link to='/' className={`hover:text-[#D12525] ${isHomeActive && 'text-[#D12525]'} cursor-pointer`}>
                             Home
                         </Link>
 
-                        <Link to='/menu' className={`hover:text-red-600 ${isMenuActive && 'text-red-600'} cursor-pointer`} >
+                        <Link to='/menu' className={`hover:text-[#D12525] ${isMenuActive && 'text-[#D12525]'} cursor-pointer`} >
                             Menu
                         </Link>
 
-                        <Link to='/about' className={`hover:text-red-600 ${isAboutActive && 'text-red-600'} cursor-pointer`}>
+                        <Link to='/about' className={`hover:text-[#D12525] ${isAboutActive && 'text-[#D12525]'} cursor-pointer`}>
                             About
                         </Link>
 
-                        <Link to='/contact' className={`hover:text-red-600 ${isContactActive && 'text-red-600'} cursor-pointer`}>
+                        <Link to='/contact' className={`hover:text-[#D12525] ${isContactActive && 'text-[#D12525]'} cursor-pointer`}>
                             Contact
                         </Link>
                         <div className="flex  justify-center items-center gap-3">
                             <Link to='/cart' className='relative'>
-                                <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
+                                <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-[#D12525] text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
                                     {props.cartItemCount || 0}
                                 </span>
                                 <BiShoppingBag className="" size={30} />
@@ -113,7 +130,7 @@ const Header = (props) => {
                             {/* <DropDownProfile username={props.userName} /> */}
 
                             {/* <Link to='/login' className=''> */}
-                            <button onClick={() => { handleLogoutClick() }} className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
+                            <button onClick={() => { handleLogoutClick() }} className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
                                 <h1>Logout</h1> <BiPowerOff size={21} />
                             </button>
                             {/* </Link> */}
@@ -122,13 +139,13 @@ const Header = (props) => {
 
                     <div className="md:hidden flex gap-3 items-center">
                         <Link to='/cart' className='relative'>
-                            <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-red-600 text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
+                            <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-[#D12525] text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
                                 {props.cartItemCount || 0}
                             </span>
                             <BiShoppingBag className="" size={30} />
                         </Link>
                         {/* <Link to='/login' className=''>
-                            <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
+                            <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
                                 <h1>Logout</h1> <BiPowerOff size={21} />
                             </button>
                         </Link> */}
@@ -143,24 +160,24 @@ const Header = (props) => {
                     className={` ${menu ? "translate-x-0" : "-translate-x-full"
                         } lg:hidden flex flex-col absolute bg-white text-black left-0 top-20 font-normal text-2xl text-center pt-8 pb-4 gap-8 w-full h-fit transition-transform duration-300 z-50`}
                 >
-                    <Link to='/' className={`hover:text-red-600 ${isHomeActive && 'text-red-600'}`} onClick={closeMenu} >
+                    <Link to='/' className={`hover:text-[#D12525] ${isHomeActive && 'text-[#D12525]'}`} onClick={closeMenu} >
                         Home
                     </Link>
-                    <Link to='/menu' className={`hover:text-red-600 ${isMenuActive && 'text-red-600'}`} onClick={closeMenu}>
+                    <Link to='/menu' className={`hover:text-[#D12525] ${isMenuActive && 'text-[#D12525]'}`} onClick={closeMenu}>
                         Menu
                     </Link>
-                    <Link to='/about' className={`hover:text-red-600 ${isAboutActive && 'text-red-600'}`} onClick={closeMenu}>
+                    <Link to='/about' className={`hover:text-[#D12525] ${isAboutActive && 'text-[#D12525]'}`} onClick={closeMenu}>
                         About
                     </Link>
-                    <Link to='/reviews' className={`hover:text-red-600 ${isContactActive && 'text-red-600'}`} onClick={closeMenu}>
+                    <Link to='/reviews' className={`hover:text-[#D12525] ${isContactActive && 'text-[#D12525]'}`} onClick={closeMenu}>
                         Contact
                     </Link>
-                    <Link to='/profile' className="hover:text-red-600 transition-all cursor-pointer flex justify-center items-center gap-2">
+                    <Link to='/profile' className="hover:text-[#D12525] transition-all cursor-pointer flex justify-center items-center gap-2">
                         <BiUser size={20} />
                         {props.userName}
                     </Link>
                     {/* <Link to='/login' className='mx-auto'> */}
-                    <button onClick={handleLogoutClick} className='uppercase w-fit mx-auto my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
+                    <button onClick={handleLogoutClick} className='uppercase w-fit mx-auto my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
                         <h1>Logout</h1> <BiPowerOff size={21} />
                     </button>
                     {/* </Link> */}

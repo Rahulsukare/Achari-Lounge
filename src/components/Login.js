@@ -133,14 +133,25 @@ const Login = () => {
             } catch (error) {
                 console.error(error);
                 alert("Invalid Credentials!");
-                setLoading(true)
+                setLoading(false)
             } 
         }
-        
+
     }
 
     const toggleShowHidePass = () => {
         setToggle(!toggle)
+    }
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    if (isSignInForm) {
+        document.title = `${capitalizeFirstLetter('Login')} - FoodRestro`;
+    }
+    if (!isSignInForm) {
+        document.title = `${capitalizeFirstLetter('SignUp')} - FoodRestro`;
     }
 
     return (
@@ -152,7 +163,7 @@ const Login = () => {
                 />
             </div>
             <div className="md:w-1/3 max-w-sm">
-                <div className="text-[#F4511F] my-5 text-center font-bold text-3xl md:text-left">
+                <div className="text-red-600 my-5 text-center font-bold text-3xl md:text-left">
                     {(isSignInForm) ? "Login" : "Sign Up"}
                 </div>
                 <form action="" onSubmit={(e) => e.preventDefault()} className=''>
@@ -185,14 +196,17 @@ const Login = () => {
                         <span>Remember Me</span>
                     </label>
                     <Link
-                        className="text-[#F4511F] hover:text-[#ba2f05] hover:underline hover:underline-offset-4"
+                        className="text-red-600 hover:text-red-500 hover:underline hover:underline-offset-4"
                         href="/login"
                     >
                         Forgot Password?
                     </Link>
                 </div>
                 <div>
-                    <p className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left hover: cursor-pointer" onClick={toggleSignIn}>{(isSignInForm) ? "New to Achari-Lounge? Sign Up Now!" : "Already Registered? Sign In Now!"}</p>
+                    {isSignInForm ?
+                        <p className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left " >New to Achari-Lounge? <span onClick={toggleSignIn} className=" text-red-600 underline cursor-pointer">Sign Up Now!</span></p>
+                        :
+                        <p className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left " >Already Registered? <span onClick={toggleSignIn} className=" text-red-600 underline cursor-pointer">Login</span></p>}
                 </div>
             </div>
         </section>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import Header from './components/Header';
 import Home from './components/Home';
 import Menu from './components/Menu';
@@ -10,18 +11,22 @@ import Profile from './components/Profile';
 import OrdersStatus from './components/OrdersStatus';
 import About from './components/About';
 import Footer from './components/Footer';
-
-import axios from 'axios';
 import Contact from './components/Contact';
+import OrderSuccess from './components/OrderSuccess';
+import OrderFailed from './components/OrderFailed';
+
+import { BiUpArrowAlt } from "react-icons/bi";
 
 function App() {
 
   const location = useLocation();
   const [name, setName] = useState('');
+  const [email, setemail] = useState('')
   const [fullName, setfullName] = useState('')
   const [address, setaddress] = useState('');
   const [phoneNumber, setphoneNumber] = useState('')
   const [cartItemCount, setCartItemCount] = useState(0);
+  const [showScrollUp, setShowScrollUp] = useState(false);
 
   useEffect(() => {
 
@@ -43,6 +48,7 @@ function App() {
               const firstName = fullName.split(" ")[0];
               setName(firstName)
               setfullName(response.data.name)
+              setemail(response.data.email)
               setaddress(response.data.address)
               setphoneNumber(response.data.phoneNumber)
               setCartItemCount(response.data.cart.length)
@@ -59,15 +65,37 @@ function App() {
     }
 
     fetchUser();
+
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setShowScrollUp(false);
+      } else {
+        setShowScrollUp(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+
   });
+
+
+  const scrollUp = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   // Check if current route is login page
   const isLoginPage = location.pathname === '/login';
 
   return (
     <div className="App">
-      
-      {/* {!(localStorage.getItem('auth-token')) ? (<><Login /></>) : (<> */}
+      {!(localStorage.getItem('auth-token')) ? (<><Login /></>) : (<>
 
         {/* Conditionally render Header based on whether user is on login page */}
         {!isLoginPage && <Header userName={name || "UserName"} cartItemCount={cartItemCount || 0} />}
@@ -76,12 +104,14 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/menu' element={<Menu />} />
             <Route path='/item/:name' element={<Item />} />
-            <Route path='/cart' element={<Cart userName={fullName} address={address} phoneNumber={phoneNumber} />} />
-            <Route path='/orders' element={<OrdersStatus/>} />
+            <Route path='/cart' element={<Cart userName={fullName} email={email} address={address} phoneNumber={phoneNumber} />} />
+            <Route path='/orders' element={<OrdersStatus />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/about' element={<About />} />
-            <Route path='/contact' element={<Contact/>} />
+            <Route path='/success' element={<OrderSuccess />} />
+            <Route path='/failed' element={<OrderFailed />} />
+            <Route path='/contact' element={<Contact />} />
             <Route path='*' element={<Navigate to='/' />} />
           </Routes>
         </main>

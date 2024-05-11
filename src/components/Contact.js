@@ -4,7 +4,7 @@ import { BiMap ,BiPhoneCall ,BiMailSend  } from 'react-icons/bi';
 
 const Contact = () => {
     return (
-        <div className="mx-auto py-20 md:py-32 bg-[#f4f1ea]">
+        <div className="mx-auto py-20 md:py-32 bg-[#f4f1ea] animate-popup">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 px-10 md:px-28">
                 {/* Address */}
                 <div className="bg-white rounded-lg shadow-md p-8 md:p-12 flex flex-col justify-center items-center cursor-pointer hover:bg-green-700 hover:text-white group transition-all duration-300 ease-in-out">

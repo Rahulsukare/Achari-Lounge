@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { BiCart, BiX,BiShoppingBag  } from 'react-icons/bi';
+import { Link, redirect, useNavigate } from 'react-router-dom';
+import { BiCart, BiX, BiShoppingBag } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
 const Cart = (props) => {
@@ -15,9 +15,10 @@ const Cart = (props) => {
     const [finalTotal, setFinalTotal] = useState(0);
 
     const [paymentMethod, setpaymentMethod] = useState('card');
-    const [name, setname] = useState(props.userName || ''); // Initialize with props or empty string
-    const [phoneNumber, setphoneNumber] = useState(props.phoneNumber || ''); // Initialize with props or empty string
-    const [address, setaddress] = useState(props.address || ''); // Initialize with props or empty string
+    const [name, setname] = useState(props.userName || '');
+    const [email, setemail] = useState(props.email || '')
+    const [phoneNumber, setphoneNumber] = useState(props.phoneNumber || '');
+    const [address, setaddress] = useState(props.address || '');
 
     // Validation states
     const [nameError, setNameError] = useState('');
@@ -208,7 +209,8 @@ const Cart = (props) => {
             };
 
             const response = await axios(config);
-            console.log(response.data);
+            // console.log(response.data);
+            setData(response.data.cart)
             console.log("Item Removed Successfully");
             navigate('/cart');
             setUpdate(!update)
@@ -293,23 +295,123 @@ const Cart = (props) => {
 
                 const response = await axios(config);
                 if (response) {
-                    navigate('/orders')
-                    alert('Order Placed Successfully')
+                    navigate('/success')
+                    window.scrollTo(0, 0);
                     setCheckOut(false)
+                    // alert('Order Placed Successfully')
                 }
                 else {
                     console.log("Request failed")
-                    alert('Order Failed')
+                    navigate('/failed')
+                    window.scrollTo(0, 0);
+                    setCheckOut(false)
+                    // alert('Order Failed')
                 }
             } catch (error) {
                 console.log('Add order request failed')
+                setCheckOut(false)
             }
 
         }
         else {
-            console.log("Card order processing....")
-            return;
+            console.log("Card order processing....");
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_HOST_URL}/order/checkout`, { amount: finalTotal });
+
+                if (response.data.success === true) {
+                    const options = {
+                        key: "rzp_test_tV1cfQiqQ5MW4d",
+                        amount: response.data.paymentOrder.amount,
+                        currency: "INR",
+                        name: "Food Restro", //your business name
+                        description: "Food Restro Payments",
+                        image: "/favicon.png",
+                        order_id: response.data.paymentOrder.id,
+                        // callback_url: "http://localhost:8001/order/paymentVerification",
+                        remember_customer: true,
+                        prefill: {
+                            "name": name,
+                            "email": email,
+                            "contact": phoneNumber
+                        },
+                        notes: {
+                            "address": "Razorpay Corporate Office"
+                        },
+                        theme: {
+                            "color": "#00813D"
+                        },
+                        handler: async function (response) {
+                            console.log("callBack Invoked:", response);
+
+                            // Check if the callback URL responded well
+                            try {
+                                const callbackResponse = await axios.post(`${process.env.REACT_APP_HOST_URL}/order/paymentVerification`, {
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature
+                                });
+                                if (callbackResponse.data.success === true) {
+                                    // Proceed to add order after payment success
+                                    try {
+                                        let config = {
+                                            method: 'post',
+                                            url: `${process.env.REACT_APP_HOST_URL}/order/addOrder`,
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'auth-token': `${localStorage.getItem('auth-token')}`
+                                            },
+                                            data: orderData
+                                        };
+
+                                        const orderResponse = await axios(config);
+                                        if (orderResponse) {
+                                            setCheckOut(false);
+                                            console.log("Card order Completed .");
+                                            navigate('/success');
+                                            window.scrollTo(0, 0);
+                                        } else {
+                                            console.log("Request failed");
+                                            alert('Payment Completed But Order place did not respond');
+                                        }
+                                    } catch (error) {
+                                        console.log('Add order request failed');
+                                        navigate('/failed')
+                                        // Scroll window to top after navigation
+                                        window.scrollTo(0, 0);
+                                        alert('Payment Completed But Order Failed');
+                                    }
+                                } else {
+                                    console.log("Callback URL did not respond well");
+                                    navigate('/failed')
+                                    // Scroll window to top after navigation
+                                    window.scrollTo(0, 0);
+                                    alert("Payment verification failed");
+                                }
+                            } catch (error) {
+                                console.error("Error verifying payment:", error);
+                                navigate('/failed')
+                                // Scroll window to top after navigation
+                                window.scrollTo(0, 0);
+                                alert("Payment verification failed");
+                            }
+                        }
+                    };
+                    const razor = await new window.Razorpay(options);
+                    razor.open();
+                } else {
+                    alert('Checkout Payment Failed');
+                }
+            } catch (error) {
+                alert('Payment Failed');
+            }
         }
+    }
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    if (checkout) {
+        document.title = `${capitalizeFirstLetter('checkout')} - FoodRestro`;
     }
 
     return (
@@ -369,7 +471,9 @@ const Cart = (props) => {
                     </table>
 
                     <div className='flex'>
-                        <button className='uppercase font-bold w-fit py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600' ><Link to="/menu">View More &nbsp; &rarr; </Link></button>
+                        <Link to='/menu'>
+                            <button className='uppercase font-bold w-fit py-3 px-9 text-sm bg-green-600 text-white hover:bg-red-600' >View More &nbsp; &rarr; </button>
+                        </Link>
                     </div>
 
                 </div>
@@ -411,7 +515,7 @@ const Cart = (props) => {
                         <div className='flex flex-col gap-5 w-full md:w-1/2 p-2 rounded-md'>
 
                             <div className='font-medium text-sm md:text-md text-zinc-700'>CONTACT INFORMATION</div>
-                            <input type="tel" name="number" id="number" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' pattern="[7-9]{1}[0-9]{9}" minlength="10" maxlength="10" onChange={(e) => setphoneNumber(e.target.value)} value={phoneNumber} required />
+                            <input type="tel" name="number" id="number" placeholder='PHONE NUMBER' className='w-full p-2 md:p-3 text-sm md:text-md text-gray-700 bg-white border border-gray-300 rounded' pattern="[7-9]{1}[0-9]{9}" minLength="10" maxLength="10" onChange={(e) => setphoneNumber(e.target.value)} value={phoneNumber} required />
                             {phoneNumberError && <div className="text-red-500 text-xs mt-1">{phoneNumberError}</div>}
 
                             <hr className='border-t border-gray-300 my-5' />

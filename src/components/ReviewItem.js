@@ -1,21 +1,24 @@
-import person from '../Assets/person.jpg'
 import Stars from './Stars'
+import { BiSolidUserCircle } from "react-icons/bi";
 
-const ReviewItem = () => {
+const ReviewItem = (props) => {
     return (
         <>
             <div className='flex md:flex-nowrap flex-wrap md:items-center items-start uppercase my-6'>
 
-                <div className=' w-28 h-28 overflow-hidden md:mr-6 md:mb-0 mb-3 flex items-center justify-center'>
-                    <img src={person} alt="profileImg" />
+                <div className=' w-28 h-28 overflow-hidden md:mr-2 md:mb-0 mb-3 flex items-center justify-center'>
+                    <BiSolidUserCircle size={70} className={`text-zinc-400`} />
                 </div>
 
-                <div className='md:w-3/4 w-full px-8 py-6 border-l-8 border-l-green-600'>{/*Box */}
+                <div className='md:w-3/4 w-full px-8 py-6 border-2'>{/*Box */}
                     <div className='flex justify-between items-center'>
-                        <h5 className='font-bold text-lg'>MIKLOS SALSA</h5>
-                        <Stars/>
+                        <div>
+                            <h5 className='font-bold'>{props.userName}</h5>
+                            {/* <h5 className='font-bold'>{props.date}</h5> */}
+                        </div>
+                        <Stars rating={props.rating} />
                     </div>
-                    <p className=' text-md font-medium text-slate-600 mt-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quia, at dolor autem et nostrum voluptas doloribus? Magni ab voluptatem quos alias sunt debitis porro.</p>
+                    <p className='text-sm font-medium text-slate-600 mt-3'>{props.review}</p>
                 </div>
 
             </div>
