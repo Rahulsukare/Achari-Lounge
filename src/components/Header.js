@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import DropDownProfile from "./DropDownProfile";
+// import DropDownProfile from "./DropDownProfile";
 
 import { BiShoppingBag, BiUser, BiPowerOff } from "react-icons/bi";
 // import { BiChevronDown } from "react-icons/bi";
@@ -110,7 +110,7 @@ const Header = (props) => {
                                 </div>
                             </div>
                         </div> */}
-                            <DropDownProfile username={props.userName} />
+                            {/* <DropDownProfile username={props.userName} /> */}
 
                             {/* <Link to='/login' className=''> */}
                             <button onClick={() => { handleLogoutClick() }} className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >

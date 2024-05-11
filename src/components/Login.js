@@ -133,7 +133,7 @@ const Login = () => {
             } catch (error) {
                 console.error(error);
                 alert("Invalid Credentials!");
-                setLoading(false)
+                setLoading(true)
             } 
         }
         
