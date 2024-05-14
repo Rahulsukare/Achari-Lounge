@@ -95,7 +95,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* {!(localStorage.getItem('auth-token')) ? (<><Login /></>) : (<> */}
+      {!(localStorage.getItem('auth-token')) ? (<><Login /></>) : (<>
 
         {/* Conditionally render Header based on whether user is on login page */}
         {!isLoginPage && <Header userName={name || "UserName"} cartItemCount={cartItemCount || 0} />}
@@ -116,7 +116,7 @@ function App() {
           </Routes>
         </main>
         {!isLoginPage && <Footer />}
-      {/* </>)} */}
+      </>)}
     </div>
   );
 }
