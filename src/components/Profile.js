@@ -74,7 +74,7 @@ const Profile = () => {
 
     return (
         <div className='overflow-x-auto p-9 bg-[#f4f1ea] animate-fade-in '>
-            <p className='uppercase font-bold text-2xl md:text-4xl my-14 w-full md:w-1/2 mx-auto flex gap-1'>PROFILE<BiUser className='inline font-bold' /></p>
+            <p className='uppercase font-bold text-2xl md:text-4xl my-14 w-full md:w-1/2 mx-auto flex items-center gap-1'>PROFILE<BiUser className='inline font-bold' /></p>
             <div className='relative flex flex-col md:flex-row gap-10 p-6 py-8 md:py-16 w-full md:w-1/2 mx-auto shadow-md rounded-md bg-white'>
 
                 <button className={`absolute right-8 top-8 px-5 py-2 bg-zinc-200 flex items-center text-[0.7rem] font-semibold text-zinc-800 rounded-md ${isEdit && 'hidden'}`} onClick={() => { setIsEdit(true) }}>

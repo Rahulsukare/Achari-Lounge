@@ -1,9 +1,7 @@
 import React from 'react'
 import DishesCard from './DishesCard'
 
-import notFound from '../Assets/empty-cart.png'
-
-import { BiSad } from "react-icons/bi";
+import notFound from '../Assets/not-found.png'
 
 const Dishes = (props) => {
   const data = props.Menu
@@ -12,16 +10,12 @@ const Dishes = (props) => {
     <>
 
       {(length === 0) ?
-        (<div className={`${props.loading && 'hidden'} mt-20`}>
-          <img src={notFound} alt="Items Not Found" className='w-20 mx-auto'/>
+        (
+        <div className={`${props.loading && 'hidden'} mt-20`}>
+          <img src={notFound} alt="Items Not Found" className='w-20 mx-auto' />
           <div className='font-bold  text-sm md:text-md text-zinc-600 w-fit my-2 mx-auto'> Sorry! Dishes Not Found</div>
-
-          {/* <div className=' bg-gradient-to-r from-red-400 via-red-500 to-red-400 py-2 text-white'> */}
-          {/* <BiSad size={80} className='border mx-auto ' /> */}
-          {/* <div className='font-extrabold w-fit mx-auto'>Try Another Dishes !</div> */}
-          {/* </div> */}
-
-        </div>)
+        </div>
+        )
         :
         (
           <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 animate-fade-in'>

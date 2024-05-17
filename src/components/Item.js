@@ -4,7 +4,7 @@ import axios from 'axios';
 import ReviewItem from './ReviewItem';
 import Stars from './Stars';
 
-import { BiCart, BiCheckCircle, BiSad } from 'react-icons/bi';
+import { BiBasket, BiCheckCircle, BiSad } from 'react-icons/bi';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -298,12 +298,17 @@ const Item = () => {
 
 
               <button
-                className={`uppercase w-full md:w-96 mt-3 py-3 text-lg rounded-sm text-white  flex justify-center gap-2 ${item.quantity === 0 ? 'cursor-not-allowed bg-red-400' : 'bg-green-600 hover:bg-red-600'} ${numberOfCartItem === 0 && 'cursor-not-allowed bg-red-400'}`}
+                className={`uppercase w-fit px-16 md:w-96 mt-3 py-3 text-lg rounded-sm flex justify-center gap-2 ${item.quantity === 0 ? 'cursor-not-allowed bg-red-400' : 'bg-[#00813D]'} ${numberOfCartItem === 0 && 'cursor-not-allowed bg-red-400'} overflow-hidden relative group`}
                 onClick={() => { addToCart(item._id) }}
                 disabled={numberOfCartItem === 0 || item.quantity === 0}
               >
-                {item.quantity === 0 ? <><span>OUT OF STOCK</span><BiSad size={25} /></> : <><BiCart size={25} />
-                  <span>Add to cart</span></>}
+                {item.quantity === 0 ? <><span className='text-white'>OUT OF STOCK</span><BiSad className='text-white' size={25} /></> :
+                  <>
+                    <span className="relative z-10 text-white duration-500 flex items-center justify-center gap-2 ">Add to Cart <BiBasket size={20} className='inline' /> </span>
+                    <span className={`absolute w-full h-full bg-[#D12525] -left-80 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500 ${numberOfCartItem === 0 && 'hidden'}`}></span>
+                    <span className={`absolute w-full h-full bg-[#D12525] -right-80 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500 ${numberOfCartItem === 0 && 'hidden'}`}></span>
+                  </> 
+                }
               </button>
 
               {item.quantity === 0 ?

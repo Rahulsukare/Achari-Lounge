@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import DropDownProfile from "./DropDownProfile";
 
-import { BiShoppingBag, BiUser, BiPowerOff } from "react-icons/bi";
-// import { BiChevronDown } from "react-icons/bi";
-import { AiOutlineClose, AiOutlineMenuUnfold } from "react-icons/ai";
+import avatar from '../Assets/avatar.avif'
+
+import { BiHomeAlt2, BiDish, BiPhone, BiPackage, BiInfoCircle, BiBasket, BiUser, BiPowerOff, BiLogInCircle, BiMenu, BiX } from "react-icons/bi";
 
 const Header = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [menu, setMenu] = useState(false);
-    // const [cartItemCount, setCartItemCount] = useState(0);
 
     const handleChange = () => {
         setMenu(!menu);
@@ -21,11 +20,8 @@ const Header = (props) => {
     };
 
     const handleLogoutClick = () => {
-        console.log("LOGOUT START")
         localStorage.removeItem("auth-token");
         navigate('/login')
-        console.log("LOGOUT END")
-
     }
 
     const isHomeActive = location.pathname === '/';
@@ -35,153 +31,142 @@ const Header = (props) => {
     const isCartActive = location.pathname === '/cart';
     const isOrdersActive = location.pathname === '/orders';
     const isProfileActive = location.pathname === '/profile';
-    // useEffect(() => {
-    //     const fetchCartItemsCount = async () => {
-    //         try {
-    //             let config = {
-    //                 method: 'get',
-    //                 maxBodyLength: Infinity,
-    //                 url: `http://localhost:8001/auth/getCart`,
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'auth-token': `${localStorage.getItem('auth-token')}`
-    //                 },
-    //             };
-
-    //             const response = await axios.request(config);
-    //             setCartItemCount(response.data.totalCartItems)
-
-    //         } catch (error) {
-    //             console.error('Error fetching cart items:', error);
-    //         }
-    //     };
-
-    //     fetchCartItemsCount();
-    // },[]);
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     let title = ""
-    if (isHomeActive) {title = 'Home'}
-    if (isMenuActive){title = 'Menu'}
-    if (isAboutActive){ title = 'About'}
-    if (isContactActive){ title = 'Contact'}
-    if (isCartActive){ title = 'Cart'}
-    if (isOrdersActive){ title = 'Orders'}
-    if (isProfileActive){ title = 'Profile'}
+    if (isHomeActive) { title = 'Home' }
+    if (isMenuActive) { title = 'Menu' }
+    if (isAboutActive) { title = 'About' }
+    if (isContactActive) { title = 'Contact' }
+    if (isCartActive) { title = 'Cart' }
+    if (isOrdersActive) { title = 'Orders' }
+    if (isProfileActive) { title = 'Profile' }
 
     document.title = `${capitalizeFirstLetter(title)} - FoodRestro`;
 
     return (
-        <div className=" w-full animate-fade-in overflow-x-auto">
-            <div>
-                <div className="min-w-fit flex flex-row justify-between py-5 px-10 md:py-0 md:px-10 md:px-356 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+        <div className=" w-full animate-fade-in">
+            <div className="min-w-fit flex flex-row justify-between py-5 px-10 md:py-0 md:px-10 md:px-356 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
 
-                    <div className=" flex flex-row items-center cursor-pointer">
-                        {/* <img className="w-24 rounded-full" src="../Assets/RestLogo.png" alt="" /> */}
-                        <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden mr-10 md:mr-5">FoodRestro</h1>
-                    </div>
-
-                    <nav className="hidden md:flex flex-row items-center text-sm text-slate-900 font-semibold gap-8">
-                        <Link to='/' className={`hover:text-[#D12525] ${isHomeActive && 'text-[#D12525]'} cursor-pointer`}>
-                            Home
-                        </Link>
-
-                        <Link to='/menu' className={`hover:text-[#D12525] ${isMenuActive && 'text-[#D12525]'} cursor-pointer`} >
-                            Menu
-                        </Link>
-
-                        <Link to='/about' className={`hover:text-[#D12525] ${isAboutActive && 'text-[#D12525]'} cursor-pointer`}>
-                            About
-                        </Link>
-
-                        <Link to='/contact' className={`hover:text-[#D12525] ${isContactActive && 'text-[#D12525]'} cursor-pointer`}>
-                            Contact
-                        </Link>
-                        <div className="flex  justify-center items-center gap-3">
-                            <Link to='/cart' className='relative'>
-                                <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-[#D12525] text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
-                                    {props.cartItemCount || 0}
-                                </span>
-                                <BiShoppingBag className="" size={30} />
-                            </Link>
-                            {/* <div className="relative inline-block text-left">
-                            <div>
-                                <button type="button" class="inline-flex w-full justify-center gap-x-1 rounded-md bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                    <BiUser size={17} />
-                                    {props.userName}
-                                    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                <div class="py-1" role="none">
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2">License</a>
-                                    <form method="POST" action="#" role="none">
-                                        <button type="submit" class="text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> */}
-                            <DropDownProfile username={props.userName} />
-
-                            {/* <Link to='/login' className=''> */}
-                            <button onClick={() => { handleLogoutClick() }} className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                                <h1>Logout</h1> <BiPowerOff size={21} />
-                            </button>
-                            {/* </Link> */}
-                        </div>
-                    </nav>
-
-                    <div className="md:hidden flex gap-3 items-center">
-                        <Link to='/cart' className='relative'>
-                            <span className="absolute top-0 right-0 w-3 h-3 p-2 bg-[#D12525] text-slate-100 text-sm rounded-full flex items-center justify-center z-50">
-                                {props.cartItemCount || 0}
-                            </span>
-                            <BiShoppingBag className="" size={30} />
-                        </Link>
-                        {/* <Link to='/login' className=''>
-                            <button className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                                <h1>Logout</h1> <BiPowerOff size={21} />
-                            </button>
-                        </Link> */}
-                        {menu ? (
-                            <AiOutlineClose size={30} onClick={handleChange} className=" cursor-pointer" />
-                        ) : (
-                            <AiOutlineMenuUnfold size={30} onClick={handleChange} className=" cursor-pointer" />
-                        )}
-                    </div>
+                <div className=" flex flex-row items-center cursor-pointer">
+                    {/* <img className="w-24 rounded-full" src="../Assets/RestLogo.png" alt="" /> */}
+                    <h1 className="text-lg tracking-widest lg:text-xl font-semibold text-nowrap overflow-hidden mr-10 md:mr-5">FoodRestro</h1>
                 </div>
-                <div
-                    className={` ${menu ? "translate-x-0" : "-translate-x-full"
-                        } lg:hidden flex flex-col absolute bg-white text-black left-0 top-20 font-normal text-2xl text-center pt-8 pb-4 gap-8 w-full h-fit transition-transform duration-300 z-50`}
-                >
-                    <Link to='/' className={`hover:text-[#D12525] ${isHomeActive && 'text-[#D12525]'}`} onClick={closeMenu} >
+
+                <nav className="hidden md:flex flex-row items-center text-sm text-slate-900 font-semibold gap-8">
+                    <Link to='/' className={`hover:text-[#D12525] ${isHomeActive && 'text-[#D12525]'} cursor-pointer`}>
                         Home
                     </Link>
-                    <Link to='/menu' className={`hover:text-[#D12525] ${isMenuActive && 'text-[#D12525]'}`} onClick={closeMenu}>
+
+                    <Link to='/menu' className={`hover:text-[#D12525] ${isMenuActive && 'text-[#D12525]'} cursor-pointer`} >
                         Menu
                     </Link>
-                    <Link to='/about' className={`hover:text-[#D12525] ${isAboutActive && 'text-[#D12525]'}`} onClick={closeMenu}>
+
+                    <Link to='/about' className={`hover:text-[#D12525] ${isAboutActive && 'text-[#D12525]'} cursor-pointer`}>
                         About
                     </Link>
-                    <Link to='/reviews' className={`hover:text-[#D12525] ${isContactActive && 'text-[#D12525]'}`} onClick={closeMenu}>
+
+                    <Link to='/contact' className={`hover:text-[#D12525] ${isContactActive && 'text-[#D12525]'} cursor-pointer`}>
                         Contact
                     </Link>
-                    <Link to='/profile' className="hover:text-[#D12525] transition-all cursor-pointer flex justify-center items-center gap-2">
-                        <BiUser size={20} />
-                        {props.userName}
+                    <div className="flex  justify-center items-center gap-3">
+                        <Link to='/cart' className='relative'>
+                            <span className="absolute -top-1 -right-2 w-1 h-1 p-2 bg-zinc-800 text-slate-100 text-[0.6rem] rounded-full flex items-center justify-center z-30">
+                                {props.cartItemCount || 0}
+                            </span>
+                            <BiBasket className="text-[#D12525]" size={27} />
+                        </Link>
+
+                        <DropDownProfile username={props.userName} />
+
+                        <button onClick={() => { handleLogoutClick() }} className='uppercase my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white overflow-hidden relative group cursor-pointer' >
+                            <span className="relative z-10 flex item-center gap-2">Logout <BiPowerOff size={20} className="inline" /></span>
+                            <span className="absolute w-full h-full bg-[#00813D] -left-52 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+                            <span className="absolute w-full h-full bg-[#00813D] -right-52 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+
+                        </button>
+                    </div>
+                </nav>
+
+                <div className="md:hidden flex gap-3 items-center">
+                    <Link to='/cart' className='relative'>
+                        <span className="absolute -top-1 -right-2 w-1 h-1 p-2 bg-zinc-800 text-slate-100 text-[0.6rem] rounded-full flex items-center justify-center z-30">
+                            {props.cartItemCount || 0}
+                        </span>
+                        <BiBasket className="text-[#D12525]" size={27} />
                     </Link>
-                    {/* <Link to='/login' className='mx-auto'> */}
-                    <button onClick={handleLogoutClick} className='uppercase w-fit mx-auto my-3 px-6 py-3 text-sm rounded-md bg-[#D12525] text-white hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 flex gap-1 items-center' >
-                        <h1>Logout</h1> <BiPowerOff size={21} />
-                    </button>
-                    {/* </Link> */}
+
+                    {menu ? (
+                        <BiX size={30} onClick={handleChange} className=" cursor-pointer" />
+                    ) : (
+                        <BiMenu size={30} onClick={handleChange} className=" cursor-pointer" />
+                    )}
                 </div>
+            </div>
+
+            <div className={` lg:hidden ${menu ? 'inset-0 opacity-75' : '-inset-full opacity-0'} absolute top-0 bg-black w-full h-full z-40 transition-opacity ease-in-out duration-700`} onClick={() => setMenu(false)}>
+            </div>
+
+            <div
+                className={` ${menu ? "right-0" : "-right-full"
+                    } min-w-fit h-screen py-10 px-2 md:hidden flex flex-col fixed top-0 bg-white text-sm text-slate-900 font-semibold z-50 border-slate-300 border border-r-2 lg:border-none transition-all ease-in-out duration-700 `}
+            >
+
+                {/* <BiX size={25} onClick={handleChange} className={` lg:hidden absolute top-3 left-3 cursor-pointer transition-all ease-in-out hover:scale-125 hover:border-zinc-600 hover:border rounded-full bg-[#D12525] text-white`} /> */}
+
+                {/* <div className=" font-bold text-2xl text-[#00813D]">Welcome</div> */}
+                {/* <div className=" font-semibold ">{props.userName}</div> */}
+
+                <div className="flex items-center justify-between mt-2 ml-4 mr-6 pl-3 py-3">
+                    <div className=" font-bold text-2xl mr-10 tracking-widest text-nowrap text-zinc-900">FOODRESTRO</div>
+                    <BiX size={25} onClick={handleChange} className={` lg:hidden cursor-pointer transition-all ease-in-out hover:scale-125 rounded-full `} />
+                </div>
+
+                <Link to='/' className={`hover:text-[#D12525] ${isHomeActive && 'text-[#00813D]'} mt-9 pl-3 pr-10 py-3 rounded-lg ml-4 mr-6 hover:bg-zinc-100 flex item-center gap-2`} onClick={closeMenu} >
+                    <BiHomeAlt2 size={18} />
+                    <h1>Home</h1>
+                </Link>
+                <Link to='/menu' className={`hover:text-[#D12525] ${isMenuActive && 'text-[#00813D]'} pl-3 pr-10 py-3 rounded-lg ml-4 mr-6 hover:bg-zinc-100 flex item-center gap-2`} onClick={closeMenu}>
+                    <BiDish size={18} />
+                    <h1>Menu</h1>
+                </Link>
+
+                <Link to='/profile' className={`hover:text-[#D12525] ${isProfileActive && 'text-[#00813D]'} pl-3 pr-10 py-3 rounded-lg ml-4 mr-6 hover:bg-zinc-100 flex item-center gap-2`} onClick={closeMenu}>
+                    <BiUser size={18} />
+                    <h1>Profile</h1>
+                </Link>
+
+                <Link to='/orders' className={`hover:text-[#D12525] ${isOrdersActive && 'text-[#00813D]'} pl-3 pr-10 py-3 rounded-lg ml-4 mr-6 hover:bg-zinc-100 flex item-center gap-2`} onClick={closeMenu}>
+                    <BiPackage size={18} />
+                    <h1>Orders</h1>
+                </Link>
+
+
+                <Link to='/contact' className={`hover:text-[#D12525] ${isContactActive && 'text-[#00813D]'} pl-3 pr-10 py-3 rounded-lg ml-4 mr-6 hover:bg-zinc-100 flex item-center gap-2`} onClick={closeMenu}>
+                    <BiPhone size={18} />
+                    <h1>Contact</h1>
+                </Link>
+
+                <Link to='/about' className={`hover:text-[#D12525] ${isAboutActive && 'text-[#00813D]'} pl-3 pr-10 py-3 rounded-lg ml-4 mr-6 hover:bg-zinc-100 flex item-center gap-2`} onClick={closeMenu}>
+                    <BiInfoCircle size={18} />
+                    <h1>About</h1>
+                </Link>
+
+                <div className={`bg-[#D12525] text-white pl-3 pr-10 py-3 rounded-lg mt-3 mx-4 overflow-hidden relative group cursor-pointer`} onClick={handleLogoutClick}>
+                    <span className="relative z-10 flex item-center gap-2"> <BiLogInCircle size={18} className="inline" />Sign Out</span>
+                    <span className="absolute w-full h-full bg-[#00813D] -left-52 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+                    <span className="absolute w-full h-full bg-[#00813D] -right-52 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+                </div>
+
+                <div className="pl-3 pr-28 py-1 mr-2 absolute bottom-5 flex bg-zinc-100 border rounded-lg">
+                    <div className="w-10 h-10 overflow-hidden rounded-full">
+                        <img src={avatar} alt="avatar" className="object-center" />
+                    </div>
+                    <div className="flex items-center ml-3 text-nowrap">{props.fullName}</div>
+                </div>
+
             </div>
         </div>
     );

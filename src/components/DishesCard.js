@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BiCart, BiCheckCircle, BiSad } from 'react-icons/bi';
+import { BiBasket, BiCheckCircle, BiSad } from 'react-icons/bi';
 import Stars from './Stars';
 
 const DishesCard = (props) => {
@@ -78,11 +78,11 @@ const DishesCard = (props) => {
                     :
                     (
                         <button className={`uppercase w-full mt-2 py-3 text-[0.6rem] font-semibold rounded-xl  text-white  flex justify-center gap-1 transition-all ease-in-out duration-200 ${props.quantity === 0 ? 'bg-red-500 text-white cursor-not-allowed' : 'bg-zinc-800 hover:bg-[#00813D]'}`} onClick={() => { addToCart(props.id) }} disabled={isAdded || props.quantity === 0}>
-                            {props.quantity === 0 ? <><span>OUT OF STOCK</span><BiSad size={14} /></>
+                            {props.quantity === 0 ? <div className='flex items-center justify-center gap-2'><span>OUT OF STOCK</span><BiSad size={14} /></div>
                                 :
                                 <>
-                                    {isAdded ? <><div>Item Added</div><BiCheckCircle size={14} /></> : <><BiCart size={14} />
-                                        <span>Add to cart</span></>}
+                                    {isAdded ? <><div>Item Added</div><BiCheckCircle size={14} /></> : <div className='flex items-center justify-center gap-2'><BiBasket size={14} />
+                                        <span>Add to cart</span></div>}
                                 </>
                             }
                         </button>

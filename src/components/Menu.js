@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Dishes from "./Dishes";
-import { BiChevronRight, BiErrorCircle, BiCheckCircle, BiChevronUp, BiChevronDown, BiX, BiFilter, BiFilterAlt, BiReset, BiArrowBack } from "react-icons/bi";
-import Loading from "./Loading";
+import { BiChevronUp, BiChevronDown, BiX, BiFilter, BiFilterAlt, BiReset, BiArrowBack } from "react-icons/bi";
 import Slider from 'react-slider'
+// import Loading from "./Loading";
 // import { get } from "react-scroll/modules/mixins/scroller";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -78,6 +78,10 @@ const Menu = () => {
     };
 
     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         setLoading(true);
         const fetchCategories = async () => {
             try {
@@ -298,14 +302,14 @@ const Menu = () => {
             {/* // ${handleCat && 'fixed inset-0 bg-gray-700 bg-opacity-75 transition-opacity'} */}
             <div className={` relative flex flex-wrap lg:flex-nowrap sm:px-10 sm:py-8 md:px-16 lg:px-20 xl:px-28 animate-fade-in min-h-screen`}>
 
-                <form className={`${handleCat ? ' inset-0 bg-white min-h-full overflow-auto' : ' -inset-full lg:inset-0'} absolute top-0 z-50  lg:relative lg:block lg:mt-9 p-9 w-fit h-fit lg:w-5/12 border-slate-300 border border-r-2 lg:border-none transition-all ease-in-out duration-700  `}
+                <form className={`${handleCat ? ' inset-0 bg-white min-h-full overflow-auto' : ' -inset-full lg:inset-0'} absolute top-0 z-40  lg:relative lg:block lg:mt-9 p-9 w-fit h-fit lg:w-5/12 border-slate-300 border border-r-2 lg:border-none transition-all ease-in-out duration-700  `}
                     onSubmit={(e) => filter(e)}>
 
                     {handleCat && <BiX className={` lg:hidden absolute top-5 right-5 cursor-pointer transition-all ease-in-out hover:scale-125 hover:border-zinc-600 hover:border`} onClick={handleCategories} />}
 
                     <h2 className="text-md mb-4 pl-2 py-0 font-semibold border-l border-l-[#00813D]">CATEGORIES</h2>
                     {categories.map(category => (
-                        <div className="flex items-center gap-3" >
+                        <div key={category._id} className="flex items-center gap-3" >
                             <div className="inline-flex items-center">
                                 <div className="relative flex items-center rounded-full cursor-pointer" >
                                     <input type="checkbox"
@@ -357,8 +361,9 @@ const Menu = () => {
 
                     <hr className="my-10" />
 
-                    <button type="reset" className="w-full my-1 cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#D12525] group px-8 py-2"
+                    <button type="reset" className="w-full my-1 cursor-pointer font-semibold overflow-hidden relative group z-100 border border-[#D12525]  px-8 py-2"
                         onClick={() => {
+                            setHandleCat(false);
                             setCheckedCategories({});
                             setValues([minPrice, maxPrice]);
                             setSelectedSort('Default')
@@ -376,7 +381,7 @@ const Menu = () => {
                     </button>
                 </form>
 
-                <div className={` lg:hidden ${handleCat ? 'inset-0 opacity-75' : '-inset-full opacity-0'} absolute top-0 bg-black w-full h-full z-40 transition-opacity ease-in-out duration-700`} onClick={() => setHandleCat(false)}>
+                <div className={` lg:hidden ${handleCat ? 'inset-0 opacity-75' : '-inset-full opacity-0'} absolute top-0 bg-black w-full h-full z-30 transition-opacity ease-in-out duration-700`} onClick={() => setHandleCat(false)}>
                 </div>
 
                 {/* Right Container */}

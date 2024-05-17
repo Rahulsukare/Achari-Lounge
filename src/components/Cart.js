@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, redirect, useNavigate } from 'react-router-dom';
-import { BiCart, BiX, BiShoppingBag } from 'react-icons/bi';
+import { Link, useNavigate } from 'react-router-dom';
+import { BiBasket, BiX, BiShoppingBag } from 'react-icons/bi';
 import emptyCart from '../Assets/empty-cart (1).png'
 
 const Cart = (props) => {
@@ -16,7 +16,7 @@ const Cart = (props) => {
 
     const [paymentMethod, setpaymentMethod] = useState('card');
     const [name, setname] = useState(props.userName || '');
-    const [email, setemail] = useState(props.email || '')
+    const [email,] = useState(props.email || '')
     const [phoneNumber, setphoneNumber] = useState(props.phoneNumber || '');
     const [address, setaddress] = useState(props.address || '');
 
@@ -197,7 +197,7 @@ const Cart = (props) => {
         }
     }
     const removeCartItem = async (id) => {
-        setUpdate(!update)
+        // setUpdate(!update)
         try {
             let config = {
                 method: 'post',
@@ -209,11 +209,30 @@ const Cart = (props) => {
             };
 
             const response = await axios(config);
-            // console.log(response.data);
-            setData(response.data.cart)
-            console.log("Item Removed Successfully");
+            // Check if response data contains cart items
+            if (response.data && response.data.cart) {
+                // Extract cart items and total cart items from response data
+                const { cart } = response.data;
+
+                // Map over cart items to format the data if needed
+                const formattedCartItems = cart.map(item => {
+                    return {
+                        menuId: item.menuId,
+                        name: item.name,
+                        price: item.price,
+                        image: item.image,
+                        quantity: item.quantity,
+                        subtotal: item.subtotal
+                    };
+                });
+
+                // Update state or perform any other action with cart items
+                setData(formattedCartItems);
+                console.log(formattedCartItems)
+                fetchCartTotal();
+            }
             navigate('/cart');
-            setUpdate(!update)
+            // setUpdate(!update)
 
         } catch (error) {
             console.error('Error removing cart items:', error);
@@ -419,22 +438,22 @@ const Cart = (props) => {
             <div className={`overflow-x-auto mx-auto bg-[#f4f1ea] animate-fade-in ${checkout ? "hidden" : ""}`}>
 
                 {/* Heading */}
-                <p className='uppercase font-bold text-2xl md:text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiCart className='inline' /></p>
+                <p className='uppercase font-bold text-2xl md:text-4xl mx-auto my-14 w-3/4'>SHOPPING <span className='inline text-red-600'>CART</span>&nbsp;<BiBasket className='inline' /></p>
 
                 {/* Cart items */}
                 <div className="bg-white  overflow-x-auto ml-4 md:mx-auto my-14 w-full md:w-3/4 p-6 shadow-lg">
                     <table className="mx-auto my-9 w-full">
                         <thead className=''>
                             <tr className="text-lg border-b">
-                                <th className="py-2 pr-2 text-left">PRODUCT</th>
-                                <th className="py-2 pr-2 text-left">PRICE</th>
-                                <th className="py-2 pr-2 text-left">QUANTITY</th>
-                                <th className="py-2 pr-2 text-left">SUBTOTAL</th>
-                                <th className="py-2 pr-2 text-left">REMOVE</th>
+                                <th className="py-2 pr-10 text-left">PRODUCT</th>
+                                <th className="py-2 pr-10 text-left">PRICE</th>
+                                <th className="py-2 pr-10 text-left">QUANTITY</th>
+                                <th className="py-2 pr-10 text-left">SUBTOTAL</th>
+                                <th className="py-2 pr-10 text-left">REMOVE</th>
                             </tr>
                         </thead>
-                        <tbody className='border-b'>
-                            {data.length !== 0 ?
+                        <tbody className='border-b '>
+                            {data.length !== 0 &&
                                 (
                                     data.map((item) => (
                                         <tr key={item.menuId} className="text-center sm:text-left">
@@ -457,18 +476,17 @@ const Cart = (props) => {
                                         </tr>
                                     ))
                                 )
-                                :
-                                (
-                                    <tr className="animate-fade-in">
-                                        <td>
-                                            <p className="text-center text-xl font-bold text-gray-700 mt-10">Your Cart is Empty</p>
-                                            <img src={emptyCart} className='w-20 mx-auto mb-10' alt="Empty cart logo" />
-                                        </td>
-                                    </tr>
-                                )
+
                             }
                         </tbody>
                     </table>
+
+                    {data.length === 0 && <div className="w-full animate-fade-in flex items-center justify-center my-10 ">
+                        <div>
+                            <p className="text-center text-xl font-bold text-gray-700 mt-10">Your Cart is Empty</p>
+                            <img src={emptyCart} className='w-20 mx-auto mb-10' alt="Empty cart logo" />
+                        </div>
+                    </div>}
 
                     <div className='flex'>
                         <Link to='/menu'>
