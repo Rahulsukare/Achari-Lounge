@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ChatBot from 'react-simple-chatbot';
-import Chatbot from './Chatbot'
+
 import { useNavigate } from 'react-router-dom';
 // import Button from './Button'
 // import backgroundImage from './vintage-old-rustic-cutlery-dark.jpg'
@@ -89,8 +89,63 @@ const Home = () => {
                 <button className='uppercase mt-5 rounded-xl font-bold w-fit py-3 px-9 text-sm bg-white text-zinc-800 hover:bg-yellow-400 hover:text-white' onClick={handleClick} >View More &nbsp; &rarr;</button>
             </div>
 
-            <Chatbot/>
+            <ChatBot
+                steps={[
+                    {
+                        id: '1',
+                        message: 'Hi, nice to meet you!',
+                        trigger: '2',
+                    },
+                    {
+                        id: '2',
+                        message: "How can I assist you today?",
+                        trigger: '3'
+                    },
+                    {
+                        id: '3',
+                        options: [
+                            { value: 'menu', label: 'View Menu', trigger: '4' },
+                            { value: 'reservation', label: 'Make a Reservation', trigger: '5' },
+                            { value: 'contact', label: 'Contact Us', trigger: '6' },
+                        ],
+                    },
+                    {
+                        id: '4',
+                        message: 'Sure! Here is our menu:',
+                        trigger: '7',
+                    },
+                    {
+                        id: '5',
+                        message: 'Great! When would you like to make the reservation?',
+                        trigger: '8',
+                    },
+                    {
+                        id: '6',
+                        message: 'Thank you for reaching out to us! We will get back to you shortly.',
+                        end: true,
+                    },
+                    {
+                        id: '7',
+                        component: (
+                            <div>
+                                {/* Display your menu items here */}
+                                <p>Menu Item 1: $10</p>
+                                <p>Menu Item 2: $12</p>
+                                <p>Menu Item 3: $15</p>
+                            </div>
+                        ),
+                        end: true,
+                    },
+                    {
+                        id: '8',
+                        user: true,
+                        trigger: '6',
+                    },
+                ]}
+                floating={true}
+            />
         </>
     )
 }
+
 export default Home;
