@@ -18,7 +18,6 @@ import OrderFailed from './components/OrderFailed';
 import { BiUpArrowAlt } from "react-icons/bi";
 
 function App() {
-
   const location = useLocation();
   const [name, setName] = useState('');
   const [email, setemail] = useState('')
