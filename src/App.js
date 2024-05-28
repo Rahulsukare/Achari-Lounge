@@ -18,7 +18,8 @@ import OrderFailed from './components/OrderFailed';
 import deliveryBoy from './Assets/delivery-man.png'
 import { BiUpArrowAlt } from "react-icons/bi";
 
-
+// import ChatBot from 'react-simple-chatbot';
+import Chatbot from './components/Chatbot'
 
 function App() {
   const navigate = useNavigate();
@@ -123,11 +124,15 @@ function App() {
   return (
     <div className="App relative">
       {showScrollUp && localStorage.getItem('auth-token') && (
+        <>
         <BiUpArrowAlt
           id='scrollUp'
-          className='fixed bottom-5 right-5 w-8 h-8 p-2 sm:w-10 sm:h-10 sm:p-3 md:w-12 md:h-12 md:p-3 border text-[#D12525] border-[#D12525] rounded-full z-50 cursor-pointer animate-popup' onClick={scrollUp}
+          className='fixed bottom-5 left-5 w-8 h-8 p-2 sm:w-10 sm:h-10 sm:p-3 md:w-12 md:h-12 md:p-3 border text-[#D12525] border-[#D12525] rounded-full z-50 cursor-pointer animate-popup' onClick={scrollUp}
         />
+        
+        </>
       )}
+      {localStorage.getItem('auth-token') && (<><Chatbot/></>)}
 
       {!(localStorage.getItem('auth-token')) ? (<><Login /></>) : (<>
 
