@@ -13,6 +13,7 @@ import reputation from '../Assets/reputation.png';
 import { BiLogoFacebook, BiLogoInstagram, BiLogoTwitter, BiLogoYoutube } from "react-icons/bi";
 
 const About = () => {
+    
     return (
         <div className='bg-[#f4f1ea] py-20 animate-popup'>
 
